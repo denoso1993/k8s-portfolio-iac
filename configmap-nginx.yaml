@@ -1,0 +1,100 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-html-config
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SRE Portfolio | Denis Oliveira Ramos</title>
+        <style>
+            :root {
+                --primary: #0078d4;
+                --secondary: #24292f;
+                --bg: #f0f2f5;
+                --surface: rgba(255, 255, 255, 0.95);
+                --text: #1a1a1a;
+                --border: #d0d7de;
+            }
+            body { 
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+                color: var(--text);
+                display: flex; justify-content: center; align-items: center; 
+                min-height: 100vh; margin: 0; padding: 20px 0;
+            }
+            .card { 
+                background: var(--surface);
+                backdrop-filter: blur(10px);
+                padding: 35px; border-radius: 16px;
+                border: 1px solid white;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                max-width: 480px; width: 90%; text-align: center;
+            }
+            .header h1 { margin: 0; font-size: 26px; color: var(--secondary); letter-spacing: -0.5px; }
+            .header p { color: var(--primary); font-weight: 600; margin-top: 5px; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
+            
+            .section-title { 
+                font-size: 12px; font-weight: bold; color: #57606a; 
+                text-align: left; margin: 25px 0 10px 5px;
+                text-transform: uppercase; border-left: 3px solid var(--primary); padding-left: 8px;
+            }
+
+            .grid-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+            
+            .btn {
+                text-decoration: none;
+                padding: 12px; border-radius: 8px; font-weight: 600;
+                transition: all 0.2s ease; font-size: 13px;
+                display: flex; align-items: center; justify-content: center;
+                border: 1px solid var(--border);
+                color: var(--secondary);
+            }
+            .btn-primary { background: var(--primary); color: white; border: none; }
+            .btn-primary:hover { background: #005a9e; transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); color: white; }
+            
+            .btn-outline { background: white; border: 1px solid var(--border); }
+            .btn-outline:hover { background: #f6f8fa; border-color: #8c959f; }
+
+            .infra-status { 
+                margin-top: 30px; padding-top: 15px; border-top: 1px solid var(--border);
+                font-size: 10px; color: #57606a; text-align: left;
+                display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+            }
+            .status-dot { height: 7px; width: 7px; background-color: #2da44e; border-radius: 50%; display: inline-block; margin-right: 5px; }
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            <div class="header">
+                <h1>Denis Oliveira Ramos</h1>
+                <p>Senior Cloud Analyst | SRE & Infrastructure</p>
+            </div>
+
+            <div class="section-title">Currículos (Resume)</div>
+            <div class="grid-buttons">
+                <a href="https://drive.google.com/open?id=1AtSEc-qtGJzdPCroJEleJrU8U6OsDz2w" target="_blank" class="btn btn-primary">Português (PT-BR)</a>
+                <a href="https://drive.google.com/open?id=1nLev2K3tUuM09_PxtIShWjTdp4YSb9Tm" target="_blank" class="btn btn-primary">English (EN-US)</a>
+            </div>
+
+            <div class="section-title">Evidências e Certificações</div>
+            <div class="grid-buttons">
+                <a href="https://drive.google.com/drive/folders/1k_4mO-j4WEoaIGngR9cGLX1WpVSKC-AD" target="_blank" class="btn btn-outline">Pasta de Certificados</a>
+                <a href="https://drive.google.com/drive/folders/1tIIPUa3S2Tq-8M-J570m66ldim4fRnAj" target="_blank" class="btn btn-outline">Drive Profissional</a>
+                
+                <a href="https://linkedin.com/in/denis93" target="_blank" class="btn btn-outline">LinkedIn</a>
+                <a href="mailto:denis_oliveira@rocketmail.com" class="btn btn-outline">E-mail</a>
+            </div>
+
+            <div class="infra-status">
+                <div><span class="status-dot"></span>Cloud Cluster: Kind</div>
+                <div><span class="status-dot"></span>Ingress: Nginx</div>
+                <div><span class="status-dot"></span>Region: Local (Barueri)</div>
+                <div><span class="status-dot"></span>Port: 8081</div>
+            </div>
+        </div>
+    </body>
+    </html>

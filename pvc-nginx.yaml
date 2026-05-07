@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nginx-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce    # O HD pode ser lido e escrito por um nó por vez
+  resources:
+    requests:
+      storage: 1Gi     # Tamanho do nosso HD virtual

@@ -31,13 +31,11 @@ resource "kubernetes_config_map" "portfolio_html" {
     <div class="card">
         <h1>Denis Oliveira Ramos</h1>
         <div class="subtitle">SENIOR CLOUD ANALYST | SRE & INFRASTRUCTURE</div>
-        
         <div class="section-title">CURRÍCULOS (RESUME)</div>
         <div class="btn-group">
             <a href="https://drive.google.com/open?id=1AtSEc-qtGJzdPCroJEleJrU8U6OsDz2w" target="_blank" class="btn btn-primary">Português (PT-BR)</a>
             <a href="https://drive.google.com/open?id=1nLev2K3tUuM09_PxtIShWjTdp4YSb9Tm" target="_blank" class="btn btn-primary">English (EN-US)</a>
         </div>
-        
         <div class="section-title">EVIDÊNCIAS E CERTIFICAÇÕES</div>
         <div class="btn-group">
             <a href="https://drive.google.com/drive/folders/1k_4mO-j4WEoaIGngR9cGLX1WpVSKC-AD" target="_blank" class="btn btn-outline">Pasta de Certificados</a>
@@ -45,7 +43,6 @@ resource "kubernetes_config_map" "portfolio_html" {
             <a href="https://linkedin.com/in/denis93" target="_blank" class="btn btn-outline">LinkedIn</a>
             <a href="mailto:denis_oliveira@rocketmail.com" class="btn btn-outline">E-mail</a>
         </div>
-        
         <div class="footer-info">
             <div class="footer-item">Cloud Cluster: Kind</div>
             <div class="footer-item">Ingress: Nginx</div>
@@ -75,6 +72,10 @@ resource "kubernetes_deployment" "nginx_portfolio" {
           image = "nginx:latest"
           name  = "nginx"
           port { container_port = 80 }
+          resources {
+            requests = { cpu = "100m", memory = "128Mi" }
+            limits   = { cpu = "200m", memory = "256Mi" }
+          }
           volume_mount {
             name       = "html-volume"
             mount_path = "/usr/share/nginx/html"
@@ -114,6 +115,7 @@ resource "helm_release" "prometheus" {
   repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "prometheus"
   namespace  = kubernetes_namespace.monitoring.metadata[0].name
+  
   set {
     name  = "server.persistentVolume.enabled"
     value = "false"
@@ -125,20 +127,64 @@ resource "helm_release" "grafana" {
   repository = "https://grafana.github.io/helm-charts"
   chart      = "grafana"
   namespace  = kubernetes_namespace.monitoring.metadata[0].name
+
   set {
     name  = "persistence.enabled"
     value = "false"
   }
+  
   set {
     name  = "adminPassword"
     value = "admin"
   }
+  
   set {
     name  = "service.type"
     value = "NodePort"
   }
+  
   set {
     name  = "service.nodePort"
     value = "30001"
   }
+
+  values = [
+    yamlencode({
+      datasources = {
+        "datasources.yaml" = {
+          apiVersion = 1
+          datasources = [{
+            name      = "Prometheus"
+            type      = "prometheus"
+            url       = "http://prometheus-server.monitoring.svc.cluster.local"
+            access    = "proxy"
+            isDefault = true
+          }]
+        }
+      }
+      dashboardProviders = {
+        "dashboardproviders.yaml" = {
+          apiVersion = 1
+          providers = [{
+            name            = "default"
+            orgId           = 1
+            folder          = ""
+            type            = "file"
+            disableDeletion = false
+            editable        = true
+            options         = { path = "/var/lib/grafana/dashboards/default" }
+          }]
+        }
+      }
+      dashboards = {
+        default = {
+          kubernetes-pods = {
+            gnetId     = 15760
+            revision   = 28
+            datasource = "Prometheus"
+          }
+        }
+      }
+    })
+  ]
 }

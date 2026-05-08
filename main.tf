@@ -188,3 +188,95 @@ resource "helm_release" "grafana" {
     })
   ]
 }
+
+resource "kubernetes_secret" "postgres_credentials" {
+  metadata {
+    name      = "postgres-secret"
+    namespace = "default"
+  }
+  data = {
+    POSTGRES_USER     = "sre_admin"
+    POSTGRES_PASSWORD = "sre_password_123"
+    POSTGRES_DB       = "portfolio_db"
+  }
+}
+
+resource "kubernetes_persistent_volume_claim" "postgres_pvc" {
+  metadata {
+    name      = "postgres-pvc"
+    namespace = "default"
+  }
+  spec {
+    access_modes = ["ReadWriteOnce"]
+    resources {
+      requests = {
+        storage = "1Gi"
+      }
+    }
+  }
+  wait_until_bound = false
+}
+
+resource "kubernetes_stateful_set" "postgres" {
+  metadata {
+    name      = "postgres-sts"
+    namespace = "default"
+  }
+  spec {
+    service_name = "postgres-service"
+    replicas     = 1
+    selector {
+      match_labels = {
+        app = "postgres"
+      }
+    }
+    template {
+      metadata {
+        labels = {
+          app = "postgres"
+        }
+      }
+      spec {
+        container {
+          name  = "postgres"
+          image = "postgres:15-alpine"
+          port {
+            container_port = 5432
+          }
+          env_from {
+            secret_ref {
+              name = kubernetes_secret.postgres_credentials.metadata[0].name
+            }
+          }
+          volume_mount {
+            name       = "postgres-storage"
+            mount_path = "/var/lib/postgresql/data"
+          }
+        }
+        volume {
+          name = "postgres-storage"
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim.postgres_pvc.metadata[0].name
+          }
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_service" "postgres_service" {
+  metadata {
+    name      = "postgres-service"
+    namespace = "default"
+  }
+  spec {
+    selector = {
+      app = "postgres"
+    }
+    port {
+      port        = 5432
+      target_port = 5432
+    }
+    type = "ClusterIP"
+  }
+}

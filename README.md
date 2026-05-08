@@ -1,22 +1,42 @@
-# Kubernetes Lab - Infrastructure as Code (IaC)
+Kubernetes SRE Lab - Infrastructure as Code (IaC)
+Este repositório contém a orquestração completa de um ecossistema Kubernetes resiliente e observável, provisionado de forma 100% declarativa. O projeto evoluiu de um deploy simples para uma arquitetura que simula desafios reais de produção, como persistência de estado e centralização de logs.
 
-Este projeto demonstra a migração de um ambiente Kubernetes local (**Kind**) para gestão via **Terraform**, aplicando princípios de SRE e automação.
+🏗️ Arquitetura e Engenharia
+A solução é composta pelos seguintes pilares de confiabilidade:
 
-## 🚀 Tecnologias Utilizadas
-*   **Kubernetes (Kind):** Orquestração de containers local.
-*   **Terraform:** Provisionamento e gestão da infraestrutura.
-*   **Nginx:** Servidor web stateless para o portfólio.
-*   **HPA (Horizontal Pod Autoscaler):** Escalabilidade baseada em consumo de CPU.
+Provisionamento Declarativo: Toda a infraestrutura, desde o cluster local (Kind) até os recursos internos, é gerenciada via Terraform e Helm, eliminando configurações manuais.
 
-## 🏗️ Arquitetura do Projeto
-O cluster gerencia um deploy de Nginx que consome o conteúdo estático via **ConfigMap**. O escalonamento é automatizado para variar entre 1 e 5 réplicas conforme a demanda.
+Resiliência de Dados: Diferente de arquiteturas stateless simples, este lab utiliza StatefulSets e PersistentVolumeClaims (PVC) para o banco de dados PostgreSQL, garantindo que os dados sobrevivam ao ciclo de vida dos Pods.
 
+Serviço Web: O portfólio técnico é servido via Nginx, com o conteúdo desacoplado da imagem através de ConfigMaps.
 
----
-*Projeto mantido por [Denis De Oliveira Ramos](https://github.com/denoso1993)*
+Escalabilidade: Implementação de HPA (Horizontal Pod Autoscaler), permitindo que a aplicação responda dinamicamente a picos de tráfego (1 a 5 réplicas).
 
+📊 Observabilidade (Full-Stack)
+Não há SRE sem dados. O cluster integra uma stack completa de telemetria:
 
-<img width="1587" height="931" alt="SRE" src="https://github.com/user-attachments/assets/d392910c-b4f2-4ab7-af3d-3fd945520461" />
+Métricas: Prometheus extraindo dados de performance em tempo real.
 
-<img width="1661" height="950" alt="SRE2" src="https://github.com/user-attachments/assets/25b93338-513a-4577-8196-93e375fca758" />
+Logs: Stack Loki & Promtail para agregação centralizada de logs, permitindo auditoria e troubleshooting sem acesso direto ao terminal.
 
+Visualização: Dashboards dinâmicos no Grafana, provisionados automaticamente via código (Data Sources & Dashboards-as-Code).
+
+🚀 Tecnologias Utilizadas
+Orquestração: Kubernetes (Kind)
+
+IaC: Terraform & Helm
+
+Web Server: Nginx
+
+Database: PostgreSQL 15 (Alpine)
+
+Observability: Prometheus, Grafana, Loki & Promtail
+
+🛠️ Próximos Passos (Roadmap)
+[ ] Secret Management: Migração de segredos para External Secrets / Vault.
+
+[ ] Ingress Control: Implementação de NGINX Ingress com suporte a TLS.
+
+[ ] Disaster Recovery: Automação de backups do PostgreSQL para Cloud Storage.
+
+Mantido por Denis Oliveira Ramos

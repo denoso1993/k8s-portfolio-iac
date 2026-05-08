@@ -1,4 +1,5 @@
-Kubernetes SRE Lab - Infrastructure as Code (IaC)
+**Kubernetes SRE Lab - Infrastructure as Code (IaC)**
+
 Este repositório contém a orquestração completa de um ecossistema Kubernetes resiliente e observável, provisionado de forma 100% declarativa. O projeto evoluiu de um deploy simples para uma arquitetura que simula desafios reais de produção, como persistência de estado e centralização de logs.
 
 🏗️ Arquitetura e Engenharia

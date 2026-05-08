@@ -122,6 +122,27 @@ resource "helm_release" "prometheus" {
   }
 }
 
+# NOVA CAMADA: Motor de Logs Loki + Agente Promtail
+resource "helm_release" "loki_stack" {
+  name       = "loki-stack"
+  repository = "https://grafana.github.io/helm-charts"
+  chart      = "loki-stack"
+  namespace  = kubernetes_namespace.monitoring.metadata[0].name
+
+  set {
+    name  = "grafana.enabled"
+    value = "false"
+  }
+  set {
+    name  = "prometheus.enabled"
+    value = "false"
+  }
+  set {
+    name  = "promtail.enabled"
+    value = "true"
+  }
+}
+
 resource "helm_release" "grafana" {
   name       = "grafana"
   repository = "https://grafana.github.io/helm-charts"
@@ -132,17 +153,14 @@ resource "helm_release" "grafana" {
     name  = "persistence.enabled"
     value = "false"
   }
-  
   set {
     name  = "adminPassword"
     value = "admin"
   }
-  
   set {
     name  = "service.type"
     value = "NodePort"
   }
-  
   set {
     name  = "service.nodePort"
     value = "30001"
@@ -153,13 +171,21 @@ resource "helm_release" "grafana" {
       datasources = {
         "datasources.yaml" = {
           apiVersion = 1
-          datasources = [{
-            name      = "Prometheus"
-            type      = "prometheus"
-            url       = "http://prometheus-server.monitoring.svc.cluster.local"
-            access    = "proxy"
-            isDefault = true
-          }]
+          datasources = [
+            {
+              name      = "Prometheus"
+              type      = "prometheus"
+              url       = "http://prometheus-server.monitoring.svc.cluster.local"
+              access    = "proxy"
+              isDefault = true
+            },
+            {
+              name      = "Loki"
+              type      = "loki"
+              url       = "http://loki-stack.monitoring.svc.cluster.local:3100"
+              access    = "proxy"
+            }
+          ]
         }
       }
       dashboardProviders = {

@@ -23,4 +23,5 @@ O cluster gerencia um deploy de Nginx que consome o conteúdo estático via **Co
 
 <img width="1587" height="931" alt="SRE" src="https://github.com/user-attachments/assets/d392910c-b4f2-4ab7-af3d-3fd945520461" />
 
-<img width="1587" height="931" alt="SRE" src="https://github.com/user-attachments/assets/6d7049b0-acaf-4b84-95ea-72bcbac46435" />
+<img width="1661" height="950" alt="SRE2" src="https://github.com/user-attachments/assets/25b93338-513a-4577-8196-93e375fca758" />
+

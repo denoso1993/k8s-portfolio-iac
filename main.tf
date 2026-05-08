@@ -122,7 +122,6 @@ resource "helm_release" "prometheus" {
   }
 }
 
-# NOVA CAMADA: Motor de Logs Loki + Agente Promtail
 resource "helm_release" "loki_stack" {
   name       = "loki-stack"
   repository = "https://grafana.github.io/helm-charts"
@@ -182,7 +181,7 @@ resource "helm_release" "grafana" {
             {
               name      = "Loki"
               type      = "loki"
-              url       = "http://loki-stack.monitoring.svc.cluster.local:3100"
+              url       = "http://loki.monitoring.svc.cluster.local:3100"
               access    = "proxy"
             }
           ]

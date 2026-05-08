@@ -2,7 +2,7 @@
 
 Este repositório contém a orquestração completa de um ecossistema Kubernetes resiliente e observável, provisionado de forma 100% declarativa. O projeto evoluiu de um deploy simples para uma arquitetura que simula desafios reais de produção, como persistência de estado e centralização de logs.
 
-🏗️ Arquitetura e Engenharia
+- Arquitetura e Engenharia
 A solução é composta pelos seguintes pilares de confiabilidade:
 
 Provisionamento Declarativo: Toda a infraestrutura, desde o cluster local (Kind) até os recursos internos, é gerenciada via Terraform e Helm, eliminando configurações manuais.
@@ -13,8 +13,8 @@ Serviço Web: O portfólio técnico é servido via Nginx, com o conteúdo desaco
 
 Escalabilidade: Implementação de HPA (Horizontal Pod Autoscaler), permitindo que a aplicação responda dinamicamente a picos de tráfego (1 a 5 réplicas).
 
-📊 Observabilidade (Full-Stack)
-Não há SRE sem dados. O cluster integra uma stack completa de telemetria:
+- Observabilidade (Full-Stack)
+O cluster integra uma stack completa de telemetria:
 
 Métricas: Prometheus extraindo dados de performance em tempo real.
 
@@ -22,7 +22,7 @@ Logs: Stack Loki & Promtail para agregação centralizada de logs, permitindo au
 
 Visualização: Dashboards dinâmicos no Grafana, provisionados automaticamente via código (Data Sources & Dashboards-as-Code).
 
-🚀 Tecnologias Utilizadas
+- Tecnologias Utilizadas
 Orquestração: Kubernetes (Kind)
 
 IaC: Terraform & Helm
@@ -33,7 +33,7 @@ Database: PostgreSQL 15 (Alpine)
 
 Observability: Prometheus, Grafana, Loki & Promtail
 
-🛠️ Próximos Passos (Roadmap)
+- Próximos Passos (Roadmap)
 [ ] Secret Management: Migração de segredos para External Secrets / Vault.
 
 [ ] Ingress Control: Implementação de NGINX Ingress com suporte a TLS.

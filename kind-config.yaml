@@ -4,14 +4,15 @@ nodes:
 - role: control-plane
   kubeadmConfigPatches:
   - |
-    kind: InitConfiguration
-    nodeRegistration:
-      kubeletExtraArgs:
-        node-labels: "ingress-ready=true"
+    kind: ClusterConfiguration
+    apiServer:
+      extraArgs:
+        enable-aggregator-routing: "true"
+        requestheader-client-ca-file: "/etc/kubernetes/pki/front-proxy-ca.crt"
   extraPortMappings:
-  - containerPort: 80
+  - containerPort: 30000
     hostPort: 8081
     protocol: TCP
-  - containerPort: 443
-    hostPort: 443
+  - containerPort: 30001
+    hostPort: 3000
     protocol: TCP

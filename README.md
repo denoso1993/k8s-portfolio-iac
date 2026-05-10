@@ -1,17 +1,33 @@
-# Kubernetes SRE Lab - IaC
+# Laboratório Kubernetes SRE
 
-## Status: Production Ready
+Projeto de SRE com Kubernetes e Terraform.
 
-- Arquitetura Windows-WSL
-- Security Hardening
-- HPA: 70% CPU
-- Full Observability
+![Cluster](https://github.com/user-attachments/assets/f4d0563d-fbe8-44b8-88e7-74c77a47cb8d)
 
-## Docs
+## Implementado
 
-- ROADMAP-2026.md
-- README-CONTEXTO.md
+- Kubernetes v1.27.3
+- HPA: 1-5 réplicas (70% CPU)
+- Prometheus + Grafana + Loki
+- WSL Bridge
 
-## Links
+![HPA](https://github.com/user-attachments/assets/8fce90cf-31c5-476b-8af1-37c57a47cb8d)
 
-- https://github.com/denoso1993/k8s-portfolio-iac
+## Uso
+
+```bash
+git clone https://github.com/denoso1993/k8s-portfolio-iac.git
+./setup.sh
+terraform init && terraform apply
+```
+
+## Acessar
+
+- Nginx: localhost:8080
+- Grafana: localhost:3000
+
+## Sobre
+
+Denis Oliveira Ramos - linkedin.com/in/denis93
+
+MIT License

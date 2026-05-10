@@ -15,18 +15,16 @@ Projeto de SRE com Kubernetes e Terraform.
 
 ## Uso
 
-```bash
+`ash
 git clone https://github.com/denoso1993/k8s-portfolio-iac.git
 ./setup.sh
 terraform init && terraform apply
-```
+`
 
 ## Acessar
 
 - Nginx: localhost:8080
 - Grafana: localhost:3000
-
-## Sobre
 
 Denis Oliveira Ramos - linkedin.com/in/denis93
 

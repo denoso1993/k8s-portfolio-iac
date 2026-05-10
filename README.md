@@ -208,7 +208,7 @@ Senior Cloud Analyst | SRE & Infrastructure
 Barueri, SP - Brasil
 
 - **LinkedIn:** [linkedin.com/in/denis93](https://linkedin.com/in/denis93)
-- **Currículo:** [Google Drive](https://drive.google.com/open?id=1AtSEc-qtGJzdPCroJEleJrU8U6OsDz2w)
+- **Currículo:** [Google Drive](https://drive.google.com/file/d/11fzA0o9tvPZmhhwIsCuknAiWwu8YIlkJ/view)
 - **Certificados:** [Pasta Completa](https://drive.google.com/drive/folders/1k_4mO-j4WEoaIGngR9cGLX1WpVSKC-AD)
 
 ---

@@ -33,8 +33,8 @@ resource "kubernetes_config_map" "portfolio_html" {
         <div class="subtitle">SENIOR CLOUD ANALYST | SRE & INFRASTRUCTURE</div>
         <div class="section-title">CURRÍCULOS (RESUME)</div>
         <div class="btn-group">
-            <a href="https://drive.google.com/open?id=1AtSEc-qtGJzdPCroJEleJrU8U6OsDz2w" target="_blank" class="btn btn-primary">Português (PT-BR)</a>
-            <a href="https://drive.google.com/open?id=1nLev2K3tUuM09_PxtIShWjTdp4YSb9Tm" target="_blank" class="btn btn-primary">English (EN-US)</a>
+            <a href="https://drive.google.com/file/d/11fzA0o9tvPZmhhwIsCuknAiWwu8YIlkJ/view" target="_blank" class="btn btn-primary">Português (PT-BR)</a>
+            <a href="https://drive.google.com/file/d/1Yhzihbq8T9fV_U4FzxqY1EDke4dhgNUS/view" target="_blank" class="btn btn-primary">English (EN-US)</a>
         </div>
         <div class="section-title">EVIDÊNCIAS E CERTIFICAÇÕES</div>
         <div class="btn-group">

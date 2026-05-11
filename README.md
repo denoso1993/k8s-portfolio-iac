@@ -1,66 +1,66 @@
-# 🚀 Kubernetes SRE Lab - Infrastructure as Code
+# Kubernetes SRE Lab - Infrastructure as Code
 
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/denoso1993/k8s-portfolio-iac)
 [![K8s](https://img.shields.io/badge/K8s-v1.27.3-blue)](https://kubernetes.io/)
 [![Terraform](https://img.shields.io/badge/Terraform-IaC-purple)](https://www.terraform.io/)
 
-## 🏗️ Arquitetura do Cluster
+## Arquitetura do Cluster
 
 ![Cluster Architecture](assets/cluster-architecture.png)
 
-## 📋 Visão Geral
+## Visao Geral
 
-Este repositório documenta minha jornada prática com **Kubernetes e Site Reliability Engineering (SRE)**, evoluindo de conceitos básicos até implementações **production-ready** com infraestrutura 100% declarativa via Terraform.
+Este repositorio documenta minha jornada pratica com **Kubernetes e Site Reliability Engineering (SRE)**, evoluindo de conceitos basicos ate implementacoes **production-ready** com infraestrutura 100% declarativa via Terraform.
 
-### 🎯 O Que Este Projeto Demonstra
+### O Que Este Projeto Demonstra
 
-- ✅ **Cluster Kubernetes Local**: Kind (Kubernetes in Docker) totalmente funcional
-- ✅ **Auto-Scaling**: HPA configurado para escalar de 1-5 réplicas (70% CPU)
-- ✅ **Segurança**: ResourceQuota, LimitRange e NetworkPolicies implementados
-- ✅ **Observabilidade Completa**: Prometheus + Grafana + Loki stack
-- ✅ **Banco de Dados**: PostgreSQL com StatefulSet e persistência
-- ✅ **GitOps Ready**: Estrutura preparada para CI/CD
+- **Cluster Kubernetes Local**: Kind (Kubernetes in Docker) totalmente funcional
+- **Auto-Scaling**: HPA configurado para escalar de 1-5 replicas (70% CPU)
+- **Seguranca**: ResourceQuota, LimitRange e NetworkPolicies implementados
+- **Observabilidade Completa**: Prometheus + Grafana + Loki stack
+- **Banco de Dados**: PostgreSQL com StatefulSet e persistencia
+- **GitOps Ready**: Estrutura preparada para CI/CD
 
-## 🏗️ Arquitetura Implementada
+## Arquitetura Implementada
 
 | Componente | Tecnologia | Status |
-|------------|------------|---------|
-| **Orquestração** | Kubernetes (Kind v1.27.3) | ✅ Ready |
-| **IaC** | Terraform + Helm | ✅ 100% declarativo |
-| **Web Server** | Nginx (ConfigMap-based) | ✅ Desacoplado |
-| **Database** | PostgreSQL 15 (StatefulSet) | ✅ PVC persistência |
-| **HPA** | Horizontal Pod Autoscaler | ✅ 1-5 réplicas (70%) |
-| **Métricas** | Prometheus + Metrics Server | ✅ Ativo |
-| **Logs** | Loki + Promtail | ✅ Centralizado |
-| **Dashboards** | Grafana | ✅ Provisionado |
-| **Segurança** | NetworkPolicy + Quotas | ✅ Implementado |
+|------------|------------|--------|
+| Orquestracao | Kubernetes (Kind v1.27.3) | Ready |
+| IaC | Terraform + Helm | 100% declarativo |
+| Web Server | Nginx (ConfigMap-based) | Desacoplado |
+| Database | PostgreSQL 15 (StatefulSet) | PVC persistencia |
+| HPA | Horizontal Pod Autoscaler | 1-5 replicas (70%) |
+| Metricas | Prometheus + Metrics Server | Ativo |
+| Logs | Loki + Promtail | Centralizado |
+| Dashboards | Grafana | Provisionado |
+| Seguranca | NetworkPolicy + Quotas | Implementado |
 
-## 📊 Stack de Monitoramento
+## Stack de Monitoramento
 
 ![Monitoring Stack](assets/monitoring-stack.png)
 
-## 🛡️ Segurança e Governança
+## Seguranca e Governanca
 
 ### ResourceQuota (Namespace: default)
 - **CPU**: 4 cores request / 8 cores limit
-- **Memória**: 4Gi request / 8Gi limit
+- **Memoria**: 4Gi request / 8Gi limit
 - **Pods**: 20 max
 - **Services**: 10 max
 
-### LimitRange (Padrões para Containers)
+### LimitRange (Padroes para Containers)
 - **Default CPU**: 500m
 - **Default Memory**: 512Mi
 - **Request CPU**: 100m
 - **Request Memory**: 128Mi
 
 ### NetworkPolicies Ativas
-- `default-deny-all`: Bloqueia todo tráfego por padrão (zero-trust)
+- `default-deny-all`: Bloqueia todo trafego por padrao (zero-trust)
 - `allow-dns`: Permite DNS apenas para kube-system
-- `nginx-allow-ingress`: Permite tráfego na porta 80 do nginx
+- `nginx-allow-ingress`: Permite trafego na porta 80 do nginx
 
-## 📦 Como Usar
+## Como Usar
 
-### Pré-requisitos
+### Pre-requisitos
 - WSL2 (Ubuntu 20.04+)
 - Docker Desktop
 - Kind
@@ -77,28 +77,28 @@ terraform apply
 kubectl get nodes
 ```
 
-### Acessando as Aplicações
-| Aplicação | Porta Local | NodePort |
+### Acessando as Aplicacoes
+| Aplicacao | Porta Local | NodePort |
 |-----------|-------------|----------|
-| Nginx (Portfólio) | 8081 | 30000 |
+| Nginx (Portfolio) | 8081 | 30000 |
 | Grafana | 3000 | 30001 |
 | Prometheus | 9090 | - |
 
-## 🔧 Operação
+## Operacao
 
 ### Status Atual do Cluster
 
 ```text
-NAMESPACE    NAME                      READY   STATUS    Uptime
-default      nginx-deployment          1/1     Running   ~18h
-default      postgres-sts-0            1/1     Running   ~14h
-monitoring   grafana                   1/1     Running   ~19h
-monitoring   prometheus-server         2/2     Running   ~19h
-monitoring   loki-stack                1/1     Running   ~19h
-kube-system  metrics-server            1/1     Running   ~16h
+NAMESPACE    NAME                      READY   STATUS
+default      nginx-deployment          1/1     Running
+default      postgres-sts-0            1/1     Running
+monitoring   grafana                   1/1     Running
+monitoring   prometheus-server         2/2     Running
+monitoring   loki-stack                1/1     Running
+kube-system  metrics-server            1/1     Running
 ```
 
-### Comandos Úteis
+### Comandos Uteis
 
 ```bash
 # Status do cluster
@@ -114,61 +114,55 @@ kubectl get pods -A
 kubectl logs -f deploy/nginx-deployment
 ```
 
-## 📊 Roadmap
+## Roadmap
 
-### ✅ Concluído (Fase 1 - Fundamentos)
+### Concluido (Fase 1 - Fundamentos)
 - [x] Cluster Kind operacional
-- [x] HPA configurado (70% CPU, 1-5 réplicas)
+- [x] HPA configurado (70% CPU, 1-5 replicas)
 - [x] Security hardening completo
 - [x] Stack de monitoramento (Prometheus + Grafana + Loki)
 - [x] PostgreSQL StatefulSet
 - [x] Stress tests validados
 
-### 🔄 Em Andamento (Fase 2 - Produtividade)
-- [ ] k9s + Stern para operação
+### Em Andamento (Fase 2 - Produtividade)
+- [ ] k9s + Stern para operacao
 - [ ] Goldilocks para recommendations
 - [ ] Dashboards Grafana customizados
 
-### ⏳ Planejado (Fase 3 - CI/CD)
+### Planejado (Fase 3 - CI/CD)
 - [ ] GitHub Actions workflows
-- [ ] Validação automática de PRs
-- [ ] Deploy automático
+- [ ] Validacao automatica de PRs
+- [ ] Deploy automatico
 
-### ⏳ Futuro (Fase 4 - GitOps)
+### Futuro (Fase 4 - GitOps)
 - [ ] ArgoCD
-- [ ] Sync automático
+- [ ] Sync automatico
 - [ ] Image automation
 
-## 📈 Métricas do Projeto
+## Metricas do Projeto
 
-| Métrica | Status |
+| Metrica | Status |
 |---------|--------|
 | Uptime Cluster | ~99% |
 | Resource Utilization | Otimizado (70% target) |
 | IaC Coverage | 100% |
 | HPA Status | 0%/70% (1/5 replicas) |
-| Última Atualização | 2026-05-10 |
+| Ultima Atualizacao | 2026-05-10 |
 
-## 👨‍💻 Sobre o Autor
+## Sobre o Autor
 
 **Denis Oliveira Ramos**  
 Senior Cloud Analyst | SRE & Infrastructure  
 Barueri, SP - Brasil
 
-Atuo com infraestrutura cloud e automação, focando em práticas de SRE e Infrastructure as Code. Este projeto documenta minha jornada e serve como referência para outros profissionais.
+Atuo com infraestrutura cloud e automacao, focando em praticas de SRE e Infrastructure as Code. Este projeto documenta minha jornada e serve como referencia para outros profissionais.
 
 ### Links
 - **LinkedIn:** [linkedin.com/in/denis93](https://linkedin.com/in/denis93)
-- **Currículo PT-BR:** [Google Drive](https://drive.google.com/file/d/11fzA0o9tvPZmhhwIsCuknAiWwu8YIlkJ/view)
-- **Currículo EN:** [Google Drive](https://drive.google.com/file/d/1Yhzihbq8T9fV_U4FzxqY1EDke4dhgNUS/view)
+- **Curriculo PT-BR:** [Google Drive](https://drive.google.com/file/d/11fzA0o9tvPZmhhwIsCuknAiWwu8YIlkJ/view)
+- **Curriculo EN:** [Google Drive](https://drive.google.com/file/d/1Yhzihbq8T9fV_U4FzxqY1EDke4dhgNUS/view)
 - **Certificados:** [Pasta Completa](https://drive.google.com/drive/folders/1k_4mO-j4WEoaIGngR9cGLX1WpVSKC-AD)
 
 ---
 
-<div align="center">
-
-**Se este projeto foi útil, considere dar uma ⭐!**
-
-Feito com 💙 por Denis Oliveira Ramos
-
-</div>
+*Projeto de portfolio pessoal - Denis Oliveira Ramos*

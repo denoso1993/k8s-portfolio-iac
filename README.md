@@ -4,63 +4,61 @@
 [![K8s](https://img.shields.io/badge/K8s-v1.27.3-blue)](https://kubernetes.io/)
 [![Terraform](https://img.shields.io/badge/Terraform-IaC-purple)](https://www.terraform.io/)
 
-## Arquitetura do Cluster
+Este repositório documenta minha jornada prática com **Kubernetes e Site Reliability Engineering (SRE)**, evoluindo de conceitos básicos até implementações production-ready com infraestrutura 100% declarativa via Terraform.
 
-![Cluster Architecture](assets/cluster-architecture.png)
-
-## Visao Geral
-
-Este repositorio documenta minha jornada pratica com **Kubernetes e Site Reliability Engineering (SRE)**, evoluindo de conceitos basicos ate implementacoes **production-ready** com infraestrutura 100% declarativa via Terraform.
-
-### O Que Este Projeto Demonstra
+## O Que Este Projeto Demonstra
 
 - **Cluster Kubernetes Local**: Kind (Kubernetes in Docker) totalmente funcional
-- **Auto-Scaling**: HPA configurado para escalar de 1-5 replicas (70% CPU)
-- **Seguranca**: ResourceQuota, LimitRange e NetworkPolicies implementados
-- **Observabilidade Completa**: Prometheus + Grafana + Loki stack
-- **Banco de Dados**: PostgreSQL com StatefulSet e persistencia
-- **GitOps Ready**: Estrutura preparada para CI/CD
+- **Auto-Scaling**: HPA validado sob carga real (1 → 4 réplicas)
+- **GitOps**: ArgoCD com sincronização automática GitHub → Cluster
+- **TLS Automático**: Cert-Manager com Let's Encrypt
+- **Segurança**: PSS (baseline enforce) + NetworkPolicies
+- **Observabilidade**: Prometheus + Grafana + Loki stack
+- **Banco de Dados**: PostgreSQL com StatefulSet e persistência
 
 ## Arquitetura Implementada
 
 | Componente | Tecnologia | Status |
 |------------|------------|--------|
-| Orquestracao | Kubernetes (Kind v1.27.3) | Ready |
-| IaC | Terraform + Helm | 100% declarativo |
-| Web Server | Nginx (ConfigMap-based) | Desacoplado |
-| Database | PostgreSQL 15 (StatefulSet) | PVC persistencia |
-| HPA | Horizontal Pod Autoscaler | 1-5 replicas (70%) |
-| Metricas | Prometheus + Metrics Server | Ativo |
-| Logs | Loki + Promtail | Centralizado |
-| Dashboards | Grafana | Provisionado |
-| Seguranca | NetworkPolicy + Quotas | Implementado |
+| **Orquestração** | Kubernetes (Kind v1.27.3) | Ready |
+| **IaC** | Terraform + Helm | 100% declarativo |
+| **Web Server** | Nginx (PSS-compliant) | Ready |
+| **Database** | PostgreSQL 15 (StatefulSet) | PVC persistente |
+| **Auto-Scaling** | HPA (70% CPU, 1-5 réplicas) | Validado |
+| **GitOps** | ArgoCD | Sync automático |
+| **TLS** | Cert-Manager (Let's Encrypt) | Auto-renovável |
+| **Métricas** | Prometheus + Metrics Server | Ativo |
+| **Logs** | Loki + Promtail | Centralizado |
+| **Dashboards** | Grafana | Provisionado |
+| **Segurança** | PSS + NetworkPolicy | Implementado |
 
-## Stack de Monitoramento
-
-![Monitoring Stack](assets/monitoring-stack.png)
-
-## Seguranca e Governanca
+## Segurança e Governança
 
 ### ResourceQuota (Namespace: default)
 - **CPU**: 4 cores request / 8 cores limit
-- **Memoria**: 4Gi request / 8Gi limit
+- **Memória**: 4Gi request / 8Gi limit
 - **Pods**: 20 max
 - **Services**: 10 max
 
-### LimitRange (Padroes para Containers)
+### LimitRange (Padrões para Containers)
 - **Default CPU**: 500m
 - **Default Memory**: 512Mi
 - **Request CPU**: 100m
 - **Request Memory**: 128Mi
 
+### Pod Security Standards
+- **Nível**: `baseline` (enforce) + `restricted` (audit/warn)
+- **Configurações**: runAsNonRoot, capabilities drop ALL, seccompProfile RuntimeDefault
+
 ### NetworkPolicies Ativas
-- `default-deny-all`: Bloqueia todo trafego por padrao (zero-trust)
-- `allow-dns`: Permite DNS apenas para kube-system
-- `nginx-allow-ingress`: Permite trafego na porta 80 do nginx
+- `default-deny-ingress`: Zero-trust padrão
+- `allow-dns`: DNS para kube-system
+- `nginx-allow-ingress`: Tráfego porta 8080
+- `postgres-allow-from-nginx`: Apenas nginx → postgres (5432)
 
 ## Como Usar
 
-### Pre-requisitos
+### Pré-requisitos
 - WSL2 (Ubuntu 20.04+)
 - Docker Desktop
 - Kind
@@ -77,97 +75,17 @@ terraform apply
 kubectl get nodes
 ```
 
-### Acessando as Aplicacoes
-| Aplicacao | Porta Local | NodePort |
+### Acessando as Aplicações
+
+| Aplicação | Porta Local | NodePort |
 |-----------|-------------|----------|
 | Nginx (Portfolio) | 8081 | 30000 |
-| Grafana | 3000 | 30001 |
+| Grafana | 3000 | 30001 (admin/admin) |
 | Prometheus | 9090 | - |
 
-## Operacao
+## Testes Validados
 
-### Status Atual do Cluster
-
-```text
-NAMESPACE    NAME                      READY   STATUS
-default      nginx-deployment          1/1     Running
-default      postgres-sts-0            1/1     Running
-monitoring   grafana                   1/1     Running
-monitoring   prometheus-server         2/2     Running
-monitoring   loki-stack                1/1     Running
-kube-system  metrics-server            1/1     Running
-```
-
-### Comandos Uteis
-
-```bash
-# Status do cluster
-kubectl get all -A
-
-# Ver HPA
-kubectl get hpa
-
-# Ver pods
-kubectl get pods -A
-
-# Logs
-kubectl logs -f deploy/nginx-deployment
-```
-
-## Roadmap
-
-### Concluido (Fase 1 - Fundamentos)
-- [x] Cluster Kind operacional
-- [x] HPA configurado (70% CPU, 1-5 replicas)
-- [x] Security hardening completo
-- [x] Stack de monitoramento (Prometheus + Grafana + Loki)
-- [x] PostgreSQL StatefulSet
-- [x] Stress tests validados
-
-### Em Andamento (Fase 2 - Produtividade)
-- [ ] k9s + Stern para operacao
-- [ ] Goldilocks para recommendations
-- [ ] Dashboards Grafana customizados
-
-### Planejado (Fase 3 - CI/CD)
-- [ ] GitHub Actions workflows
-- [ ] Validacao automatica de PRs
-- [ ] Deploy automatico
-
-### Futuro (Fase 4 - GitOps)
-- [ ] ArgoCD
-- [ ] Sync automatico
-- [ ] Image automation
-
-## Metricas do Projeto
-
-| Metrica | Status |
-|---------|--------|
-| Uptime Cluster | ~99% |
-| Resource Utilization | Otimizado (70% target) |
-| IaC Coverage | 100% |
-| HPA Status | 0%/70% (1/5 replicas) |
-| Ultima Atualizacao | 2026-05-10 |
-
-## Sobre o Autor
-
-**Denis Oliveira Ramos**  
-Senior Cloud Analyst | SRE & Infrastructure  
-Barueri, SP - Brasil
-
-Atuo com infraestrutura cloud e automacao, focando em praticas de SRE e Infrastructure as Code. Este projeto documenta minha jornada e serve como referencia para outros profissionais.
-
-### Links
-- **LinkedIn:** [linkedin.com/in/denis93](https://linkedin.com/in/denis93)
-- **Curriculo PT-BR:** [Google Drive](https://drive.google.com/file/d/11fzA0o9tvPZmhhwIsCuknAiWwu8YIlkJ/view)
-- **Curriculo EN:** [Google Drive](https://drive.google.com/file/d/1Yhzihbq8T9fV_U4FzxqY1EDke4dhgNUS/view)
-- **Certificados:** [Pasta Completa](https://drive.google.com/drive/folders/1k_4mO-j4WEoaIGngR9cGLX1WpVSKC-AD)
-
----
-
-*Projeto de portfolio pessoal - Denis Oliveira Ramos*## 🧪 Testes Validados
-
-### 1. HPA (Horizontal Pod Autoscaler) - ✅ APROVADO
+### 1. HPA (Horizontal Pod Autoscaler)
 
 **Objetivo:** Validar auto-scaling sob carga
 
@@ -178,12 +96,12 @@ Atuo com infraestrutura cloud e automacao, focando em praticas de SRE e Infrastr
 
 **Teste Realizado:**
 ```bash
-# Carga aplicada: 3 pods gerando tráfego contínuo
 kubectl run load-generator --image=busybox --replicas=3 \
   --command -- while true; do wget nginx-service; done
 ```
 
 **Resultados:**
+
 | Métrica | Inicial | Sob Carga | Após Scaling |
 |---------|---------|-----------|--------------|
 | **Réplcias** | 1 | 1 → 2 → 4 | 4 |
@@ -194,23 +112,11 @@ kubectl run load-generator --image=busybox --replicas=3 \
 
 ---
 
-### 2. Pod Security Standards (PSS) - ✅ APROVADO
+### 2. Pod Security Standards (PSS)
 
 **Objetivo:** Implementar segurança em nível de pod
 
 **Nível:** `baseline` (enforce) + `restricted` (audit/warn)
-
-**Configurações Aplicadas:**
-```yaml
-securityContext:
-  runAsNonRoot: true
-  runAsUser: 101
-  seccompProfile:
-    type: RuntimeDefault
-  allowPrivilegeEscalation: false
-  capabilities:
-    drop: ["ALL"]
-```
 
 **Validação:**
 ```bash
@@ -222,7 +128,7 @@ kubectl get namespace default -o jsonpath='{.metadata.labels}'
 
 ---
 
-### 3. NetworkPolicies - ✅ APROVADO
+### 3. NetworkPolicies
 
 **Objetivo:** Segmentação de rede (zero-trust)
 
@@ -235,7 +141,7 @@ kubectl get namespace default -o jsonpath='{.metadata.labels}'
 
 ---
 
-### 4. GitOps com ArgoCD - ✅ APROVADO
+### 4. GitOps com ArgoCD
 
 **Objetivo:** Sincronização automática GitHub → Cluster
 
@@ -251,9 +157,8 @@ kubectl get namespace default -o jsonpath='{.metadata.labels}'
 4. Sync automático aplicado
 5. Deployment atualizado no cluster
 
-**Comandos de Validação:**
+**Validação:**
 ```bash
-# Status do Application
 kubectl get application -n argocd
 # Result: k8s-portfolio-iac  Synced  Healthy
 ```
@@ -262,7 +167,7 @@ kubectl get application -n argocd
 
 ---
 
-### 5. Cert-Manager (TLS Automático) - ✅ APROVADO
+### 5. Cert-Manager (TLS Automático)
 
 **Objetivo:** Gerenciar certificados TLS automaticamente
 
@@ -281,31 +186,29 @@ kubectl get certificate nginx-selfsigned-cert
 
 ---
 
-## 📊 Status Atualizado do Cluster
+## Status do Cluster
 
 ### Recursos (Última Verificação: 2026-05-12)
 
 ```
 Nodes:        1/1 Ready (v1.27.3)
 Pods:         27/27 Running (100%)
-Uptime:       12h+
+Uptime:       15h+
 Namespaces:   default, monitoring, cert-manager, argocd, goldilocks
 ```
 
-### Novos Componentes Implementados
+### Componentes Implementados
 
-| Componente | Namespace | Status |
-|------------|-----------|--------|
-| **ArgoCD** | argocd | ✅ 7 pods Running |
-| **Cert-Manager** | cert-manager | ✅ 3 pods Running |
-| **Goldilocks** | goldilocks | ✅ 1 pod Running |
-| **Ingress (TLS)** | default | ✅ nginx-ingress |
+| Componente | Namespace | Pods |
+|------------|-----------|------|
+| **ArgoCD** | argocd | 7 Running |
+| **Cert-Manager** | cert-manager | 3 Running |
+| **Goldilocks** | goldilocks | 1 Running |
+| **Ingress (TLS)** | default | nginx-ingress |
 
----
+## Roadmap
 
-## 🔧 Roadmap Atualizado
-
-### Concluído (Fase 1 - Fundamentos) ✅
+### Concluído (Fase 1 - Fundamentos)
 - [x] Cluster Kind operacional
 - [x] HPA configurado e validado (70% CPU, 1-5 replicas)
 - [x] Security hardening (PSS + NetworkPolicies)
@@ -315,33 +218,47 @@ Namespaces:   default, monitoring, cert-manager, argocd, goldilocks
 - [x] GitOps com ArgoCD
 - [x] TLS automático (Cert-Manager)
 
-### Em Andamento (Fase 2 - Produtividade) 🚧
+### Em Andamento (Fase 2 - Produtividade)
 - [ ] k9s + Stern para operação
 - [ ] Goldilocks para recommendations
 - [ ] Dashboards Grafana customizados
 
-### Planejado (Fase 3 - CI/CD) 📅
+### Planejado (Fase 3 - CI/CD)
 - [ ] GitHub Actions workflows
 - [ ] Validação automática de PRs
 - [ ] Deploy automático
 
-### Futuro (Fase 4 - GitOps Avançado) 🔮
+### Futuro (Fase 4 - GitOps Avançado)
 - [x] ArgoCD instalado
 - [x] Sync automático configurado
 - [ ] Image automation
 
----
-
-## 📈 Métricas Atualizadas
+## Métricas do Projeto
 
 | Métrica | Status |
 |---------|--------|
-| **Uptime Cluster** | ~99% (12h+) |
+| **Uptime Cluster** | ~99% (15h+) |
 | **Resource Utilization** | Otimizado (70% target) |
 | **IaC Coverage** | 100% |
 | **HPA Status** | 0%/80% (1/5 replicas) |
-| **GitOps Sync** | ✅ Automated |
-| **TLS Certificates** | ✅ Auto-renewable |
+| **GitOps Sync** | Automated |
+| **TLS Certificates** | Auto-renewable |
 | **Última Atualização** | 2026-05-12 |
 
+## Sobre o Autor
+
+**Denis Oliveira Ramos**  
+Senior Cloud Analyst | SRE & Infrastructure  
+Barueri, SP - Brasil
+
+Atuo com infraestrutura cloud e automação, focando em práticas de SRE e Infrastructure as Code. Este projeto documenta minha jornada e serve como referência para outros profissionais.
+
+### Links
+- **LinkedIn:** [linkedin.com/in/denis93](https://linkedin.com/in/denis93)
+- **Currículo PT-BR:** [Google Drive](https://drive.google.com/file/d/11fzA0o9tvPZmhhwIsCuknAiWwu8YIlkJ/view)
+- **Currículo EN:** [Google Drive](https://drive.google.com/file/d/1Yhzihbq8T9fV_U4FzxqY1EDke4dhgNUS/view)
+- **Certificados:** [Pasta Completa](https://drive.google.com/drive/folders/1k_4mO-j4WEoaIGngR9cGLX1WpVSKC-AD)
+
 ---
+
+*Projeto de portfólio pessoal - Denis Oliveira Ramos*

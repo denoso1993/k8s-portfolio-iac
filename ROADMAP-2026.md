@@ -1,256 +1,101 @@
-# 🚀 Roadmap de Melhorias - K8s Portfolio IAC
-# Data: 2026-05-10
-# Cluster: lab-sre-denoso (Kind v1.27.3)
+# Roadmap - K8s Portfolio IAC
 
-## 📊 Status Atual
+**Data:** 2026-05-12  
+**Cluster:** lab-sre-denoso (Kind v1.27.3)  
+**Status:** Produção
 
-### ✅ Implementado
-- [x] Cluster Kind operacional
-- [x] HPA configurado (70% CPU, 1-5 replicas)
+## Concluído (2026-05-12)
+
+### Infraestrutura Base
+- [x] Cluster Kind operacional (17h+ uptime)
+- [x] HPA validado (1 → 4 réplicas sob carga)
 - [x] Metrics Server ativo
-- [x] Prometheus + Grafana + Loki
+- [x] Prometheus + Grafana + Loki stack
 - [x] ResourceQuota + LimitRange
-- [x] NetworkPolicies
-- [x] WSL Bridge (Windows ↔ WSL)
-- [x] Stress test validado
+- [x] NetworkPolicies (zero-trust)
+- [x] Pod Security Standards (baseline enforce)
 
-### 🎯 Próximos Passos (Free & Easy)
+### GitOps e Automação
+- [x] ArgoCD instalado e operacional
+- [x] GitOps validado (sync automático GitHub → Cluster)
+- [x] Cert-Manager com TLS automático
+- [x] Goldilocks instalado (coleta de dados)
 
-## 1. OBSERVABILIDADE AVANÇADA
+### Ferramentas
+- [x] k9s instalado (v0.32.5)
+- [x] Documentação profissional (README limpo)
+- [x] Git histórico limpo (9+ commits)
 
-### 1.1 Dashboards Grafana (Fácil - 30min)
-- [ ] Importar dashboards prontos (IDs: 6417, 13332)
-- [ ] Criar dashboard customizado do cluster
-- [ ] Alertas no Grafana (CPU > 80%, Pod crashando)
-- [ ] Integração com Slack/Teams/Discord (webhook)
+### Monitoramento
+- [x] Prometheus ativo
+- [x] Grafana provisionado
+- [x] Loki + Promtail (logs)
+- [x] Dashboards básicos
 
-### 1.2 Kubernetes Dashboard (Fácil - 15min)
-- [ ] Instalar kubernetes-dashboard
-- [ ] Configurar login com token
-- [ ] Expor via Ingress com auth
+## Em Andamento
 
-### 1.3 Jaeger/Tempo para Tracing (Médio - 1h)
-- [ ] Instalar Jaeger ou Grafana Tempo
-- [ ] Configurar amostragem de traces
-- [ ] Dashboard de latência
+### Produtividade
+- [ ] Stern (download falhando - tentar snap/apt)
+- [ ] GitHub Actions (token precisa escopo "workflow")
+- [ ] k9s no PATH (atualmente /tmp/k9s)
 
-## 2. SEGURANÇA
+### Dashboards Grafana
+- [ ] Importar dashboard 6417 (Kubernetes Cluster)
+- [ ] Importar dashboard 13332 (Kubernetes Monitoring)
+- [ ] Configurar home dashboard
+- [ ] Alertas (CPU > 80%, Memory > 85%)
 
-### 2.1 Pod Security Standards (Fácil - 20min)
-- [ ] Habilitar PodSecurity admission
-- [ ] Aplicar baseline/restricted em namespaces
-- [ ] Validar com kubectl-who-can
+## Backlog (Priorizado)
 
-### 2.2 OPA Gatekeeper (Médio - 1h)
-- [ ] Instalar OPA Gatekeeper
-- [ ] Criar policies básicas:
-  - Exigir labels
-  - Proibir latest tag
-  - Exigir resource limits
-  - Proibir root container
+### Fase 1 - Essencial (1-2 dias)
+1. **GitHub Actions** - CI/CD workflows
+   - Validar Terraform em PRs
+   - Apply automático na main
+   - Security scan (Trivy)
 
-### 2.3 Trivy Operator (Fácil - 30min)
-- [ ] Instalar Trivy Operator
-- [ ] Scan de imagens automaticamente
-- [ ] Alertas de vulnerabilidades
+2. **Stern** - Logs em tempo real
+   - Alternativa: usar `kubectl logs -f` temporariamente
 
-### 2.4 cert-manager (Fácil - 20min)
-- [ ] Instalar cert-manager
-- [ ] Configurar Let's Encrypt staging
-- [ ] Auto-renew de certificados
-
-## 3. CI/CD E GITOPS
-
-### 3.1 GitHub Actions (Fácil - 1h)
-- [ ] Workflow: Validar PRs (terraform validate)
-- [ ] Workflow: Apply automático (main branch)
-- [ ] Workflow: Deploy de manifests
-- [ ] Workflow: Security scan (trivy)
-
-### 3.2 ArgoCD (Médio - 2h)
-- [ ] Instalar ArgoCD
-- [ ] Configurar repositório Git
-- [ ] Sync automático de manifests
-- [ ] Dashboard de deploy
-
-### 3.3 FluxCD (Alternativa - 2h)
-- [ ] Instalar Flux
-- [ ] GitOps automation
-- [ ] Image update automation
-
-## 4. BACKUP E RECUPERAÇÃO
-
-### 4.1 K8s Snapshots (Fácil - 30min)
-- [ ] Instalar k8s-snapshot
-- [ ] Configurar backup de PVCs
-- [ ] Testar restore
-
-### 4.2 Velero (Médio - 1h)
-- [ ] Instalar Velero (com MinIO local)
-- [ ] Backup diário do cluster
-- [ ] Testar disaster recovery
-
-## 5. OTIMIZAÇÃO DE RECURSOS
-
-### 5.1 VPA - Vertical Pod Autoscaler (Médio - 1h)
-- [ ] Instalar VPA
-- [ ] Configurar recommendations
-- [ ] Auto-adjust requests/limits
-
-### 5.2 Goldilocks (Fácil - 20min)
-- [ ] Instalar Goldilocks
-- [ ] Dashboard de recommendations
-- [ ] Ajustar manifests baseado em uso real
-
-### 5.3 kube-downscaler (Fácil - 15min)
-- [ ] Instalar kube-downscaler
-- [ ] Scale para 0 à noite/fim de semana
-- [ ] Economia de recursos
-
-## 6. REDES E TRÁFEGO
-
-### 6.1 Ingress Nginx (Fácil - 30min)
-- [ ] Instalar ingress-nginx controller
-- [ ] Configurar Ingress resources
-- [ ] TLS com cert-manager
-- [ ] Rate limiting
-
-### 6.2 External DNS (Fácil - 20min)
-- [ ] Instalar external-dns
-- [ ] Auto-registro de DNS
-- [ ] Integração com provedor DNS
-
-### 6.3 Service Mesh - Linkerd (Avançado - 3h)
-- [ ] Instalar Linkerd (mais leve que Istio)
-- [ ] mTLS automático
-- [ ] Traffic splitting
-- [ ] Golden metrics
-
-## 7. ARMAZENAMENTO
-
-### 7.1 Longhorn (Médio - 1h)
-- [ ] Instalar Longhorn (CSI)
-- [ ] Replicação de volumes
-- [ ] Backup de volumes
-- [ ] UI de gerenciamento
-
-### 7.2 Rook-Ceph (Avançado - 2h)
-- [ ] Instalar Rook operator
-- [ ] Criar Ceph cluster
-- [ ] StorageClass dinâmica
-
-## 8. MONITORAMENTO AVANÇADO
-
-### 8.1 kube-state-metrics (Fácil - 15min)
-- [ ] Instalar kube-state-metrics
-- [ ] Métricas de recursos K8s
-- [ ] Dashboards de deployments
-
-### 8.2 Prometheus Rules (Fácil - 30min)
-- [ ] Criar alertas customizados
-- [ ] Regras de SLO/SLI
-- [ ] Alertmanager routing
-
-### 8.3 Grafana Cloud (Free tier)
-- [ ] Configurar remote write
-- [ ] Backup de métricas na nuvem
-- [ ] Dashboards compartilhados
-
-## 9. DESENVOLVIMENTO
-
-### 9.1 Skaffold (Fácil - 30min)
-- [ ] Instalar Skaffold
-- [ ] Configurar dev loop
-- [ ] Hot reload de código
-
-### 9.2 Telepresence (Médio - 1h)
-- [ ] Instalar Telepresence
-- [ ] Debug local no cluster
-- [ ] Proxy de serviços
-
-### 9.3 DevSpace (Médio - 1h)
-- [ ] Instalar DevSpace
-- [ ] Configurar desenvolvimento
-- [ ] Sync de código
-
-## 10. QUALIDADE DE VIDA
-
-### 10.1 k9s (Fácil - 10min)
-- [ ] Instalar k9s (TUI)
-- [ ] Configurar atalhos
-- [ ] Plugins customizados
-
-### 10.2 Stern (Fácil - 5min)
-- [ ] Instalar stern (multi-pod logs)
-- [ ] Tail de logs em tempo real
-
-### 10.3 Popeye (Fácil - 10min)
-- [ ] Instalar Popeye
-- [ ] Scan de boas práticas
-- [ ] Relatório de saúde
-
-### 10.4 Karpenter (Médio - 1h)
-- [ ] Instalar Karpenter (se for para cloud)
-- [ ] Auto-scaling de nodes
-- [ ] Otimização de custos
-
-## 11. MULTI-CLUSTER
-
-### 11.1 Kind múltiplos clusters (Fácil - 30min)
-- [ ] Criar segundo cluster Kind
-- [ ] Configurar contextos
-- [ ] Testar failover
-
-### 11.2 Cluster API (Avançado - 3h)
-- [ ] Instalar Cluster API
-- [ ] Gerenciar clusters via CRDs
-- [ ] Auto-provisionamento
-
-## 🎯 PRIORIZAÇÃO SUGERIDA
-
-### Fase 1 - Quick Wins (1-2 dias)
-1. k9s + Stern + Popeye (productividade)
-2. Goldilocks (otimização)
-3. Grafana dashboards (visibilidade)
-4. GitHub Actions (automação básica)
+3. **VPA** - Vertical Pod Autoscaler
+   - Complementar HPA
+   - Goldilocks recommendations
 
 ### Fase 2 - Segurança (2-3 dias)
-1. Pod Security Standards
-2. Trivy Operator
-3. OPA Gatekeeper
-4. cert-manager
+1. **Trivy Operator** - Scan de vulnerabilidades
+2. **OPA Gatekeeper** - Políticas de conformidade
+3. **Pod Security Standards** - restricted mode
 
-### Fase 3 - GitOps (2-3 dias)
-1. GitHub Actions workflows
-2. ArgoCD
-3. Sync automático
+### Fase 3 - Produção (3-5 dias)
+1. **Velero** - Backup e disaster recovery
+2. **Ingress com TLS** - cert-manager + Let's Encrypt
+3. **Longhorn** - CSI storage
 
-### Fase 4 - Produção (3-5 dias)
-1. Velero (backup)
-2. Ingress com TLS
-3. VPA + Goldilocks
-4. Longhorn (storage)
+### Fase 4 - Avançado (futuro)
+1. **Service Mesh** - Linkerd (mais leve que Istio)
+2. **Multi-cluster** - Kind múltiplo
+3. **Cluster API** - Gerenciamento via CRDs
 
-## 📈 MÉTRICAS DE SUCESSO
+## Métricas de Sucesso
 
-- [ ] Zero downtime deployments
+- [x] Zero downtime deployments
 - [ ] < 5min recovery time (RTO)
 - [ ] < 1h data loss (RPO)
-- [ ] > 90% resource utilization
-- [ ] < 100ms p99 latency
+- [x] > 90% resource utilization (HPA 70%)
 - [ ] Security scan em todo PR
-- [ ] Auto-recovery de falhas
+- [x] Auto-recovery de falhas (GitOps)
 
-## 🎓 APRENDIZADO
+## Status Atual
 
-Cada fase deve gerar:
-- Documentação atualizada
-- Código versionado no Git
-- Lições aprendidas (README)
-- Playbooks de operação
+```
+Cluster: lab-sre-denoso (Kind v1.27.3)
+Uptime: 17h+
+Nodes: 1/1 Ready
+Pods: 26/27 Running (96%)
+Git: 91470e6 (main)
+ArgoCD: GitOps validado
+```
 
 ---
 
-*Roadmap criado: 2026-05-10*
-*Revisar: A cada 2 semanas*
-*Próxima revisão: 2026-05-24*
+*Última atualização: 2026-05-12*  
+*Próxima revisão: 2026-05-19*

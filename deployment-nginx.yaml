@@ -1,48 +1,103 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"nginx"},"name":"nginx-deployment","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"nginx"}},"template":{"metadata":{"labels":{"app":"nginx"}},"spec":{"containers":[{"env":[{"name":"NGINX_PORT","value":"8080"}],"image":"nginx:latest","name":"nginx","ports":[{"containerPort":8080,"protocol":"TCP"}],"resources":{"limits":{"cpu":"200m","memory":"256Mi"},"requests":{"cpu":"100m","memory":"128Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]}},"volumeMounts":[{"mountPath":"/tmp","name":"tmp"},{"mountPath":"/var/cache/nginx","name":"cache"},{"mountPath":"/var/run","name":"run"},{"mountPath":"/etc/nginx/conf.d","name":"conf"}]}],"securityContext":{"runAsNonRoot":true,"runAsUser":101,"seccompProfile":{"type":"RuntimeDefault"}},"volumes":[{"emptyDir":{},"name":"tmp"},{"emptyDir":{},"name":"cache"},{"emptyDir":{},"name":"run"},{"emptyDir":{},"name":"conf"}]}}}}
+  creationTimestamp: "2026-05-12T09:17:02Z"
+  generation: 1
   labels:
     app: nginx
+  name: nginx-deployment
+  namespace: default
+  resourceVersion: "54068"
+  uid: abdc1677-8456-444f-b0e2-6b031bdba6b1
 spec:
+  progressDeadlineSeconds: 600
   replicas: 1
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: nginx
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   template:
     metadata:
+      creationTimestamp: null
       labels:
         app: nginx
     spec:
       containers:
-      - name: nginx
+      - env:
+        - name: NGINX_PORT
+          value: "8080"
         image: nginx:latest
+        imagePullPolicy: Always
+        name: nginx
         ports:
-        - containerPort: 80
+        - containerPort: 8080
+          protocol: TCP
         resources:
-          requests:
-            memory: "64Mi"
-            cpu: "100m"
           limits:
-            memory: "128Mi"
-            cpu: "200m"
+            cpu: 200m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
         volumeMounts:
-        - name: html-config
-          mountPath: /usr/share/nginx/html/index.html
-          subPath: index.html
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 80
-          initialDelaySeconds: 2
-          periodSeconds: 5
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 80
-          initialDelaySeconds: 5
-          periodSeconds: 10
+        - mountPath: /tmp
+          name: tmp
+        - mountPath: /var/cache/nginx
+          name: cache
+        - mountPath: /var/run
+          name: run
+        - mountPath: /etc/nginx/conf.d
+          name: conf
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 101
+        seccompProfile:
+          type: RuntimeDefault
+      terminationGracePeriodSeconds: 30
       volumes:
-      - name: html-config
-        configMap:
-          name: nginx-html-config
+      - emptyDir: {}
+        name: tmp
+      - emptyDir: {}
+        name: cache
+      - emptyDir: {}
+        name: run
+      - emptyDir: {}
+        name: conf
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2026-05-12T09:17:04Z"
+    lastUpdateTime: "2026-05-12T09:17:04Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2026-05-12T09:17:02Z"
+    lastUpdateTime: "2026-05-12T09:17:04Z"
+    message: ReplicaSet "nginx-deployment-5f78b65b77" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

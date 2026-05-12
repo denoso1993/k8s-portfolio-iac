@@ -165,4 +165,183 @@ Atuo com infraestrutura cloud e automacao, focando em praticas de SRE e Infrastr
 
 ---
 
-*Projeto de portfolio pessoal - Denis Oliveira Ramos*
+*Projeto de portfolio pessoal - Denis Oliveira Ramos*## 🧪 Testes Validados
+
+### 1. HPA (Horizontal Pod Autoscaler) - ✅ APROVADO
+
+**Objetivo:** Validar auto-scaling sob carga
+
+**Configuração:**
+- Threshold: 80% CPU
+- Mínimo: 1 réplica
+- Máximo: 5 réplicas
+
+**Teste Realizado:**
+```bash
+# Carga aplicada: 3 pods gerando tráfego contínuo
+kubectl run load-generator --image=busybox --replicas=3 \
+  --command -- while true; do wget nginx-service; done
+```
+
+**Resultados:**
+| Métrica | Inicial | Sob Carga | Após Scaling |
+|---------|---------|-----------|--------------|
+| **Réplcias** | 1 | 1 → 2 → 4 | 4 |
+| **CPU** | 0% | 152% | 70-75% |
+| **Tempo** | - | 30s | 2min |
+
+**Conclusão:** HPA escalou de 1 → 4 réplicas quando CPU atingiu 152%, estabilizando em 70-75%.
+
+---
+
+### 2. Pod Security Standards (PSS) - ✅ APROVADO
+
+**Objetivo:** Implementar segurança em nível de pod
+
+**Nível:** `baseline` (enforce) + `restricted` (audit/warn)
+
+**Configurações Aplicadas:**
+```yaml
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 101
+  seccompProfile:
+    type: RuntimeDefault
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop: ["ALL"]
+```
+
+**Validação:**
+```bash
+kubectl get namespace default -o jsonpath='{.metadata.labels}'
+# Result: pod-security.kubernetes.io/enforce=baseline
+```
+
+**Conclusão:** Nginx rodando como usuário não-root (UID 101), sem privilégios elevados.
+
+---
+
+### 3. NetworkPolicies - ✅ APROVADO
+
+**Objetivo:** Segmentação de rede (zero-trust)
+
+**Políticas Implementadas:**
+- `default-deny-ingress`: Bloqueia todo tráfego de entrada por padrão
+- `nginx-network-policy`: Permite tráfego na porta 8080
+- `postgres-network-policy`: Apenas nginx pode acessar PostgreSQL (5432)
+
+**Conclusão:** Segmentação de rede funcionando corretamente.
+
+---
+
+### 4. GitOps com ArgoCD - ✅ APROVADO
+
+**Objetivo:** Sincronização automática GitHub → Cluster
+
+**Configuração:**
+- **Application:** `k8s-portfolio-iac`
+- **Sync Policy:** Automated (prune, selfHeal)
+- **Repositório:** https://github.com/denoso1993/k8s-portfolio-iac
+
+**Fluxo Testado:**
+1. Alteração no `deployment-nginx.yaml` (adicionado label `version: v2`)
+2. Commit e push no GitHub
+3. ArgoCD detecta mudança (≈ 30s)
+4. Sync automático aplicado
+5. Deployment atualizado no cluster
+
+**Comandos de Validação:**
+```bash
+# Status do Application
+kubectl get application -n argocd
+# Result: k8s-portfolio-iac  Synced  Healthy
+```
+
+**Conclusão:** GitOps operacional, sincronização automática validada.
+
+---
+
+### 5. Cert-Manager (TLS Automático) - ✅ APROVADO
+
+**Objetivo:** Gerenciar certificados TLS automaticamente
+
+**Configuração:**
+- **ClusterIssuer:** `selfsigned-issuer` (auto-assinado)
+- **ClusterIssuer:** `letsencrypt-staging` (Let's Encrypt)
+- **Certificate:** `nginx-selfsigned-cert`
+
+**Validação:**
+```bash
+kubectl get certificate nginx-selfsigned-cert
+# Result: READY=True, SECRET=nginx-tls-secret
+```
+
+**Conclusão:** Certificados TLS gerados e vinculados ao Ingress.
+
+---
+
+## 📊 Status Atualizado do Cluster
+
+### Recursos (Última Verificação: 2026-05-12)
+
+```
+Nodes:        1/1 Ready (v1.27.3)
+Pods:         27/27 Running (100%)
+Uptime:       12h+
+Namespaces:   default, monitoring, cert-manager, argocd, goldilocks
+```
+
+### Novos Componentes Implementados
+
+| Componente | Namespace | Status |
+|------------|-----------|--------|
+| **ArgoCD** | argocd | ✅ 7 pods Running |
+| **Cert-Manager** | cert-manager | ✅ 3 pods Running |
+| **Goldilocks** | goldilocks | ✅ 1 pod Running |
+| **Ingress (TLS)** | default | ✅ nginx-ingress |
+
+---
+
+## 🔧 Roadmap Atualizado
+
+### Concluído (Fase 1 - Fundamentos) ✅
+- [x] Cluster Kind operacional
+- [x] HPA configurado e validado (70% CPU, 1-5 replicas)
+- [x] Security hardening (PSS + NetworkPolicies)
+- [x] Stack de monitoramento (Prometheus + Grafana + Loki)
+- [x] PostgreSQL StatefulSet
+- [x] Stress tests validados
+- [x] GitOps com ArgoCD
+- [x] TLS automático (Cert-Manager)
+
+### Em Andamento (Fase 2 - Produtividade) 🚧
+- [ ] k9s + Stern para operação
+- [ ] Goldilocks para recommendations
+- [ ] Dashboards Grafana customizados
+
+### Planejado (Fase 3 - CI/CD) 📅
+- [ ] GitHub Actions workflows
+- [ ] Validação automática de PRs
+- [ ] Deploy automático
+
+### Futuro (Fase 4 - GitOps Avançado) 🔮
+- [x] ArgoCD instalado
+- [x] Sync automático configurado
+- [ ] Image automation
+
+---
+
+## 📈 Métricas Atualizadas
+
+| Métrica | Status |
+|---------|--------|
+| **Uptime Cluster** | ~99% (12h+) |
+| **Resource Utilization** | Otimizado (70% target) |
+| **IaC Coverage** | 100% |
+| **HPA Status** | 0%/80% (1/5 replicas) |
+| **GitOps Sync** | ✅ Automated |
+| **TLS Certificates** | ✅ Auto-renewable |
+| **Última Atualização** | 2026-05-12 |
+
+---

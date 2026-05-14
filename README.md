@@ -210,7 +210,7 @@ Namespaces:   default, monitoring, cert-manager, argocd, goldilocks
 
 ### Concluído (Fase 1 - Fundamentos)
 - [x] Cluster Kind operacional
-- [x] HPA configurado e validado (70% CPU, 1-5 replicas)
+- [x] HPA configurado e validado (70% CPU, 1-5 réplicas)
 - [x] Security hardening (PSS + NetworkPolicies)
 - [x] Stack de monitoramento (Prometheus + Grafana + Loki)
 - [x] PostgreSQL StatefulSet
@@ -240,7 +240,7 @@ Namespaces:   default, monitoring, cert-manager, argocd, goldilocks
 | **Uptime Cluster** | ~99% (15h+) |
 | **Resource Utilization** | Otimizado (70% target) |
 | **IaC Coverage** | 100% |
-| **HPA Status** | 0%/80% (1/5 replicas) |
+| **HPA Status** | 0%/80% (1/5 réplicas) |
 | **GitOps Sync** | Automated |
 | **TLS Certificates** | Auto-renewable |
 | **Última Atualização** | 2026-05-12 |

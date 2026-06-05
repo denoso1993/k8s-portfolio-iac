@@ -1,167 +1,215 @@
-# Kubernetes SRE Lab - Infrastructure as Code
+<p align="center">
+  <h1 align="center">Kubernetes SRE Lab</h1>
+  <p align="center">
+    <em>Infraestrutura como Codigo com Kubernetes, GitOps e boas praticas de SRE</em>
+  </p>
+</p>
 
-## Overview
+<p align="center">
+  <a href="https://github.com/denoso1993/k8s-portfolio-iac/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/licenca-MIT-blue.svg" alt="Licenca MIT">
+  </a>
+  <a href="https://kubernetes.io/">
+    <img src="https://img.shields.io/badge/Kubernetes-1.27.3-326CE5?logo=kubernetes" alt="K8s 1.27.3">
+  </a>
+  <a href="https://kind.sigs.k8s.io/">
+    <img src="https://img.shields.io/badge/Kind-cluster-green" alt="Kind">
+  </a>
+  <a href="https://argo-cd.readthedocs.io/">
+    <img src="https://img.shields.io/badge/GitOps-ArgoCD-orange" alt="ArgoCD">
+  </a>
+  <a href="https://kyverno.io/">
+    <img src="https://img.shields.io/badge/Policy-Kyverno-9cf" alt="Kyverno">
+  </a>
+</p>
 
-This repository contains the infrastructure-as-code definitions for a Kubernetes cluster running on Kind (Kubernetes in Docker). The project demonstrates practical Site Reliability Engineering (SRE) practices including GitOps workflows, observability, security hardening, and policy-as-code enforcement.
+<p align="center">
+  <a href="#visao-geral">Visao Geral</a> &middot;
+  <a href="#arquitetura">Arquitetura</a> &middot;
+  <a href="#comecando">Comecando</a> &middot;
+  <a href="#componentes">Componentes</a> &middot;
+  <a href="#seguranca">Seguranca</a> &middot;
+  <a href="#operacao">Operacao</a> &middot;
+  <a href="#autor">Autor</a>
+</p>
 
-The cluster runs a personal portfolio website (nginx-based) and a PostgreSQL database, both managed through ArgoCD with automatic sync from this repository.
+---
 
-## Repository Structure
+## Visao Geral
+
+Este repositorio define a infraestrutura como codigo de um cluster Kubernetes rodando localmente com Kind. O projeto foi construido para demonstrar tecnicas de Site Reliability Engineering na pratica: GitOps, observabilidade, hardening de seguranca, politicas como codigo e gerenciamento de recursos.
+
+O cluster executa um site pessoal de portifolio (nginx) e um banco PostgreSQL, ambos gerenciados pelo ArgoCD com sincronizacao automatica a partir deste repositorio. Toda a configuracao e declarativa e versionada.
+
+---
+
+## Arquitetura
+
+O ambiente consiste em um cluster Kind de no unico rodando Kubernetes 1.27.3 sobre WSL2 (Ubuntu). A estrutura de diretorios reflete a separacao por responsabilidade:
 
 ```
-k8s/                          # Kubernetes manifests (ArgoCD source path)
-  infrastructure/             # Cluster-level components
-  monitoring/                 # Alerting rules
-  security/                   # Network policies, quotas, PSS
-  services/                   # Application workloads
-  platform/                   # Kyverno policies
-bootstrap/                    # ArgoCD Application manifest (outside k8s/ path)
-scripts/                      # Cluster bootstrap and health checks
-archive/                      # Historical reports and legacy Terraform
-assets/                       # Architecture diagrams
-kind-config.yaml              # Kind cluster definition
-``````
-k8s/                          # Kubernetes manifests (ArgoCD source path)
-  infrastructure/             # Cluster-level components
-bootstrap/                    # ArgoCD Application definition (outside k8s/ to avoid circular reference)
-  platform/                   # Kyverno policies
-  monitoring/                 # Alerting rules
-  security/                   # Network policies, quotas, PSS
-  services/                   # Application workloads
-scripts/                      # Cluster bootstrap and health checks
-archive/                      # Historical reports and legacy Terraform
-assets/                       # Architecture diagrams
-kind-config.yaml              # Kind cluster definition
+k8s/
+  infrastructure/      metrics-server, ingress-controller, cert-manager
+  monitoring/          regras de alerta do Prometheus
+  security/            NetworkPolicies, quotas, PSS
+  services/            aplicacoes (portfolio + postgres)
+  platform/            politicas Kyverno
+bootstrap/             manifesto do ArgoCD Application
+scripts/               scripts de bootstrap e verificacao
+archive/               relatorios historicos e Terraform legado
+kind-config.yaml       definicao do cluster Kind
 ```
 
-## Architecture
+### Especificacoes do Cluster
 
-The environment consists of a single-node Kind cluster running Kubernetes 1.27.3 on WSL2 (Ubuntu). All infrastructure is defined declaratively and synchronized via ArgoCD.
+| Item | Valor |
+|------|-------|
+| Kubernetes | 1.27.3 |
+| No | 1 (control-plane) |
+| Capacidade | 16 vCPU, 16 GB memoria |
+| Container runtime | containerd 1.7.1 |
+| Rede | Kind default (CNI: kindnet) |
+| Ambiente | WSL2 (Ubuntu) + Docker Desktop |
 
-### Components
+---
 
-| Component | Purpose |
-|-----------|---------|
-| Kind | Local Kubernetes cluster (single control-plane node) |
-| nginx | Portfolio web server (nginxinc/nginx-unprivileged, non-root) |
-| PostgreSQL 15 | Relational database (StatefulSet with persistent volume) |
-| ArgoCD | GitOps sync - automatic reconciliation with this repository |
-| cert-manager | TLS certificate lifecycle management |
-| Kyverno | Policy-as-code engine |
-| Goldilocks / VPA | Resource optimization recommendations |
-| Prometheus / Grafana | Metrics collection and visualization |
-| Loki / Promtail | Log aggregation |
-| metrics-server | Resource metrics for HPA autoscaling |
-| nginx-ingress-controller | HTTP/HTTPS ingress routing |
+## Componentes
 
-### Cluster Specifications
+| Componente | Finalidade |
+|------------|------------|
+| **Kind** | Cluster Kubernetes local para desenvolvimento |
+| **nginx** | Servidor web do portifolio (imagem nginxinc/nginx-unprivileged, sem root) |
+| **PostgreSQL 15** | Banco relacional com StatefulSet e volume persistente |
+| **ArgoCD** | Sincronizacao GitOps entre este repositorio e o cluster |
+| **cert-manager** | Gerenciamento do ciclo de vida de certificados TLS |
+| **Kyverno** | Motor de politicas como codigo (Policy-as-Code) |
+| **Goldilocks / VPA** | Recomendacoes de otimizacao de recursos |
+| **Prometheus / Grafana** | Coleta de metricas e visualizacao |
+| **Loki / Promtail** | Agregacao de logs centralizada |
+| **metrics-server** | Metricas de recursos para HPA |
+| **nginx-ingress-controller** | Roteamento HTTP/HTTPS |
 
-- Kubernetes version: 1.27.3
-- Node count: 1 (control-plane)
-- Resource capacity: 16 vCPU, 16 GB memory
-- Container runtime: containerd 1.7.1
-- Network: Kind default (CNI: kindnet)
+---
 
-## Security
+## Comecando
 
-### Pod Security Standards
+### Pre-requisitos
 
-Each namespace enforces a Pod Security Standard level appropriate to its workloads:
-
-- restricted: default, argocd, cert-manager, monitoring, ingress-nginx
-- baseline: kube-public, kube-node-lease, local-path-storage
-- privileged: kube-system
-
-### Resource Controls
-
-The default namespace has the following resource limits:
-
-- Max 20 pods
-- CPU request limit: 4 cores (8 cores burst)
-- Memory request limit: 4 GB (8 GB burst)
-- Default container: 100m CPU / 128 MB memory request
-
-### Network Policies
-
-- Default deny-all ingress for all namespaces
-- Explicit allow rules for nginx (port 8080) and PostgreSQL (port 5432)
-- DNS access permitted to kube-system
-
-### Policy Engine
-
-Kyverno enforces two cluster policies:
-- Disallow privileged containers (audit mode)
-- Require resource requests and limits (audit mode)
-
-## Getting Started
-
-### Prerequisites
-
-- WSL2 with Ubuntu 20.04 or later
-- Docker Desktop with WSL2 integration
+- WSL2 com Ubuntu 20.04 ou superior
+- Docker Desktop com integracao WSL2
 - Kind (Kubernetes in Docker)
 - kubectl
-- Helm (v3+)
+- Helm 3+
 
-### Creating the Cluster
+### Criando o cluster
+
+O bootstrap completo do ambiente pode ser feito com os comandos abaixo. O tempo estimado e de aproximadamente 5 minutos dependendo da conexao com a internet.
 
 ```bash
 git clone https://github.com/denoso1993/k8s-portfolio-iac.git
 cd k8s-portfolio-iac
+
 kind create cluster --name lab-sre-denoso --config kind-config.yaml
+
 kubectl apply -f k8s/infrastructure/
 kubectl apply -f k8s/security/
-kubectl apply -f k8s/platform/argocd/
 kubectl apply -f k8s/services/portfolio/
 kubectl apply -f k8s/services/postgres/
+
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo add grafana https://grafana.github.io/helm-charts
-helm install prometheus prometheus-community/prometheus ---namespace monitoring --create-namespace
-helm install grafana grafana/grafana ---namespace monitoring
-helm install loki-stack grafana/loki-stack ---namespace monitoring
+helm install prometheus prometheus-community/prometheus --namespace monitoring --create-namespace
+helm install grafana grafana/grafana --namespace monitoring
+helm install loki-stack grafana/loki-stack --namespace monitoring
+
+kubectl create ns argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.12.3/manifests/install.yaml
+kubectl apply -f bootstrap/argocd-app.yaml
 ```
 
-### Accessing Services
+### Acessando os servicos
 
-| Service | Internal Access | External Access |
+| Servico | Acesso Interno | Acesso Externo |
 |---------|----------------|-----------------|
 | Portfolio | ClusterIP:80 | kubectl port-forward svc/nginx-service 8083:80 |
 | Grafana | monitoring:80 | kubectl port-forward svc/grafana -n monitoring 3090:80 |
 | Prometheus | monitoring:9090 | kubectl port-forward svc/prometheus-server -n monitoring 9090:9090 |
 | ArgoCD | argocd:443 | kubectl port-forward svc/argocd-server -n argocd 8080:443 |
 
-Default Grafana credentials: admin / admin
+> Credenciais padrao do Grafana: admin / admin. A senha do ArgoCD e obtida via `kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d`
 
-## Operational Notes
+---
 
-### Known Limitations
+## Seguranca
 
-- Terraform: The Terraform provider registry (registry.terraform.io) is unreachable from this WSL environment due to DNS resolution constraints. All infrastructure is provisioned via kubectl and Helm directly.
-- Port 8081: Already in use by another process on the host. The portfolio is served on port 8083 (forwarded from 8082 via Windows port proxy).
-- WSL networking: WSL2 uses a virtualized network adapter. Services are exposed via kubectl port-forward with --address 0.0.0.0 and Windows netsh port proxies.
+O cluster segue boas praticas de seguranca em multicamadas:
 
-### Maintenance
+### Pod Security Standards
+
+Cada namespace aplica o nivel de Pod Security Standard mais adequado a sua carga de trabalho:
+
+| Nivel | Namespaces |
+|-------|------------|
+| restricted | default, argocd, cert-manager, monitoring, ingress-nginx |
+| baseline | kube-public, kube-node-lease, local-path-storage |
+| privileged | kube-system |
+
+### Controle de Recursos
+
+O namespace default possui as seguintes limitacoes:
+
+- Maximo de 20 pods
+- Limite de requisicao de CPU: 4 cores (8 de burst)
+- Limite de requisicao de memoria: 4 GB (8 GB de burst)
+- Container padrao: 100m CPU / 128 MB de requisicao
+
+### Politicas de Rede
+
+- Bloqueio total de ingress por padrao (default-deny)
+- Regras explicitas de liberacao para nginx (porta 8080) e PostgreSQL (porta 5432)
+- Acesso ao DNS permitido apenas para o kube-system
+
+### Policy as Code
+
+O Kyverno aplica duas politicas em modo de auditoria:
+
+- Proibicao de containers privilegiados
+- Exigencia de recursos minimos (requests e limits)
+
+---
+
+## Operacao
+
+### Comandos uteis
 
 ```bash
 kubectl get pods -A
 kubectl get application -n argocd -o wide
 kubectl top nodes
 kubectl top pods -A
+kubectl describe application -n argocd k8s-portfolio-iac
+kubectl logs -n ingress-nginx deploy/ingress-nginx-controller
 ```
 
-## Author
+### Limitacoes conhecidas
 
-Denis Oliveira Ramos
-Senior Cloud Analyst | SRE & Infrastructure
-Barueri, SP - Brazil
-
-- LinkedIn: linkedin.com/in/denis93
-- Email: denoso1993@gmail.com
-
-### License
-
-This project is shared as a portfolio reference. Feel free to adapt and use as a starting point for your own infrastructure projects.
+- **Terraform:** O registry do provider Terraform (registry.terraform.io) nao e acessivel deste ambiente WSL devido a restricoes de resolucao de DNS. Toda a infraestrutura e provisionada via kubectl e Helm.
+- **Porta 8081:** Esta porta esta ocupada por outro processo no host. O portfolio e servido na porta 8083, com redirecionamento a partir da porta 8082 via netsh do Windows.
+- **Rede WSL2:** O WSL2 utiliza um adaptador de rede virtualizado. Servicos sao expostos via kubectl port-forward com --address 0.0.0.0 e proxies de porta do Windows (netsh).
 
 ---
 
-Infrastructure as Code portfolio project - Denis Oliveira Ramos
+## Autor
+
+**Denis Oliveira Ramos**
+Analista Cloud Senior | SRE & Infraestrutura
+Barueri, SP - Brasil
+
+[LinkedIn](https://linkedin.com/in/denis93) | denoso1993@gmail.com
+
+---
+
+<p align="center">
+  <em>Projeto de portifolio pessoal em Infraestrutura como Codigo</em><br>
+  Denis Oliveira Ramos
+</p>

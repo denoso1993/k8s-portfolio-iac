@@ -11,6 +11,18 @@ The cluster runs a personal portfolio website (nginx-based) and a PostgreSQL dat
 ```
 k8s/                          # Kubernetes manifests (ArgoCD source path)
   infrastructure/             # Cluster-level components
+  monitoring/                 # Alerting rules
+  security/                   # Network policies, quotas, PSS
+  services/                   # Application workloads
+  platform/                   # Kyverno policies
+bootstrap/                    # ArgoCD Application manifest (outside k8s/ path)
+scripts/                      # Cluster bootstrap and health checks
+archive/                      # Historical reports and legacy Terraform
+assets/                       # Architecture diagrams
+kind-config.yaml              # Kind cluster definition
+``````
+k8s/                          # Kubernetes manifests (ArgoCD source path)
+  infrastructure/             # Cluster-level components
 bootstrap/                    # ArgoCD Application definition (outside k8s/ to avoid circular reference)
   platform/                   # Kyverno policies
   monitoring/                 # Alerting rules

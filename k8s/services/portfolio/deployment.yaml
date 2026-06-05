@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
-  namespace: default
   labels:
     app: nginx
+  name: nginx-deployment
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -16,10 +16,12 @@ spec:
         app: nginx
     spec:
       containers:
-      - name: nginx
-        image: nginxinc/nginx-unprivileged:latest
+      - image: nginxinc/nginx-unprivileged:1.25-alpine
+        imagePullPolicy: IfNotPresent
+        name: nginx
         ports:
         - containerPort: 8080
+          protocol: TCP
         resources:
           requests:
             cpu: 100m
@@ -27,16 +29,18 @@ spec:
           limits:
             cpu: 200m
             memory: 256Mi
+        volumeMounts:
+        - name: html-volume
+          mountPath: /usr/share/nginx/html
         securityContext:
           allowPrivilegeEscalation: false
           runAsNonRoot: true
           runAsUser: 101
+          seccompProfile:
+            type: RuntimeDefault
           capabilities:
             drop: ["ALL"]
-        volumeMounts:
-        - name: html-volume
-          mountPath: /usr/share/nginx/html
       volumes:
       - name: html-volume
         configMap:
-          name: nginx-html-config
+          name: nginx-configmap

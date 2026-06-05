@@ -43,4 +43,4 @@ spec:
       volumes:
       - name: html-volume
         configMap:
-          name: nginx-configmap
+          name: nginx-html-config

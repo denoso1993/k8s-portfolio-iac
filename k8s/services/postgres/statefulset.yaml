@@ -15,6 +15,26 @@ spec:
         app: postgres
     spec:
       serviceAccountName: postgres
+      securityContext:
+        fsGroup: 70
+      initContainers:
+      - name: volume-permissions
+        image: busybox:1.36
+        command:
+        - sh
+        - -c
+        - chown -R 70:70 /var/lib/postgresql/data
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsUser: 0
+          seccompProfile:
+            type: RuntimeDefault
+          capabilities:
+            drop: ["ALL"]
+            add: ["CHOWN", "DAC_OVERRIDE"]
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: postgres-storage
       containers:
       - name: postgres
         image: postgres:15-alpine
@@ -37,7 +57,7 @@ spec:
           periodSeconds: 10
         resources:
           requests:
-            cpu: 15m
+            cpu: 50m
             memory: 104Mi
           limits:
             cpu: 100m
@@ -48,7 +68,7 @@ spec:
         securityContext:
           allowPrivilegeEscalation: false
           runAsNonRoot: true
-          runAsUser: 999
+          runAsUser: 70
           seccompProfile:
             type: RuntimeDefault
           capabilities:

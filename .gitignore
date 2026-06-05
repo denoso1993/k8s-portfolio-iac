@@ -4,7 +4,4 @@
 .terraform.lock.hcl
 *.tfvars
 terraform.tfstate*
-.terraform/
-*.tfstate
-*.tfvars
-
+k8s-manifests/applicationset-crd.yaml

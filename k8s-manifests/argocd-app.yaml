@@ -9,8 +9,8 @@ spec:
   project: default
   source:
     repoURL: https://github.com/denoso1993/k8s-portfolio-iac.git
-    targetRevision: HEAD
-    path: .
+    targetRevision: main
+    path: k8s-manifests
   destination:
     server: https://kubernetes.default.svc
     namespace: default
@@ -18,14 +18,5 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: false
     syncOptions:
     - CreateNamespace=true
-    - PrunePropagationPolicy=foreground
-    - PruneLast=true
-    retry:
-      limit: 5
-      backoff:
-        duration: 5s
-        factor: 2
-        maxDuration: 3m

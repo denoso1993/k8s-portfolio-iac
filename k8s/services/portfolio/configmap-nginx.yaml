@@ -92,8 +92,8 @@ data:
             <div class="infra-status">
                 <div><span class="status-dot"></span>Cloud Cluster: Kind</div>
                 <div><span class="status-dot"></span>Ingress: Nginx</div>
-                <div><span class="status-dot"></span>Region: Local (Barueri)</div>
-                <div><span class="status-dot"></span>Port: 8081</div>
+                <div><span class="status-dot"></span>Region: Cloud (WSL2) (Barueri)</div>
+                <div><span class="status-dot"></span>Domain: denisdeoliveira.com.br</div>
             </div>
         </div>
     </body>

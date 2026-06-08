@@ -1,0 +1,6 @@
+[Unit]
+Description=WSL Memory Watchdog
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/wsl-watchdog.sh

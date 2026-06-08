@@ -44,6 +44,8 @@ spec:
         volumeMounts:
         - name: html-volume
           mountPath: /usr/share/nginx/html
+        - name: assets-volume
+          mountPath: /usr/share/nginx/html/assets
         securityContext:
           allowPrivilegeEscalation: false
           runAsNonRoot: true
@@ -56,3 +58,6 @@ spec:
       - name: html-volume
         configMap:
           name: nginx-html-config
+      - name: assets-volume
+        secret:
+          secretName: nginx-assets

@@ -36,16 +36,14 @@ spec:
           periodSeconds: 10
         resources:
           requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
             cpu: 100m
             memory: 128Mi
-          limits:
-            cpu: 200m
-            memory: 256Mi
         volumeMounts:
         - name: html-volume
           mountPath: /usr/share/nginx/html
-        - name: assets-volume
-          mountPath: /usr/share/nginx/html/assets
         securityContext:
           allowPrivilegeEscalation: false
           runAsNonRoot: true
@@ -58,6 +56,3 @@ spec:
       - name: html-volume
         configMap:
           name: nginx-html-config
-      - name: assets-volume
-        secret:
-          secretName: nginx-assets

@@ -20,7 +20,7 @@ data:
                 background-image:
                     radial-gradient(circle at 15% 25%, rgba(0,255,255,0.06) 0%, transparent 40%),
                     radial-gradient(circle at 85% 75%, rgba(255,255,0,0.04) 0%, transparent 40%);
-                padding: 16px;
+                padding: 16px 16px 40px 16px;
             }
 
             .desktop {
@@ -116,7 +116,7 @@ data:
             .taskbar {
                 background:#c0c0c0; border-top:2px solid #fff;
                 padding:3px 4px; display:flex; align-items:center; gap:4px;
-                position:sticky; bottom:0; margin-top:20px;
+                position:fixed; bottom:0; left:0; right:0; z-index:100;
             }
             .taskbar .start {
                 background:#c0c0c0; border:1px solid;

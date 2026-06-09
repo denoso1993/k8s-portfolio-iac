@@ -11,6 +11,8 @@ data:
     <head><meta charset="UTF-8">
     <title>Denis Oliveira Ramos</title>
     <style>
+    html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#008080;display:flex;align-items:center;justify-content:center;}
+    
         
     .desk-wrap{width:2560px;height:1440px;transform-origin:top left;position:relative;}
     body{overflow:hidden;background:#008080;margin:0;width:100vw;height:100vh;}
@@ -37,7 +39,7 @@ data:
     .mb{background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:3px 8px;text-align:center;display:inline-block;margin:1px;min-width:40px}
     .mb .n{font-size:22px;font-weight:700;color:#000}.mb .l{font-size:9px;color:#555}
     .w95-btn{background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;padding:3px 10px;font-family:inherit;font-size:11px;display:inline-flex;align-items:center;gap:4px;text-decoration:none;color:#222;margin:1px}
-    .taskbar{background:#c0c0c0;border-top:2px solid #fff;padding:3px 6px;display:flex;align-items:center;gap:4px;position:fixed;bottom:0;left:0;right:0;z-index:999;height:30px}
+    .taskbar{background:#c0c0c0;border-top:2px solid #fff;padding:3px 6px;display:flex;align-items:center;gap:4px;position:absolute;bottom:0;left:0;right:0;z-index:999;height:30px}
     .taskbar .start{background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;padding:2px 10px;font-weight:700;font-size:13px;font-family:inherit;display:flex;align-items:center;gap:4px;cursor:pointer;height:22px}
     .taskbar .task{background:#c0c0c0;border:1px solid;border-color:#808080 #fff #fff #808080;padding:2px 12px;font-size:11px;display:flex;align-items:center}
     .taskbar .time{margin-left:auto;border:1px solid;border-color:#808080 #fff #fff #808080;padding:2px 8px;font-size:11px;background:#c0c0c0}
@@ -60,7 +62,7 @@ data:
     
     </head>
     <body style="margin:0;padding:0;overflow:hidden;background:#008080;width:100vw;height:100vh;">
-    <div class="desk-wrap" id="deskWrap"><div id="deskAll" style="width:2560px;transform-origin:top left;position:relative;"><div class="desktop">
+    <div class="desk-wrap" id="deskWrap"><div id="deskAll" style="width:2560px;transform-origin:top left;position:relative;"><div class="desktop" style="position:relative;width:2560px;min-height:1440px;background:#008080;display:flex;flex-direction:column;">
     
     <!-- SOBRE -->
     <div class="w" style="top:30px;left:50%;width:900px;height:400px;margin-left:-450px;z-index:5" onclick="bringFwd(this)">
@@ -243,6 +245,7 @@ data:
     
         function fs(){var w=document.getElementById('deskWrap');if(!w)return;var sx=window.innerWidth/2560;var sy=(window.innerHeight-30)/1440;var s=sx<sy?sx:sy;w.style.transform='scale('+s+')';}window.addEventListener('load',fs);window.addEventListener('resize',fs);
     </script>
-    </body>
+    </div></body>
     </html>
+    
     

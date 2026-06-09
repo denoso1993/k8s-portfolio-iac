@@ -9,153 +9,254 @@ data:
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Denis Oliveira Ramos | SRE & Cloud Infrastructure</title>
+        <title>Denis Oliveira Ramos · SRE & Cloud</title>
         <style>
             :root {
-                --primary: #0078d4;
-                --secondary: #24292f;
-                --bg: #f0f2f5;
-                --surface: rgba(255,255,255,0.93);
-                --text: #1a1a1a;
-                --text-light: #57606a;
-                --border: #e1e4e8;
-                --success: #2da44e;
-                --shadow: 0 8px 30px rgba(0,0,0,0.06);
+                --bg: #0d1117;
+                --surface: #161b22;
+                --border: #30363d;
+                --text: #e6edf3;
+                --text-light: #8b949e;
+                --primary: #58a6ff;
+                --primary-dim: #1f6feb;
+                --accent: #3fb950;
+                --orange: #d29922;
+                --pink: #f778ba;
+                --violet: #bc8cff;
             }
             * { margin:0; padding:0; box-sizing:border-box; }
             body {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                background: linear-gradient(160deg, #e8f0fe 0%, #dde3ed 40%, #f0f2f5 100%);
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, sans-serif;
+                background: var(--bg);
                 color: var(--text);
-                min-height: 100vh; padding: 30px 20px;
-                display: flex; flex-direction: column; align-items: center;
+                line-height: 1.6;
             }
-            .container {
-                max-width: 600px; width: 100%;
-            }
-            /* Header */
-            .header { margin-bottom: 32px; }
-            .header h1 {
-                font-size: 32px; font-weight: 700; color: var(--secondary);
-                letter-spacing: -0.75px; margin: 0 0 2px 0; line-height: 1.2;
-            }
-            .header .subtitle {
-                font-size: 15px; color: var(--primary); font-weight: 500;
-                margin: 0 0 4px 0;
-            }
-            .header .meta {
-                font-size: 13px; color: var(--text-light);
-                display: flex; flex-wrap: wrap; gap: 12px;
-            }
-            .header .meta span { display: inline-flex; align-items: center; gap: 4px; }
 
-            /* Cards */
-            .card {
+            /* Nav */
+            .nav {
+                border-bottom: 1px solid var(--border);
+                padding: 0 24px;
                 background: var(--surface);
-                border-radius: 16px; padding: 28px;
-                border: 1px solid var(--border);
-                box-shadow: var(--shadow);
-                margin-bottom: 20px;
-                backdrop-filter: blur(6px);
-                transition: box-shadow 0.2s;
+                position: sticky; top: 0; z-index: 10;
             }
-            .card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+            .nav-inner {
+                max-width: 960px; margin: 0 auto;
+                display: flex; align-items: center; justify-content: space-between;
+                height: 56px;
+            }
+            .nav-logo { font-weight: 700; font-size: 15px; color: var(--text); }
+            .nav-logo span { color: var(--primary); }
+            .nav-links { display: flex; gap: 20px; }
+            .nav-links a {
+                color: var(--text-light); text-decoration: none;
+                font-size: 13px; font-weight: 500; transition: color 0.2s;
+            }
+            .nav-links a:hover { color: var(--text); }
 
-            .section-label {
-                font-size: 10px; font-weight: 700; color: var(--text-light);
-                text-transform: uppercase; letter-spacing: 0.8px;
-                margin-bottom: 14px;
+            .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+            /* Hero */
+            .hero {
+                padding: 72px 0 48px;
+                border-bottom: 1px solid var(--border);
+            }
+            .hero-badge {
+                display: inline-block;
+                background: rgba(88,166,255,0.1);
+                border: 1px solid rgba(88,166,255,0.2);
+                color: var(--primary);
+                font-size: 12px; font-weight: 600; padding: 4px 12px;
+                border-radius: 20px; margin-bottom: 20px;
+            }
+            .hero h1 {
+                font-size: 44px; font-weight: 700; letter-spacing: -1px;
+                margin: 0 0 8px 0; line-height: 1.1;
+            }
+            .hero h1 span { color: var(--primary); }
+            .hero .subtitle {
+                font-size: 18px; color: var(--text-light);
+                margin-bottom: 16px; font-weight: 400;
+            }
+            .hero .meta {
+                font-size: 14px; color: var(--text-light);
+                display: flex; flex-wrap: wrap; gap: 16px;
+            }
+            .hero .meta span { display: inline-flex; align-items: center; gap: 6px; }
+
+            /* Sections */
+            section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+            section:last-child { border-bottom: none; }
+
+            .section-header {
+                display: flex; align-items: center; gap: 10px;
+                margin-bottom: 24px;
+            }
+            .section-header .icon {
+                width: 32px; height: 32px; border-radius: 8px;
+                display: flex; align-items: center; justify-content: center;
+                font-size: 16px;
+            }
+            .section-header .icon.blue { background: rgba(88,166,255,0.15); }
+            .section-header .icon.green { background: rgba(63,185,80,0.15); }
+            .section-header .icon.pink { background: rgba(247,120,186,0.15); }
+            .section-header .icon.orange { background: rgba(210,153,34,0.15); }
+            .section-header .icon.violet { background: rgba(188,140,255,0.15); }
+
+            .section-header h2 {
+                font-size: 18px; font-weight: 600; margin: 0;
+            }
+            .section-header .count {
+                font-size: 13px; color: var(--text-light);
+                background: var(--surface); padding: 1px 8px;
+                border-radius: 10px; border: 1px solid var(--border);
             }
 
-            /* Bio */
-            .bio {
-                font-size: 14px; line-height: 1.7; color: var(--text);
-                margin: 0;
+            /* About */
+            .about-text {
+                font-size: 15px; color: var(--text-light);
+                max-width: 720px; line-height: 1.7;
             }
-            .bio + .bio { margin-top: 14px; }
-            .highlight { color: var(--primary); font-weight: 600; }
+            .about-text strong { color: var(--text); }
+            .about-text .highlight { color: var(--primary); }
+            .about-text + .about-text { margin-top: 16px; }
 
             /* Tags */
-            .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+            .tags { display: flex; flex-wrap: wrap; gap: 8px; }
             .tag {
-                display: inline-block; padding: 4px 10px; border-radius: 6px;
-                font-size: 11px; font-weight: 500; background: #f0f2f5;
-                color: var(--secondary); border: 1px solid var(--border);
+                display: inline-block;
+                padding: 5px 12px; border-radius: 6px;
+                font-size: 12px; font-weight: 500;
+                background: var(--surface); color: var(--text-light);
+                border: 1px solid var(--border);
+                transition: all 0.2s;
             }
-            .tag:hover { background: #e8ecf0; }
+            .tag:hover {
+                border-color: var(--primary);
+                color: var(--primary);
+                background: rgba(88,166,255,0.08);
+            }
 
             /* Buttons */
-            .btn-group { display: flex; flex-wrap: wrap; gap: 8px; }
+            .btn-group { display: flex; flex-wrap: wrap; gap: 10px; }
             .btn {
-                text-decoration: none; padding: 10px 18px; border-radius: 8px;
-                font-weight: 500; font-size: 13px; transition: all 0.15s;
+                text-decoration: none; padding: 10px 20px; border-radius: 8px;
+                font-weight: 500; font-size: 13px; transition: all 0.2s;
                 display: inline-flex; align-items: center; gap: 6px;
-                border: 1px solid var(--border); color: var(--secondary);
-                background: white; cursor: pointer; flex: 1 0 auto;
-                justify-content: center;
+                border: 1px solid var(--border); color: var(--text);
+                background: var(--surface); cursor: pointer;
             }
-            .btn:hover { background: #f6f8fa; border-color: #8c959f; }
-            .btn-primary { background: var(--primary); color: #fff; border: none; }
-            .btn-primary:hover { background: #005a9e; color: #fff; }
+            .btn:hover {
+                background: #1c2128; border-color: var(--text-light);
+            }
+            .btn-primary {
+                background: var(--primary-dim); color: #fff;
+                border: 1px solid rgba(88,166,255,0.3);
+            }
+            .btn-primary:hover {
+                background: #1f6feb; color: #fff;
+                border-color: var(--primary);
+            }
 
-            /* Status grid */
-            .status-grid {
-                display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+            /* Status Grid */
+            .status-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+            .status-card {
+                background: var(--surface); border: 1px solid var(--border);
+                border-radius: 10px; padding: 16px;
+                transition: border-color 0.2s;
             }
-            .status-item {
-                display: flex; align-items: center; gap: 6px;
-                font-size: 12px; color: var(--text-light);
+            .status-card:hover { border-color: var(--primary); }
+            .status-card .label {
+                font-size: 11px; color: var(--text-light);
+                text-transform: uppercase; letter-spacing: 0.5px;
+                margin-bottom: 4px;
             }
-            .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
-            .dot.green { background: var(--success); }
+            .status-card .value {
+                font-size: 14px; font-weight: 600; color: var(--text);
+            }
+            .status-card .value .dot {
+                display: inline-block; width: 7px; height: 7px;
+                border-radius: 50%; margin-right: 6px;
+            }
+            .dot.green { background: var(--accent); }
 
             /* Dashboard placeholder */
-            .dash-placeholder {
-                background: #f6f8fa; border-radius: 10px;
-                border: 1px dashed var(--border);
-                padding: 24px; text-align: center;
-                font-size: 13px; color: var(--text-light);
+            .dash-box {
+                background: var(--surface); border: 1px solid var(--border);
+                border-radius: 10px; padding: 32px;
+                text-align: center; color: var(--text-light);
+            }
+            .dash-box .big { font-size: 32px; margin-bottom: 8px; }
+            .dash-box p { font-size: 14px; margin: 0; }
+            .dash-box .sub { font-size: 12px; color: #484f58; margin-top: 4px; }
+
+            /* Footer */
+            .footer {
+                padding: 24px 0; text-align: center;
+                font-size: 12px; color: #484f58;
             }
 
-            /* Divider */
-            hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
-
-            @media (max-width: 480px) {
-                body { padding: 16px 12px; }
-                .card { padding: 20px; }
-                .header h1 { font-size: 26px; }
-                .btn { font-size: 12px; padding: 8px 14px; }
-                .status-grid { grid-template-columns: 1fr; }
+            @media (max-width: 640px) {
+                .hero h1 { font-size: 30px; }
+                .nav-links { display: none; }
+                .status-grid { grid-template-columns: 1fr 1fr; }
+                .hero { padding: 40px 0 32px; }
+                section { padding: 32px 0; }
             }
         </style>
     </head>
     <body>
-        <div class="container">
 
-            <div class="header">
-                <h1>Denis Oliveira Ramos</h1>
+        <!-- Nav -->
+        <div class="nav">
+            <div class="nav-inner">
+                <div class="nav-logo">denis<span>.</span></div>
+                <div class="nav-links">
+                    <a href="#about">Sobre</a>
+                    <a href="#stack">Stack</a>
+                    <a href="#resume">Currículo</a>
+                    <a href="#status">Cluster</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hero -->
+        <div class="hero">
+            <div class="container">
+                <div class="hero-badge">☁️ SRE &amp; Cloud Infrastructure</div>
+                <h1>Denis Oliveira<br><span>Ramos</span></h1>
                 <div class="subtitle">Senior Cloud &amp; Infrastructure Engineer</div>
                 <div class="meta">
                     <span>📍 Barueri, SP · Brasil</span>
                     <span>🌐 Inglês C1/C2</span>
                     <span>💼 Avanade (Microsoft Unified Support)</span>
+                    <span>🔗 <a href="https://linkedin.com/in/denis93" style="color:var(--primary);text-decoration:none;" target="_blank">linkedin.com/in/denis93</a></span>
                 </div>
             </div>
+        </div>
 
-            <!-- Bio -->
-            <div class="card">
-                <div class="section-label">Sobre</div>
-                <div class="bio">
-                    Profissional de Infraestrutura Cloud e SRE com foco em <span class="highlight">Resiliência, Disaster Recovery</span> e operações de <span class="highlight">alta disponibilidade</span>. Na Avanade, atuo mitigando riscos operacionais e otimizando métricas críticas como <span class="highlight">RTO, RPO, MTTR e MTBF</span> em ambientes enterprise.
+        <div class="container">
+
+            <!-- About -->
+            <section id="about">
+                <div class="section-header">
+                    <div class="icon blue">👤</div>
+                    <h2>Sobre</h2>
                 </div>
-                <div class="bio" style="margin-top:14px;">
+                <div class="about-text">
+                    Profissional de Infraestrutura Cloud e SRE com foco em <span class="highlight">Resiliência, Disaster Recovery</span> e operações de <span class="highlight">alta disponibilidade</span>. Na <strong>Avanade (Microsoft Unified Support)</strong>, atuo mitigando riscos operacionais e otimizando métricas críticas como <span class="highlight">RTO, RPO, MTTR e MTBF</span> em ambientes enterprise.
+                </div>
+                <div class="about-text">
                     Tenho trabalhado com <span class="highlight">Kubernetes</span> e automação — mantenho um laboratório SRE prático com cluster Kind, observabilidade completa (Prometheus + Grafana + Loki) e todo o ciclo GitOps com ArgoCD. Também desenvolvo soluções com <span class="highlight">IA e automação</span>, criando engines em PowerShell que transformam logs brutos em dashboards em tempo real.
                 </div>
-            </div>
+            </section>
 
             <!-- Tech Stack -->
-            <div class="card">
-                <div class="section-label">Tech Stack</div>
+            <section id="stack">
+                <div class="section-header">
+                    <div class="icon green">⚙️</div>
+                    <h2>Tech Stack</h2>
+                    <span class="count">18</span>
+                </div>
                 <div class="tags">
                     <span class="tag">Kubernetes</span>
                     <span class="tag">Docker</span>
@@ -176,49 +277,89 @@ data:
                     <span class="tag">Linux (RHEL/Oracle)</span>
                     <span class="tag">Windows Server</span>
                 </div>
-            </div>
+            </section>
 
-            <!-- Curriculos + Links -->
-            <div class="card">
-                <div class="section-label">Currículos</div>
+            <!-- Resume + Links -->
+            <section id="resume">
+                <div class="section-header">
+                    <div class="icon pink">📄</div>
+                    <h2>Currículos</h2>
+                </div>
                 <div class="btn-group">
                     <a href="https://drive.google.com/file/d/1Zbhm9hkdQEvu4AWEoTIGneDyRZHXnx9J/view" target="_blank" class="btn btn-primary">📄 Português (PT-BR)</a>
                     <a href="https://drive.google.com/file/d/1fz-Jb7Til1SDA_M8YvjQ9fOwnLrKJXPF/view" target="_blank" class="btn btn-primary">📄 English (EN-US)</a>
                 </div>
 
-                <hr>
-
-                <div class="section-label">Links</div>
-                <div class="btn-group">
-                    <a href="https://linkedin.com/in/denis93" target="_blank" class="btn">💼 LinkedIn</a>
-                    <a href="https://github.com/denoso1993/k8s-portfolio-iac" target="_blank" class="btn">🐙 Cluster K8s (GitHub)</a>
-                    <a href="mailto:denis_oliveira@rocketmail.com" class="btn">📧 E-mail</a>
-                    <a href="https://drive.google.com/drive/folders/1k_4mO-j4WEoaIGngR9cGLX1WpVSKC-AD" target="_blank" class="btn">📜 Certificações</a>
+                <div style="margin-top:20px;">
+                    <div class="section-header">
+                        <div class="icon violet">🔗</div>
+                        <h2>Links</h2>
+                    </div>
+                    <div class="btn-group">
+                        <a href="https://linkedin.com/in/denis93" target="_blank" class="btn">💼 LinkedIn</a>
+                        <a href="https://github.com/denoso1993/k8s-portfolio-iac" target="_blank" class="btn">🐙 Cluster K8s (GitHub)</a>
+                        <a href="mailto:denis_oliveira@rocketmail.com" class="btn">📧 E-mail</a>
+                        <a href="https://drive.google.com/drive/folders/1k_4mO-j4WEoaIGngR9cGLX1WpVSKC-AD" target="_blank" class="btn">📜 Certificações</a>
+                    </div>
                 </div>
-            </div>
+            </section>
 
             <!-- Cluster Status -->
-            <div class="card">
-                <div class="section-label">Cluster Status</div>
-                <div class="status-grid">
-                    <div class="status-item"><span class="dot green"></span>Cluster: Kind</div>
-                    <div class="status-item"><span class="dot green"></span>Pods: 15/15 running</div>
-                    <div class="status-item"><span class="dot green"></span>Ingress: nginx</div>
-                    <div class="status-item"><span class="dot green"></span>Domain: denisdeoliveira.com.br</div>
-                    <div class="status-item"><span class="dot green"></span>GitOps: ArgoCD</div>
-                    <div class="status-item"><span class="dot green"></span>Tunnel: Cloudflare</div>
+            <section id="status">
+                <div class="section-header">
+                    <div class="icon orange">📊</div>
+                    <h2>Cluster Status</h2>
                 </div>
-            </div>
+                <div class="status-grid">
+                    <div class="status-card">
+                        <div class="label">Cluster</div>
+                        <div class="value"><span class="dot green"></span>Kind</div>
+                    </div>
+                    <div class="status-card">
+                        <div class="label">Pods</div>
+                        <div class="value"><span class="dot green"></span>15/15 running</div>
+                    </div>
+                    <div class="status-card">
+                        <div class="label">Ingress</div>
+                        <div class="value"><span class="dot green"></span>nginx</div>
+                    </div>
+                    <div class="status-card">
+                        <div class="label">Domain</div>
+                        <div class="value"><span class="dot green"></span>denisdeoliveira.com.br</div>
+                    </div>
+                    <div class="status-card">
+                        <div class="label">GitOps</div>
+                        <div class="value"><span class="dot green"></span>ArgoCD</div>
+                    </div>
+                    <div class="status-card">
+                        <div class="label">Tunnel</div>
+                        <div class="value"><span class="dot green"></span>Cloudflare</div>
+                    </div>
+                </div>
+            </section>
 
             <!-- Dashboard -->
-            <div class="card">
-                <div class="section-label">Dashboard</div>
-                <div class="dash-placeholder">
-                    📊 Dashboard ao vivo em breve<br>
-                    <span style="font-size:12px;color:#8c959f;">Monitoramento Prometheus + Grafana sendo configurado</span>
+            <section>
+                <div class="section-header">
+                    <div class="icon green">📈</div>
+                    <h2>Dashboard</h2>
                 </div>
-            </div>
+                <div class="dash-box">
+                    <div class="big">📊</div>
+                    <p><strong>Dashboard ao vivo em breve</strong></p>
+                    <p class="sub">Monitoramento Prometheus + Grafana sendo configurado</p>
+                </div>
+            </section>
 
         </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="container">
+                Denis Oliveira Ramos · SRE &amp; Cloud Infrastructure<br>
+                <span style="font-size:11px;">Este site é servido por um cluster Kind rodando no WSL2 via Cloudflare Tunnel</span>
+            </div>
+        </div>
+
     </body>
     </html>

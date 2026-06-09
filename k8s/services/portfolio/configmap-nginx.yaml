@@ -129,7 +129,7 @@ data:
           <span class="pt">🪣</span><span class="pt">🔵</span>
         </div>
         <div style="flex:1;margin:6px;background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;overflow:hidden;">
-          <iframe src="https://grafana.denisdeoliveira.com.br/d/cluster-sre/cluster-sre?orgId=1&kiosk=tv" width="100%" height="320" frameborder="0" style="display:block;"></iframe>
+          <div style="width:100%;height:320px;overflow:hidden;position:relative;"><iframe src="https://grafana.denisdeoliveira.com.br/d/cluster-sre/cluster-sre?orgId=1" width="100%" height="360" frameborder="0" style="display:block;position:absolute;top:-42px;left:0;"></iframe></div>
         </div>
       </div>
       <div class="sb"><span>🖼️ 640x480 · 256 cores</span><span>🔌 Para Ajuda, F1</span></div>

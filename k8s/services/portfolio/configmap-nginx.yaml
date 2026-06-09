@@ -62,7 +62,9 @@ data:
             <div style="font-size:22px;font-weight:700;">Denis Oliveira Ramos</div>
             <div style="font-size:15px;color:#444;">Senior Cloud &amp; Infrastructure Engineer</div>
             <div style="font-size:13px;color:#666;margin:4px 0 14px;">📍 Barueri, SP · 🌐 Inglês C1/C2</div>
-            <p style="margin-bottom:10px;">Profissional de Infraestrutura Cloud com foco em <strong>Infrastructure as Code (IaC)</strong>, <strong>GitOps</strong> e ambientes <strong>totalmente declarativos</strong>. Todo o ambiente é versionado no GitHub, provisionado via <strong>Helm</strong>, <strong>Terraform</strong> e <strong>kubectl</strong>, e observabilidade completa com <strong>Prometheus + Grafana + Loki</strong>.</p>
+            <p style="margin-bottom:10px;">Sou um Analista Cloud Sênior com forte especialização em ambientes <strong>Linux</strong>, <strong>Bancos de Dados</strong> e ecossistemas <strong>Cloud Native</strong>. Meu foco prático é a engenharia de infraestrutura automatizada, garantindo que sistemas complexos sejam resilientes, escaláveis e previsíveis.</p>
+
+<p style="margin-bottom:10px;">Este portfólio é a <strong>prova de conceito</strong> da minha metodologia de trabalho. Em vez de uma página estática, você está acessando uma aplicação hospedada em um <strong>cluster Kubernetes</strong> local e declarativo. A infraestrutura deste laboratório vivo é integralmente mantida através de <strong>Infrastructure as Code (IaC)</strong>, provisionada e orquestrada via <strong>Terraform</strong> e <strong>Helm</strong>. É neste ambiente que testo, quebro e reconstruo topologias de rede, observabilidade e confiabilidade de sistemas.</p>
             <p>Tenho trabalhado com <strong>Kubernetes</strong> — mantenho esse laboratório SRE com Kind, Prometheus, Grafana, Loki e ArgoCD. <strong>Este site roda no cluster, 100% no WSL2.</strong></p>
           </div>
         </div>

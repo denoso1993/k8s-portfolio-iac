@@ -18,7 +18,7 @@ data:
     .wt .btns{display:flex;gap:2px;flex-shrink:0}
     .wt .btns span{width:18px;height:16px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;font-size:11px;color:#000;cursor:default}
     .wb{padding:6px 10px;flex:1;font-size:12px;line-height:1.3;color:#222;overflow:hidden}
-    .term{background:#000;color:#0f0;font-family:'Courier New',monospace;font-size:12px;padding:8px 10px;border:2px solid;border-color:#808080 #fff #fff #808080;height:340px;overflow-y:auto;overflow-x:hidden}
+    .term{background:#000;color:#0f0;font-family:'Courier New',monospace;font-size:12px;padding:8px 10px;border:2px solid;border-color:#808080 #fff #fff #808080;flex:1;overflow-y:auto;overflow-x:hidden}
     .term .p{color:#0f0}.term .c{color:#fff}.term .o{color:#0f0;display:block;padding-left:8px;white-space:pre-wrap;word-break:break-all;font-size:12px;line-height:1.4}
     .blink{animation:blink 1s step-end infinite}@keyframes blink{50%{opacity:0}}
     .sb{background:#c0c0c0;border-top:1px solid #fff;padding:2px 8px;display:flex;justify-content:space-between;font-size:11px;color:#444;flex-shrink:0}

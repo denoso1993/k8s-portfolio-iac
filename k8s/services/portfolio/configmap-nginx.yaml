@@ -15,151 +15,210 @@ data:
                 --primary: #0078d4;
                 --secondary: #24292f;
                 --bg: #f0f2f5;
-                --surface: rgba(255, 255, 255, 0.95);
+                --surface: rgba(255,255,255,0.93);
                 --text: #1a1a1a;
                 --text-light: #57606a;
-                --border: #d0d7de;
+                --border: #e1e4e8;
                 --success: #2da44e;
-                --shadow: 0 20px 40px rgba(0,0,0,0.1);
+                --shadow: 0 8px 30px rgba(0,0,0,0.06);
             }
-            * { margin: 0; padding: 0; box-sizing: border-box; }
+            * { margin:0; padding:0; box-sizing:border-box; }
             body {
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                background: linear-gradient(160deg, #e8f0fe 0%, #dde3ed 40%, #f0f2f5 100%);
                 color: var(--text);
-                display: flex; justify-content: center; align-items: center;
-                min-height: 100vh; margin: 0; padding: 20px;
+                min-height: 100vh; padding: 30px 20px;
+                display: flex; flex-direction: column; align-items: center;
             }
+            .container {
+                max-width: 600px; width: 100%;
+            }
+            /* Header */
+            .header { margin-bottom: 32px; }
+            .header h1 {
+                font-size: 32px; font-weight: 700; color: var(--secondary);
+                letter-spacing: -0.75px; margin: 0 0 2px 0; line-height: 1.2;
+            }
+            .header .subtitle {
+                font-size: 15px; color: var(--primary); font-weight: 500;
+                margin: 0 0 4px 0;
+            }
+            .header .meta {
+                font-size: 13px; color: var(--text-light);
+                display: flex; flex-wrap: wrap; gap: 12px;
+            }
+            .header .meta span { display: inline-flex; align-items: center; gap: 4px; }
+
+            /* Cards */
             .card {
                 background: var(--surface);
-                backdrop-filter: blur(10px);
-                padding: 40px; border-radius: 20px;
-                border: 1px solid rgba(255,255,255,0.8);
-                box-shadow: var(--shadow);
-                max-width: 560px; width: 100%;
-            }
-            .header { text-align: center; margin-bottom: 15px; }
-            .header h1 { margin: 0; font-size: 28px; color: var(--secondary); letter-spacing: -0.5px; }
-            .header .title { color: var(--primary); font-weight: 600; margin-top: 4px; font-size: 13px; letter-spacing: 0.5px; }
-            .header .location { color: var(--text-light); font-size: 12px; margin-top: 2px; }
-            .divider { height: 1px; background: var(--border); margin: 20px 0; }
-            .section-title {
-                font-size: 11px; font-weight: 700; color: var(--text-light);
-                text-transform: uppercase; letter-spacing: 0.5px;
-                margin: 20px 0 10px 0; padding-left: 8px;
-                border-left: 3px solid var(--primary);
-            }
-            .grid-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-            .btn {
-                text-decoration: none; padding: 10px 14px; border-radius: 8px;
-                font-weight: 600; font-size: 12px; transition: all 0.2s ease;
-                display: flex; align-items: center; justify-content: center; gap: 6px;
-                border: 1px solid var(--border); color: var(--secondary); background: white;
-            }
-            .btn:hover { background: #f6f8fa; border-color: #8c959f; transform: translateY(-1px); }
-            .btn-primary { background: var(--primary); color: white; border: none; }
-            .btn-primary:hover { background: #005a9e; color: white; box-shadow: 0 4px 12px rgba(0,120,212,0.3); }
-            .btn-outline { background: white; }
-            .badge {
-                display: inline-block; padding: 3px 8px; border-radius: 4px;
-                font-size: 10px; font-weight: 600; background: #f0f2f5; color: var(--secondary);
+                border-radius: 16px; padding: 28px;
                 border: 1px solid var(--border);
+                box-shadow: var(--shadow);
+                margin-bottom: 20px;
+                backdrop-filter: blur(6px);
+                transition: box-shadow 0.2s;
             }
-            .badge.success { background: #dafbe1; border-color: var(--success); color: #1a7f37; }
-            .tech-stack { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
-            .infra-status {
-                margin-top: 15px; padding: 12px; border-radius: 8px;
-                background: #f6f8fa; border: 1px solid var(--border);
-                font-size: 11px; color: var(--text-light);
-                display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+            .card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+
+            .section-label {
+                font-size: 10px; font-weight: 700; color: var(--text-light);
+                text-transform: uppercase; letter-spacing: 0.8px;
+                margin-bottom: 14px;
             }
-            .status-dot { height: 7px; width: 7px; border-radius: 50%; display: inline-block; margin-right: 4px; }
-            .status-dot.green { background-color: var(--success); }
+
+            /* Bio */
             .bio {
-                font-size: 13px; line-height: 1.7; color: var(--text);
-                margin: 10px 0; text-align: justify;
+                font-size: 14px; line-height: 1.7; color: var(--text);
+                margin: 0;
             }
-            .profile-img {
-                width: 80px; height: 80px; border-radius: 50%;
-                background: linear-gradient(135deg, var(--primary), #005a9e);
-                margin: 0 auto 12px;
-                display: flex; align-items: center; justify-content: center;
-                color: white; font-size: 32px; font-weight: 700;
-                box-shadow: 0 4px 12px rgba(0,120,212,0.3);
-            }
+            .bio + .bio { margin-top: 14px; }
             .highlight { color: var(--primary); font-weight: 600; }
+
+            /* Tags */
+            .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+            .tag {
+                display: inline-block; padding: 4px 10px; border-radius: 6px;
+                font-size: 11px; font-weight: 500; background: #f0f2f5;
+                color: var(--secondary); border: 1px solid var(--border);
+            }
+            .tag:hover { background: #e8ecf0; }
+
+            /* Buttons */
+            .btn-group { display: flex; flex-wrap: wrap; gap: 8px; }
+            .btn {
+                text-decoration: none; padding: 10px 18px; border-radius: 8px;
+                font-weight: 500; font-size: 13px; transition: all 0.15s;
+                display: inline-flex; align-items: center; gap: 6px;
+                border: 1px solid var(--border); color: var(--secondary);
+                background: white; cursor: pointer; flex: 1 0 auto;
+                justify-content: center;
+            }
+            .btn:hover { background: #f6f8fa; border-color: #8c959f; }
+            .btn-primary { background: var(--primary); color: #fff; border: none; }
+            .btn-primary:hover { background: #005a9e; color: #fff; }
+
+            /* Status grid */
+            .status-grid {
+                display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+            }
+            .status-item {
+                display: flex; align-items: center; gap: 6px;
+                font-size: 12px; color: var(--text-light);
+            }
+            .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+            .dot.green { background: var(--success); }
+
+            /* Dashboard placeholder */
+            .dash-placeholder {
+                background: #f6f8fa; border-radius: 10px;
+                border: 1px dashed var(--border);
+                padding: 24px; text-align: center;
+                font-size: 13px; color: var(--text-light);
+            }
+
+            /* Divider */
+            hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+            @media (max-width: 480px) {
+                body { padding: 16px 12px; }
+                .card { padding: 20px; }
+                .header h1 { font-size: 26px; }
+                .btn { font-size: 12px; padding: 8px 14px; }
+                .status-grid { grid-template-columns: 1fr; }
+            }
         </style>
     </head>
     <body>
-        <div class="card">
-            <div class="profile-img">DO</div>
+        <div class="container">
+
             <div class="header">
                 <h1>Denis Oliveira Ramos</h1>
-                <div class="title">Senior Cloud &amp; Infrastructure Engineer</div>
-                <div class="location">Barueri, SP · Brasil · <strong>Inglês C1/C2</strong></div>
+                <div class="subtitle">Senior Cloud &amp; Infrastructure Engineer</div>
+                <div class="meta">
+                    <span>📍 Barueri, SP · Brasil</span>
+                    <span>🌐 Inglês C1/C2</span>
+                    <span>💼 Avanade (Microsoft Unified Support)</span>
+                </div>
             </div>
 
-            <div class="bio">
-                Profissional de Infraestrutura Cloud e SRE com foco em <span class="highlight">Resiliência, Disaster Recovery</span> e operações de <span class="highlight">alta disponibilidade</span>.
-                Atualmente na <strong>Avanade (Microsoft Unified Support)</strong>, onde atuo mitigando riscos operacionais e otimizando métricas críticas como <span class="highlight">RTO, RPO, MTTR e MTBF</span> em ambientes enterprise.
-            </div>
-            <div class="bio">
-                Tenho trabalhado com <span class="highlight">Kubernetes</span> e automação — mantenho um laboratório SRE prático com cluster Kind, observabilidade completa (Prometheus + Grafana + Loki) e todo o ciclo GitOps com ArgoCD.
-                Também desenvolvo soluções com <span class="highlight">IA e automação</span>, criando engines em PowerShell que transformam logs brutos em dashboards em tempo real.
-                Infraestrutura como código, Linux, Windows Server e bancos de dados (PostgreSQL, SQL Server) completam meu stack do dia a dia.
-            </div>
-
-            <div class="section-title">Tech Stack</div>
-            <div class="tech-stack">
-                <span class="badge">Kubernetes</span>
-                <span class="badge">Docker</span>
-                <span class="badge">Kind</span>
-                <span class="badge">Terraform</span>
-                <span class="badge">Helm</span>
-                <span class="badge">nginx</span>
-                <span class="badge">PostgreSQL</span>
-                <span class="badge">ArgoCD</span>
-                <span class="badge">GitOps</span>
-                <span class="badge">Prometheus</span>
-                <span class="badge">Grafana</span>
-                <span class="badge">Loki</span>
-                <span class="badge">Kyverno</span>
-                <span class="badge">cert-manager</span>
-                <span class="badge">Cloudflare</span>
-                <span class="badge">PowerShell</span>
-                <span class="badge">Linux (RHEL/Oracle)</span>
-                <span class="badge">Windows Server</span>
+            <!-- Bio -->
+            <div class="card">
+                <div class="section-label">Sobre</div>
+                <div class="bio">
+                    Profissional de Infraestrutura Cloud e SRE com foco em <span class="highlight">Resiliência, Disaster Recovery</span> e operações de <span class="highlight">alta disponibilidade</span>. Na Avanade, atuo mitigando riscos operacionais e otimizando métricas críticas como <span class="highlight">RTO, RPO, MTTR e MTBF</span> em ambientes enterprise.
+                </div>
+                <div class="bio" style="margin-top:14px;">
+                    Tenho trabalhado com <span class="highlight">Kubernetes</span> e automação — mantenho um laboratório SRE prático com cluster Kind, observabilidade completa (Prometheus + Grafana + Loki) e todo o ciclo GitOps com ArgoCD. Também desenvolvo soluções com <span class="highlight">IA e automação</span>, criando engines em PowerShell que transformam logs brutos em dashboards em tempo real.
+                </div>
             </div>
 
-            <div class="section-title">Currículos</div>
-            <div class="grid-buttons">
-                <a href="https://drive.google.com/file/d/1Zbhm9hkdQEvu4AWEoTIGneDyRZHXnx9J/view" target="_blank" class="btn btn-primary">📄 Português (PT-BR)</a>
-                <a href="https://drive.google.com/file/d/1fz-Jb7Til1SDA_M8YvjQ9fOwnLrKJXPF/view" target="_blank" class="btn btn-primary">📄 English (EN-US)</a>
+            <!-- Tech Stack -->
+            <div class="card">
+                <div class="section-label">Tech Stack</div>
+                <div class="tags">
+                    <span class="tag">Kubernetes</span>
+                    <span class="tag">Docker</span>
+                    <span class="tag">Kind</span>
+                    <span class="tag">Terraform</span>
+                    <span class="tag">Helm</span>
+                    <span class="tag">nginx</span>
+                    <span class="tag">PostgreSQL</span>
+                    <span class="tag">ArgoCD</span>
+                    <span class="tag">GitOps</span>
+                    <span class="tag">Prometheus</span>
+                    <span class="tag">Grafana</span>
+                    <span class="tag">Loki</span>
+                    <span class="tag">Kyverno</span>
+                    <span class="tag">cert-manager</span>
+                    <span class="tag">Cloudflare</span>
+                    <span class="tag">PowerShell</span>
+                    <span class="tag">Linux (RHEL/Oracle)</span>
+                    <span class="tag">Windows Server</span>
+                </div>
             </div>
 
-            <div class="section-title">Links</div>
-            <div class="grid-buttons">
-                <a href="https://linkedin.com/in/denis93" target="_blank" class="btn btn-outline">💼 LinkedIn</a>
-                <a href="https://github.com/denoso1993/k8s-portfolio-iac" target="_blank" class="btn btn-outline">🐙 Cluster K8s (GitHub)</a>
-                <a href="mailto:denis_oliveira@rocketmail.com" class="btn btn-outline">📧 E-mail</a>
-                <a href="https://drive.google.com/drive/folders/1k_4mO-j4WEoaIGngR9cGLX1WpVSKC-AD" target="_blank" class="btn btn-outline">📜 Certificações</a>
+            <!-- Curriculos + Links -->
+            <div class="card">
+                <div class="section-label">Currículos</div>
+                <div class="btn-group">
+                    <a href="https://drive.google.com/file/d/1Zbhm9hkdQEvu4AWEoTIGneDyRZHXnx9J/view" target="_blank" class="btn btn-primary">📄 Português (PT-BR)</a>
+                    <a href="https://drive.google.com/file/d/1fz-Jb7Til1SDA_M8YvjQ9fOwnLrKJXPF/view" target="_blank" class="btn btn-primary">📄 English (EN-US)</a>
+                </div>
+
+                <hr>
+
+                <div class="section-label">Links</div>
+                <div class="btn-group">
+                    <a href="https://linkedin.com/in/denis93" target="_blank" class="btn">💼 LinkedIn</a>
+                    <a href="https://github.com/denoso1993/k8s-portfolio-iac" target="_blank" class="btn">🐙 Cluster K8s (GitHub)</a>
+                    <a href="mailto:denis_oliveira@rocketmail.com" class="btn">📧 E-mail</a>
+                    <a href="https://drive.google.com/drive/folders/1k_4mO-j4WEoaIGngR9cGLX1WpVSKC-AD" target="_blank" class="btn">📜 Certificações</a>
+                </div>
             </div>
 
-            <div class="section-title">Cluster Status</div>
-            <div class="infra-status">
-                <div><span class="status-dot green"></span>Cluster: Kind</div>
-                <div><span class="status-dot green"></span>Pods: 15/15 running</div>
-                <div><span class="status-dot green"></span>Ingress: nginx</div>
-                <div><span class="status-dot green"></span>Domain: denisdeoliveira.com.br</div>
-                <div><span class="status-dot green"></span>GitOps: ArgoCD</div>
-                <div><span class="status-dot green"></span>Tunnel: Cloudflare</div>
+            <!-- Cluster Status -->
+            <div class="card">
+                <div class="section-label">Cluster Status</div>
+                <div class="status-grid">
+                    <div class="status-item"><span class="dot green"></span>Cluster: Kind</div>
+                    <div class="status-item"><span class="dot green"></span>Pods: 15/15 running</div>
+                    <div class="status-item"><span class="dot green"></span>Ingress: nginx</div>
+                    <div class="status-item"><span class="dot green"></span>Domain: denisdeoliveira.com.br</div>
+                    <div class="status-item"><span class="dot green"></span>GitOps: ArgoCD</div>
+                    <div class="status-item"><span class="dot green"></span>Tunnel: Cloudflare</div>
+                </div>
             </div>
 
-            <div class="section-title">Dashboard</div>
-            <div style="text-align:center;padding:20px;background:#f0f2f5;border-radius:8px;border:1px solid var(--border);font-size:13px;color:var(--text-light);margin-top:8px;">
-                📊 <strong>Dashboard ao vivo em breve</strong><br>
-                <span style="font-size:11px;">Monitoramento Prometheus + Grafana sendo configurado</span>
+            <!-- Dashboard -->
+            <div class="card">
+                <div class="section-label">Dashboard</div>
+                <div class="dash-placeholder">
+                    📊 Dashboard ao vivo em breve<br>
+                    <span style="font-size:12px;color:#8c959f;">Monitoramento Prometheus + Grafana sendo configurado</span>
+                </div>
             </div>
+
         </div>
     </body>
     </html>

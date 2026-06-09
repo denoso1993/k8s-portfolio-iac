@@ -78,11 +78,26 @@ data:
     <!-- DISPOSITIVOS -->
     <div class="w" style="top:550px;left:calc(50% - 970px);width:400px;height:300px;z-index:3" onclick="bringFwd(this)">
       <div class="wt"><span>🖥️ Gerenciador de Dispositivos</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
-      <div class="wb" style="padding:6px 10px">
-        <div style="font-weight:700;font-size:12px;margin-bottom:1px;">lab-sre-denoso · Kind v1.27.3</div>
-        <div><span class="mb"><span class="n">15</span><span class="l">Pods</span></span><span class="mb"><span class="n">6</span><span class="l">Svcs</span></span><span class="mb"><span class="n">3</span><span class="l">NS</span></span></div>
-        <div style="margin-top:2px;font-size:11px;">
-          🟢 Kind · nginx · ArgoCD · Cloudflare · cert-manager · HPA · PostgreSQL 15
+      <div class="wb" style="padding:8px 10px;font-size:11px">
+        <div style="font-weight:700;font-size:13px;margin-bottom:4px;color:#000080;">📦 lab-sre-denoso · Kind v1.27.3</div>
+        <div style="display:flex;gap:4px;margin-bottom:4px;flex-wrap:wrap;">
+          <span style="background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:4px 8px;text-align:center;min-width:44px;"><span style="font-size:15px;font-weight:700;display:block;">15</span><span style="font-size:9px;color:#555;">Pods</span></span>
+          <span style="background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:4px 8px;text-align:center;min-width:44px;"><span style="font-size:15px;font-weight:700;display:block;">6</span><span style="font-size:9px;color:#555;">Svcs</span></span>
+          <span style="background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:4px 8px;text-align:center;min-width:44px;"><span style="font-size:15px;font-weight:700;display:block;">3</span><span style="font-size:9px;color:#555;">NS</span></span>
+          <span style="background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:4px 8px;text-align:center;min-width:44px;"><span style="font-size:15px;font-weight:700;display:block;">1</span><span style="font-size:9px;color:#555;">No</span></span>
+          <span style="background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:4px 8px;text-align:center;min-width:44px;"><span style="font-size:15px;font-weight:700;display:block;">99%</span><span style="font-size:9px;color:#555;">Uptime</span></span>
+        </div>
+        <div style="border-top:1px solid #808080;border-bottom:1px solid #fff;padding-top:3px;margin-bottom:3px;"></div>
+        <div style="font-size:11px;line-height:1.6;">
+          <div>▶ <strong>Cluster:</strong> Kind (WSL2) · K8s v1.27.3</div>
+          <div>▶ <strong>Ingress:</strong> nginx-controller · NodePort 30080</div>
+          <div>▶ <strong>GitOps:</strong> ArgoCD v2.12.3 · auto-sync</div>
+          <div>▶ <strong>Cert:</strong> cert-manager · Let’s Encrypt</div>
+          <div>▶ <strong>DB:</strong> PostgreSQL 15 · StatefulSet + PVC</div>
+          <div>▶ <strong>Monitor:</strong> Prometheus + Grafana + Loki</div>
+          <div>▶ <strong>Policy:</strong> Kyverno · NetworkPolicies · HPA</div>
+          <div>▶ <strong>Tunnel:</strong> Cloudflare · TLS edge</div>
+          <div>▶ <strong>API:</strong> kubectl proxy · /k8s/ endpoint</div>
         </div>
       </div>
     </div>

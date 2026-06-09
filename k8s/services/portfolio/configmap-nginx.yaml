@@ -11,11 +11,6 @@ data:
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Denis Oliveira Ramos</title>
         <style>
-            @font-face {
-                font-family: 'W95';
-                src: local('MS Sans Serif'), local('Microsoft Sans Serif'), local('Courier New');
-            }
-
             * { margin:0; padding:0; box-sizing:border-box; }
 
             body {
@@ -24,15 +19,35 @@ data:
                 min-height: 100vh; overflow-x: hidden;
                 font-size: 11px;
                 display: flex; flex-direction: column;
+                background-image:
+                    radial-gradient(circle at 20% 30%, rgba(0,255,255,0.05) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 70%, rgba(255,255,0,0.03) 0%, transparent 50%),
+                    repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.01) 40px, rgba(255,255,255,0.01) 41px);
             }
 
-            /* ===== DESKTOP ===== */
+            /* ===== DESKTOP ICONS ===== */
+            .desktop-icons {
+                padding: 8px 12px 0;
+                display: flex; gap: 20px;
+                flex-wrap: wrap;
+                max-width: 960px; margin: 0 auto; width: 100%;
+            }
+            .desk-icon {
+                width: 64px; text-align: center;
+                color: #fff; font-size: 10px;
+                cursor: pointer; padding: 4px;
+                text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+            }
+            .desk-icon .ico {
+                font-size: 28px; display: block;
+                margin-bottom: 2px;
+            }
+
             .desktop {
                 flex: 1;
-                padding: 12px;
+                padding: 8px 12px 12px;
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                grid-template-rows: auto auto auto;
                 gap: 12px;
                 align-content: start;
                 max-width: 960px;
@@ -40,134 +55,180 @@ data:
                 width: 100%;
             }
 
+            /* ===== WINDOW ===== */
             .window {
                 background: #c0c0c0;
                 border: 2px solid;
                 border-color: #ffffff #808080 #808080 #ffffff;
-                box-shadow: 1px 1px 0 0 #404040;
-                display: flex;
-                flex-direction: column;
-                font-size: 11px;
+                box-shadow: 2px 2px 0 0 #404040;
+                display: flex; flex-direction: column;
             }
-            .window:focus-within { z-index: 1; }
 
             .window-title {
                 background: linear-gradient(90deg, #000080, #1084d0);
                 color: #fff;
                 font-weight: 700; font-size: 11px;
-                padding: 3px 4px 3px 6px;
+                padding: 4px 4px 4px 6px;
                 display: flex; align-items: center; justify-content: space-between;
-                cursor: default;
                 user-select: none;
                 letter-spacing: 0px;
+                min-height: 22px;
             }
             .window-title .buttons { display: flex; gap: 2px; }
             .window-title .b {
-                width: 14px; height: 13px;
+                width: 16px; height: 14px;
                 background: #c0c0c0;
                 border: 1px solid;
                 border-color: #ffffff #808080 #808080 #ffffff;
                 display: flex; align-items: center; justify-content: center;
-                font-size: 8px; font-weight: 700; color: #000;
-                cursor: pointer; line-height: 1;
-                padding: 0;
-            }
-            .window-title .b:active {
-                border-color: #808080 #ffffff #ffffff #808080;
+                font-size: 9px; font-weight: 700; color: #000;
+                cursor: default; line-height: 1; padding: 0;
             }
             .window-body {
-                padding: 10px 12px 12px;
+                padding: 12px 14px 14px;
                 flex: 1;
                 font-size: 11px;
-                line-height: 1.5;
+                line-height: 1.6;
                 color: #222;
             }
 
-            .window.full-row { grid-column: 1 / -1; }
-            .window.half { grid-column: span 1; }
+            .window.full { grid-column: 1 / -1; }
 
-            /* ===== TITLE BAR ICON ===== */
-            .win-icon {
-                display: inline-block;
-                width: 14px; height: 14px;
-                background: #c0c0c0;
-                border: 1px solid;
-                border-color: #ffffff #808080 #808080 #ffffff;
-                text-align: center; font-size: 10px; line-height: 14px;
-                margin-right: 4px;
+            /* ===== PROFILE ===== */
+            .profile-row {
+                display: flex; gap: 20px; align-items: center;
+                flex-wrap: wrap;
+            }
+            .profile-box {
+                background: #fff;
+                border: 2px solid;
+                border-color: #808080 #ffffff #ffffff #808080;
+                padding: 8px;
+                text-align: center;
+                flex-shrink: 0;
+            }
+            .profile-box .initials {
+                font-size: 36px; font-weight: 700; color: #000080;
+                line-height: 1;
+            }
+            .profile-box .sub {
+                font-size: 9px; color: #666; margin-top: 2px;
+            }
+            .profile-info h1 {
+                font-size: 20px; font-weight: 700; color: #000;
+                margin-bottom: 2px;
+            }
+            .profile-info .role {
+                font-size: 12px; color: #444;
+                margin-bottom: 6px;
             }
 
-            /* ===== W95 BUTTONS ===== */
+            .w95-hr {
+                border: none;
+                border-top: 1px solid #808080;
+                border-bottom: 1px solid #ffffff;
+                margin: 10px 0;
+            }
+
+            .win-icon {
+                display: inline-block; margin-right: 4px;
+            }
+
+            /* ===== BUTTONS ===== */
             .w95-btn {
                 background: #c0c0c0;
                 border: 1px solid;
                 border-color: #ffffff #808080 #808080 #ffffff;
-                padding: 4px 12px;
+                padding: 4px 14px;
                 font-family: inherit; font-size: 11px;
                 cursor: pointer;
                 display: inline-flex; align-items: center; gap: 4px;
                 text-decoration: none; color: #222;
+                margin: 2px;
             }
             .w95-btn:active {
                 border-color: #808080 #ffffff #ffffff #808080;
             }
-            .w95-btn.primary {
-                background: #c0c0c0;
-                border-color: #ffffff #808080 #808080 #ffffff;
-            }
 
-            /* ===== TABS / SECTIONS ===== */
-            .field-row {
-                display: flex; flex-wrap: wrap; gap: 4px 8px;
-                align-items: center;
-            }
-            .field-row label {
-                font-size: 11px; color: #222;
-            }
-
-            /* ===== LISTS ===== */
+            /* ===== TECH ITEMS ===== */
             .tech-grid {
-                display: flex; flex-wrap: wrap; gap: 6px;
-                margin-top: 6px;
+                display: flex; flex-wrap: wrap; gap: 4px;
             }
             .tech-item {
                 background: #fff;
-                border: 1px solid #808080;
+                border: 1px solid;
                 border-color: #808080 #ffffff #ffffff #808080;
-                padding: 2px 8px;
+                padding: 3px 10px;
                 font-size: 11px;
                 color: #222;
             }
 
             /* ===== METRICS ===== */
-            .metric-row {
-                display: flex; gap: 16px; flex-wrap: wrap;
-                margin: 8px 0;
-            }
+            .metric-row { display: flex; gap: 12px; flex-wrap: wrap; }
             .metric-box {
                 background: #fff;
                 border: 1px solid;
                 border-color: #808080 #ffffff #ffffff #808080;
-                padding: 6px 12px;
+                padding: 8px 16px;
                 text-align: center;
-                min-width: 60px;
+                flex: 1; min-width: 60px;
             }
-            .metric-box .num { font-size: 18px; font-weight: 700; color: #000; display: block; }
-            .metric-box .lbl { font-size: 10px; color: #444; }
+            .metric-box .num { font-size: 20px; font-weight: 700; color: #000; }
+            .metric-box .lbl { font-size: 10px; color: #555; }
 
             /* ===== STATUS BAR ===== */
             .status-bar {
                 background: #c0c0c0;
                 border-top: 1px solid #ffffff;
-                padding: 2px 6px;
-                display: flex; justify-content: space-between;
+                padding: 3px 8px;
+                display: flex; justify-content: space-between; flex-wrap: wrap;
                 font-size: 11px; color: #444;
-                margin-top: 4px;
             }
-            .status-bar .dot {
-                display: inline-block; width: 8px; height: 8px;
-                background: #00aa00; border: 1px solid #008800;
-                margin-right: 4px; vertical-align: middle;
+            .dot-green { width: 8px; height: 8px; background: #00aa00; border: 1px solid #008800; display: inline-block; margin-right: 4px; vertical-align: middle; }
+
+            /* ===== PAINT FRAME ===== */
+            .paint-frame {
+                border: 2px solid;
+                border-color: #ffffff #808080 #808080 #ffffff;
+                background: #c0c0c0;
+            }
+            .paint-title {
+                background: linear-gradient(90deg, #000080, #1084d0);
+                color: #fff; font-weight: 700; font-size: 11px;
+                padding: 3px 6px;
+                display: flex; align-items: center; gap: 6px;
+            }
+            .paint-toolbar {
+                background: #c0c0c0;
+                border-bottom: 1px solid #808080;
+                padding: 4px 6px;
+                display: flex; gap: 4px; flex-wrap: wrap;
+            }
+            .paint-tool {
+                width: 22px; height: 22px;
+                background: #c0c0c0;
+                border: 1px solid;
+                border-color: #ffffff #808080 #808080 #ffffff;
+                display: flex; align-items: center; justify-content: center;
+                font-size: 12px; cursor: default;
+            }
+            .paint-canvas {
+                background: #fff;
+                border: 2px solid;
+                border-color: #808080 #ffffff #ffffff #808080;
+                margin: 6px;
+                padding: 24px;
+                text-align: center;
+                min-height: 80px;
+                display: flex; flex-direction: column;
+                align-items: center; justify-content: center;
+            }
+            .paint-status {
+                background: #c0c0c0;
+                border-top: 1px solid #ffffff;
+                padding: 2px 6px;
+                font-size: 10px; color: #444;
+                display: flex; justify-content: space-between;
             }
 
             /* ===== TASKBAR ===== */
@@ -175,29 +236,24 @@ data:
                 background: #c0c0c0;
                 border-top: 2px solid #ffffff;
                 padding: 3px 4px;
-                display: flex; align-items: center;
-                gap: 4px;
+                display: flex; align-items: center; gap: 4px;
                 position: sticky; bottom: 0;
             }
             .taskbar .start {
                 background: #c0c0c0;
                 border: 1px solid;
                 border-color: #ffffff #808080 #808080 #ffffff;
-                padding: 2px 8px; font-weight: 700;
+                padding: 2px 10px; font-weight: 700;
                 font-size: 11px; font-family: inherit;
                 display: flex; align-items: center; gap: 4px;
                 cursor: pointer;
-            }
-            .taskbar .start:active {
-                border-color: #808080 #ffffff #ffffff #808080;
             }
             .taskbar .task {
                 background: #c0c0c0;
                 border: 1px solid;
                 border-color: #808080 #ffffff #ffffff #808080;
-                padding: 2px 10px; font-size: 11px;
+                padding: 2px 12px; font-size: 11px;
                 display: flex; align-items: center;
-                height: 22px;
             }
             .taskbar .time {
                 margin-left: auto;
@@ -208,69 +264,83 @@ data:
                 background: #c0c0c0;
             }
 
-            /* ===== DIVIDER ===== */
-            .w95-hr {
-                border: none;
-                border-top: 1px solid #808080;
-                border-bottom: 1px solid #ffffff;
-                margin: 8px 0;
-            }
-
             a { color: #000080; }
             a:visited { color: #800080; }
 
             @media (max-width: 640px) {
-                .desktop { grid-template-columns: 1fr; padding: 8px; gap: 8px; }
+                .desktop { grid-template-columns: 1fr; padding: 6px; gap: 8px; }
+                .desktop-icons { padding: 4px 6px 0; gap: 12px; }
+                .profile-row { flex-direction: column; align-items: flex-start; }
             }
         </style>
     </head>
     <body>
 
+        <!-- DESKTOP ICONS -->
+        <div class="desktop-icons">
+            <div class="desk-icon">
+                <span class="ico">🖥️</span>
+                <span>Meu Cluster</span>
+            </div>
+            <div class="desk-icon">
+                <span class="ico">📄</span>
+                <span>Currículo</span>
+            </div>
+            <div class="desk-icon">
+                <span class="ico">🌐</span>
+                <span>Internet</span>
+            </div>
+            <div class="desk-icon">
+                <span class="ico">♻️</span>
+                <span>Lixeira</span>
+            </div>
+        </div>
+
         <div class="desktop">
 
-            <!-- WINDOW: Sobre (full width) -->
-            <div class="window full-row">
+            <!-- SOBRE -->
+            <div class="window full">
                 <div class="window-title">
-                    <span><span class="win-icon">ℹ</span> denis@denis-pc: ~/sobre</span>
-                    <div class="buttons">
-                        <span class="b">?</span>
-                        <span class="b">✕</span>
-                    </div>
+                    <span><span class="win-icon">🪟</span> denis@denis-pc: ~/sobre — Notepad</span>
+                    <div class="buttons"><span class="b">_</span><span class="b">□</span><span class="b">✕</span></div>
                 </div>
                 <div class="window-body">
-                    <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
-                        <div style="background:#fff;border:1px solid #808080;padding:2px 6px;font-size:28px;font-weight:700;color:#000080;">DO</div>
-                        <div style="flex:1;">
-                            <div style="font-size:16px;font-weight:700;color:#000;margin-bottom:2px;">Denis Oliveira Ramos</div>
-                            <div style="font-size:12px;color:#444;margin-bottom:6px;">Senior Cloud &amp; Infrastructure Engineer</div>
-                            <div class="field-row">
-                                <label>📍 Barueri, SP</label>
-                                <label>🌐 Inglês C1/C2</label>
+                    <div class="profile-row">
+                        <div class="profile-box">
+                            <div class="initials">DO</div>
+                            <div class="sub">SRE</div>
+                        </div>
+                        <div class="profile-info">
+                            <h1>Denis Oliveira Ramos</h1>
+                            <div class="role">Senior Cloud &amp; Infrastructure Engineer</div>
+                            <div style="display:flex;flex-wrap:wrap;gap:12px;font-size:11px;color:#555;">
+                                <span>📍 Barueri, SP</span>
+                                <span>🌐 Inglês C1/C2</span>
                             </div>
                         </div>
                     </div>
                     <div class="w95-hr"></div>
-                    <p style="margin-bottom:6px;">
-                        Profissional de Infraestrutura Cloud e SRE com foco em <strong>Resiliência, Disaster Recovery</strong> e operações de <strong>alta disponibilidade</strong>. Atuo mitigando riscos operacionais e otimizando métricas críticas como <strong>RTO, RPO, MTTR e MTBF</strong> em ambientes enterprise.
+                    <p style="margin-bottom:8px;">
+                        Profissional de Infraestrutura Cloud e SRE com foco em <strong>Resiliência, Disaster Recovery</strong> e operações de <strong>alta disponibilidade</strong>. Atuo mitigando riscos operacionais e otimizando métricas como <strong>RTO, RPO, MTTR e MTBF</strong> em ambientes enterprise.
                     </p>
                     <p>
-                        Tenho trabalhado com <strong>Kubernetes</strong> e automação — mantenho um laboratório SRE prático com cluster Kind, observabilidade completa (Prometheus + Grafana + Loki) e todo o ciclo GitOps com ArgoCD. Também desenvolvo soluções com IA e automação, criando engines em PowerShell que transformam logs brutos em dashboards em tempo real.
+                        Tenho trabalhado com <strong>Kubernetes</strong> e automação — mantenho um <strong>laboratório SRE</strong> prático com cluster Kind, observabilidade completa (Prometheus + Grafana + Loki) e todo o ciclo GitOps com ArgoCD. Este site está sendo servido diretamente deste cluster.
                     </p>
-                    <div class="status-bar">
-                        <span><span class="dot"></span> Site rodando no cluster Kind · WSL2 · Cloudflare Tunnel</span>
-                        <span>💾 15/15 pods online</span>
-                    </div>
+                </div>
+                <div class="status-bar">
+                    <span><span class="dot-green"></span> Site servido pelo cluster Kind · WSL2 · Cloudflare Tunnel</span>
+                    <span>15/15 pods online</span>
                 </div>
             </div>
 
-            <!-- WINDOW: Tech Stack -->
-            <div class="window half">
+            <!-- TECH STACK -->
+            <div class="window">
                 <div class="window-title">
-                    <span><span class="win-icon">⚙</span> painel-de-controle.exe</span>
+                    <span><span class="win-icon">⚙️</span> Painel de Controle</span>
                     <div class="buttons"><span class="b">_</span><span class="b">□</span><span class="b">✕</span></div>
                 </div>
                 <div class="window-body">
-                    <div style="font-weight:700;margin-bottom:6px;">Tech Stack</div>
+                    <div style="font-weight:700;margin-bottom:8px;">Tecnologias Instaladas</div>
                     <div class="tech-grid">
                         <span class="tech-item">Kubernetes</span>
                         <span class="tech-item">Docker</span>
@@ -294,14 +364,14 @@ data:
                 </div>
             </div>
 
-            <!-- WINDOW: Metrics -->
-            <div class="window half">
+            <!-- TASK MANAGER -->
+            <div class="window">
                 <div class="window-title">
-                    <span><span class="win-icon">📊</span> Gerenciador de Tarefas</span>
+                    <span><span class="win-icon">📊</span> Gerenciador de Tarefas — Cluster</span>
                     <div class="buttons"><span class="b">_</span><span class="b">□</span><span class="b">✕</span></div>
                 </div>
                 <div class="window-body">
-                    <div style="font-weight:700;margin-bottom:4px;">Cluster: lab-sre-denoso</div>
+                    <div style="font-weight:700;margin-bottom:8px;">lab-sre-denoso · Kind v1.27.3</div>
                     <div class="metric-row">
                         <div class="metric-box"><span class="num">15</span><span class="lbl">Pods</span></div>
                         <div class="metric-box"><span class="num">6</span><span class="lbl">Serviços</span></div>
@@ -310,59 +380,59 @@ data:
                     </div>
                     <div class="w95-hr"></div>
                     <div style="font-size:11px;">
-                        <div>📡 <strong>Cluster:</strong> Kind v1.27.3</div>
-                        <div>🌐 <strong>Ingress:</strong> nginx</div>
-                        <div>🔁 <strong>GitOps:</strong> ArgoCD</div>
-                        <div>🔒 <strong>Tunnel:</strong> Cloudflare</div>
+                        <div>🟢 <strong>Cluster:</strong> Kind (WSL2)</div>
+                        <div>🟢 <strong>Ingress:</strong> nginx</div>
+                        <div>🟢 <strong>GitOps:</strong> ArgoCD</div>
+                        <div>🟢 <strong>Tunnel:</strong> Cloudflare</div>
+                        <div>🟢 <strong>Cert:</strong> cert-manager</div>
                     </div>
                 </div>
             </div>
 
-            <!-- WINDOW: Currículos -->
-            <div class="window half">
+            <!-- CURRÍCULOS -->
+            <div class="window full" style="grid-column:span 1;">
                 <div class="window-title">
-                    <span><span class="win-icon">📄</span> Currículos</span>
+                    <span><span class="win-icon">📄</span> Currículos.exe</span>
                     <div class="buttons"><span class="b">_</span><span class="b">□</span><span class="b">✕</span></div>
                 </div>
                 <div class="window-body">
-                    <div style="margin-bottom:8px;">📄 Selecione o idioma:</div>
-                    <div class="field-row">
-                        <a href="https://drive.google.com/file/d/1Zbhm9hkdQEvu4AWEoTIGneDyRZHXnx9J/view" target="_blank" class="w95-btn">Português (PT-BR)</a>
-                        <a href="https://drive.google.com/file/d/1fz-Jb7Til1SDA_M8YvjQ9fOwnLrKJXPF/view" target="_blank" class="w95-btn">English (EN-US)</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- WINDOW: Links -->
-            <div class="window half">
-                <div class="window-title">
-                    <span><span class="win-icon">🌐</span> Internet Explorer</span>
-                    <div class="buttons"><span class="b">_</span><span class="b">□</span><span class="b">✕</span></div>
-                </div>
-                <div class="window-body">
-                    <div class="field-row">
+                    <div style="margin-bottom:8px;">📄 Selecione o idioma para download:</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:4px;">
+                        <a href="https://drive.google.com/file/d/1Zbhm9hkdQEvu4AWEoTIGneDyRZHXnx9J/view" target="_blank" class="w95-btn">📄 Português (PT-BR)</a>
+                        <a href="https://drive.google.com/file/d/1fz-Jb7Til1SDA_M8YvjQ9fOwnLrKJXPF/view" target="_blank" class="w95-btn">📄 English (EN-US)</a>
                         <a href="https://linkedin.com/in/denis93" target="_blank" class="w95-btn">💼 LinkedIn</a>
-                        <a href="https://github.com/denoso1993/k8s-portfolio-iac" target="_blank" class="w95-btn">🐙 Cluster K8s</a>
+                        <a href="https://github.com/denoso1993/k8s-portfolio-iac" target="_blank" class="w95-btn">🐙 Cluster K8s (GitHub)</a>
                         <a href="mailto:denis_oliveira@rocketmail.com" class="w95-btn">📧 E-mail</a>
                         <a href="https://drive.google.com/drive/folders/1k_4mO-j4WEoaIGngR9cGLX1WpVSKC-AD" target="_blank" class="w95-btn">📜 Certificações</a>
                     </div>
                 </div>
             </div>
 
-            <!-- WINDOW: Dashboard -->
-            <div class="window full-row">
+            <!-- GRAFANA DASHBOARD (PAINT) -->
+            <div class="window full">
                 <div class="window-title">
-                    <span><span class="win-icon">📊</span> Grafana Dashboard (beta)</span>
+                    <span><span class="win-icon">🎨</span> paint.exe — grafana-dashboard.bmp</span>
                     <div class="buttons"><span class="b">_</span><span class="b">□</span><span class="b">✕</span></div>
                 </div>
-                <div class="window-body" style="text-align:center;padding:16px;">
-                    <div style="font-size:24px;margin-bottom:4px;">📊</div>
-                    <div><strong>Dashboard ao vivo em breve</strong></div>
-                    <div style="color:#666;margin-top:2px;">Monitoramento Prometheus + Grafana sendo configurado</div>
+                <div class="paint-toolbar">
+                    <span class="paint-tool">✏️</span>
+                    <span class="paint-tool">🖌️</span>
+                    <span class="paint-tool">🔲</span>
+                    <span class="paint-tool">🔵</span>
+                    <span class="paint-tool">🟥</span>
+                    <span class="paint-tool">🟡</span>
+                    <span class="paint-tool">🟢</span>
+                    <span style="margin-left:auto;font-size:10px;color:#444;">Grafana · Prometheus</span>
                 </div>
-                <div class="status-bar">
-                    <span>Para atualizar, pressione F5</span>
-                    <span>📡 Conectado</span>
+                <div class="paint-canvas">
+                    <div style="font-size:32px;margin-bottom:6px;">📊</div>
+                    <div style="font-weight:700;font-size:13px;">Dashboard ao vivo</div>
+                    <div style="color:#666;margin:4px 0;">Monitoramento Prometheus + Grafana</div>
+                    <div style="font-size:10px;color:#999;">Clique duas vezes para abrir no Paint</div>
+                </div>
+                <div class="paint-status">
+                    <span>🖼️ 640x480 · 16 cores</span>
+                    <span>🔌 Conectado ao cluster</span>
                 </div>
             </div>
 
@@ -370,24 +440,22 @@ data:
 
         <!-- TASKBAR -->
         <div class="taskbar">
-            <button class="start" onclick="alert('Iniciar - Windows 95 ♥ K8s')">
-                <span style="font-size:13px;">🪟</span> Iniciar
+            <button class="start" onclick="alert('Windows 95 ♥ Kubernetes 🐧')">
+                <span style="font-size:12px;">🪟</span> Iniciar
             </button>
-            <div class="task">📄 denis@denis-pc: ~</div>
-            <div class="task">📊 Gerenciador de Tarefas</div>
+            <div class="task">📄 Sobre — Notepad</div>
+            <div class="task">🎨 paint.exe</div>
             <div class="task">🌐 Internet Explorer</div>
-            <div class="time" id="clock">00:00</div>
+            <div class="time" id="clock"></div>
         </div>
 
         <script>
-            function updateClock() {
-                const d = new Date();
-                document.getElementById('clock').textContent =
-                    d.getHours().toString().padStart(2,'0') + ':' +
+            function c(){
+                const d=new Date();
+                document.getElementById('clock').textContent=
+                    d.getHours().toString().padStart(2,'0')+':'+
                     d.getMinutes().toString().padStart(2,'0');
-            }
-            updateClock();
-            setInterval(updateClock, 10000);
+            } c(); setInterval(c,10000);
         </script>
     </body>
     </html>

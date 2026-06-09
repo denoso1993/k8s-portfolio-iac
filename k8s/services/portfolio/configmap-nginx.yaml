@@ -10,37 +10,40 @@ data:
     <title>Denis Oliveira Ramos</title>
     <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'MS Sans Serif','Courier New',monospace;background:#008080;min-height:100vh;font-size:13px;padding:20px 20px 44px;background-image:radial-gradient(circle at 15% 20%,rgba(0,255,255,0.05) 0%,transparent 35%)}
-    .desk{max-width:1100px;margin:0 auto}
-    .w{background:#c0c0c0;border:2px solid;border-color:#fff #808080 #808080 #fff;box-shadow:2px 2px 0 0 #404040;margin-bottom:18px;display:flex;flex-direction:column}
-    .wt{background:linear-gradient(90deg,#000080,#1084d0);color:#fff;font-weight:700;font-size:13px;padding:5px 6px 5px 8px;display:flex;align-items:center;justify-content:space-between;user-select:none;min-height:26px}
-    .wt .btns{display:flex;gap:2px}
-    .wt .btns span{width:18px;height:16px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#000;cursor:default}
-    .wb{padding:14px 16px;flex:1;font-size:13px;line-height:1.6;color:#222}
-    .row{display:flex;gap:18px}
-    .col{flex:1}
-    .col2{flex:2}
-    .col3{flex:3}
-    .term{background:#000;color:#0f0;font-family:'Courier New',monospace;font-size:12px;line-height:1.5;padding:12px 14px;border:2px solid;border-color:#808080 #fff #fff #808080;min-height:180px;overflow:auto;max-height:280px}
+    body{font-family:'MS Sans Serif','Courier New',monospace;background:#008080;min-height:100vh;font-size:13px;padding:24px 24px 48px;background-image:radial-gradient(circle at 15% 20%,rgba(0,255,255,0.05) 0%,transparent 35%)}
+    .desk{max-width:1200px;margin:0 auto}
+    .w{background:#c0c0c0;border:2px solid;border-color:#fff #808080 #808080 #fff;box-shadow:2px 2px 0 0 #404040;margin-bottom:22px;display:flex;flex-direction:column}
+    .wt{background:linear-gradient(90deg,#000080,#1084d0);color:#fff;font-weight:700;font-size:14px;padding:6px 8px 6px 10px;display:flex;align-items:center;justify-content:space-between;user-select:none;min-height:30px}
+    .wt .btns{display:flex;gap:3px}
+    .wt .btns span{width:20px;height:17px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#000;cursor:default}
+    .wb{padding:18px 20px 22px;flex:1;font-size:14px;line-height:1.7;color:#222}
+    .row{display:flex;gap:22px;flex-wrap:wrap}
+    .col{flex:1;min-width:240px}
+    .col2{flex:2;min-width:300px}
+    .col3{flex:3;min-width:360px}
+    .term{background:#000;color:#0f0;font-family:'Courier New',monospace;font-size:13px;line-height:1.6;padding:14px 16px;border:2px solid;border-color:#808080 #fff #fff #808080;min-height:200px;overflow:auto;max-height:320px}
     .term .p{color:#0f0}.term .c{color:#fff}
     .term .o{color:#0f0;display:block;padding-left:14px;white-space:pre}
     .blink{animation:blink 1s step-end infinite}
     @keyframes blink{50%{opacity:0}}
-    .sb{background:#c0c0c0;border-top:1px solid #fff;padding:4px 10px;display:flex;justify-content:space-between;flex-wrap:wrap;font-size:12px;color:#444}
-    .dot-g{width:9px;height:9px;background:#0a0;border:1px solid #080;display:inline-block;margin-right:5px;vertical-align:middle}
-    .tg{display:flex;flex-wrap:wrap;gap:6px}
-    .tg span{background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:4px 11px;font-size:12px;color:#222}
-    .mb{background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:6px 12px;text-align:center;display:inline-block;margin:2px;min-width:55px}
-    .mb .n{font-size:18px;font-weight:700;color:#000}
-    .mb .l{font-size:10px;color:#555}
-    .w95-btn{background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;padding:6px 14px;font-family:inherit;font-size:12px;display:inline-flex;align-items:center;gap:4px;text-decoration:none;color:#222;margin:3px}
+    .sb{background:#c0c0c0;border-top:1px solid #fff;padding:5px 12px;display:flex;justify-content:space-between;flex-wrap:wrap;font-size:13px;color:#444}
+    .dot-g{width:10px;height:10px;background:#0a0;border:1px solid #080;display:inline-block;margin-right:5px;vertical-align:middle}
+    .tg{display:flex;flex-wrap:wrap;gap:7px}
+    .tg span{background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:5px 13px;font-size:13px;color:#222}
+    .mb{background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:8px 16px;text-align:center;display:inline-block;margin:3px;min-width:65px}
+    .mb .n{font-size:20px;font-weight:700;color:#000}
+    .mb .l{font-size:11px;color:#555}
+    .w95-btn{background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;padding:7px 18px;font-family:inherit;font-size:13px;display:inline-flex;align-items:center;gap:5px;text-decoration:none;color:#222;margin:4px}
     .taskbar{background:#c0c0c0;border-top:2px solid #fff;padding:4px 6px;display:flex;align-items:center;gap:4px;position:fixed;bottom:0;left:0;right:0;z-index:100}
-    .taskbar .start{background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;padding:3px 12px;font-weight:700;font-size:13px;font-family:inherit;display:flex;align-items:center;gap:4px;cursor:pointer}
-    .taskbar .task{background:#c0c0c0;border:1px solid;border-color:#808080 #fff #fff #808080;padding:3px 14px;font-size:12px;display:flex;align-items:center}
-    .taskbar .time{margin-left:auto;border:1px solid;border-color:#808080 #fff #fff #808080;padding:3px 8px;font-size:12px;background:#c0c0c0}
+    .taskbar .start{background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;padding:3px 14px;font-weight:700;font-size:14px;font-family:inherit;display:flex;align-items:center;gap:4px;cursor:pointer}
+    .taskbar .task{background:#c0c0c0;border:1px solid;border-color:#808080 #fff #fff #808080;padding:3px 16px;font-size:13px;display:flex;align-items:center}
+    .taskbar .time{margin-left:auto;border:1px solid;border-color:#808080 #fff #fff #808080;padding:3px 10px;font-size:13px;background:#c0c0c0}
     a{color:#000080}
-    .paint-tools{background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;padding:4px;display:grid;grid-template-columns:1fr 1fr;gap:3px;width:64px;flex-shrink:0}
-    .pt{width:24px;height:24px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:default}
+    .paint-tools{background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;padding:4px;display:grid;grid-template-columns:1fr 1fr;gap:3px;width:70px;flex-shrink:0}
+    .pt{width:26px;height:26px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:default}
+    .profile-name{font-size:22px;font-weight:700;color:#000;margin-bottom:2px}
+    .profile-role{font-size:15px;color:#444;margin-bottom:6px}
+    .profile-loc{font-size:13px;color:#666;margin-bottom:14px}
     @media(max-width:720px){.row{flex-direction:column}}
     </style></head>
     <body>
@@ -58,7 +61,6 @@ data:
             <span class="p">C:\&gt; </span><span class="c">kubectl get nodes</span>
             <span id="node-output" class="o">Carregando...</span>
             <span class="o"></span>
-            <span class="p">C:\&gt; </span><span class="c">cls</span>
             <span class="p">C:\&gt; <span class="blink">_</span></span>
           </div>
         </div>
@@ -67,11 +69,11 @@ data:
         <div class="w">
           <div class="wt"><span>🪟 Sobre - Notepad</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
           <div class="wb">
-            <div style="font-size:20px;font-weight:700;">Denis Oliveira Ramos</div>
-            <div style="font-size:14px;color:#444;margin-bottom:4px;">Senior Cloud &amp; Infrastructure Engineer</div>
-            <div style="font-size:12px;color:#666;margin-bottom:10px;">📍 Barueri, SP · 🌐 Inglês C1/C2</div>
-            <p style="margin-bottom:8px;">Profissional de Infraestrutura Cloud e SRE com foco em <strong>Resiliência, Disaster Recovery</strong> e <strong>alta disponibilidade</strong>. Atuo otimizando métricas como <strong>RTO, RPO, MTTR e MTBF</strong>.</p>
-            <p>Tenho trabalhado com <strong>Kubernetes</strong> — mantenho esse laboratório SRE com Kind, Prometheus, Grafana, Loki e ArgoCD. <strong>Este site roda neste cluster, 100% no WSL2.</strong></p>
+            <div class="profile-name">Denis Oliveira Ramos</div>
+            <div class="profile-role">Senior Cloud &amp; Infrastructure Engineer</div>
+            <div class="profile-loc">📍 Barueri, SP · 🌐 Inglês C1/C2</div>
+            <p style="margin-bottom:10px;">Profissional de Infraestrutura Cloud e SRE com foco em <strong>Resiliência, Disaster Recovery</strong> e <strong>alta disponibilidade</strong>. Atuo otimizando métricas como <strong>RTO, RPO, MTTR e MTBF</strong>.</p>
+            <p>Tenho trabalhado com <strong>Kubernetes</strong> — mantenho esse laboratório SRE com Kind, Prometheus, Grafana, Loki e ArgoCD. <strong>Este site roda no cluster, 100% no WSL2.</strong></p>
           </div>
         </div>
       </div>
@@ -94,9 +96,9 @@ data:
         <div class="w">
           <div class="wt"><span>🖥️ Gerenciador de Dispositivos</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
           <div class="wb">
-            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">lab-sre-denoso · Kind v1.27.3</div>
+            <div style="font-weight:700;font-size:14px;margin-bottom:6px;">lab-sre-denoso · Kind v1.27.3</div>
             <div><span class="mb"><span class="n">15</span><span class="l">Pods</span></span><span class="mb"><span class="n">6</span><span class="l">Svcs</span></span><span class="mb"><span class="n">3</span><span class="l">NS</span></span></div>
-            <div style="margin-top:8px;font-size:12px;">
+            <div style="margin-top:10px;font-size:13px;">
               🟢 Kind · nginx · ArgoCD · Cloudflare<br>
               🟢 cert-manager · Kyverno · HPA<br>
               🟢 Prometheus · Grafana · Loki<br>
@@ -110,13 +112,13 @@ data:
         <div class="w">
           <div class="wt"><span>📄 Links</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
           <div class="wb">
-            <div style="font-weight:700;margin-bottom:6px;">Currículos</div>
-            <a href="https://drive.google.com/file/d/1Zbhm9hkdQEvu4AWEoTIGneDyRZHXnx9J/view" target="_blank" class="w95-btn">📄 PT-BR</a>
-            <a href="https://drive.google.com/file/d/1fz-Jb7Til1SDA_M8YvjQ9fOwnLrKJXPF/view" target="_blank" class="w95-btn">📄 EN-US</a>
-            <div style="font-weight:700;margin:8px 0 6px;">Links</div>
+            <div style="font-weight:700;margin-bottom:8px;">Currículos</div>
+            <a href="https://drive.google.com/file/d/1Zbhm9hkdQEvu4AWEoTIGneDyRZHXnx9J/view" target="_blank" class="w95-btn">📄 Português (PT-BR)</a>
+            <a href="https://drive.google.com/file/d/1fz-Jb7Til1SDA_M8YvjQ9fOwnLrKJXPF/view" target="_blank" class="w95-btn">📄 English (EN-US)</a>
+            <div style="font-weight:700;margin:10px 0 6px;">Links</div>
             <a href="https://linkedin.com/in/denis93" target="_blank" class="w95-btn">💼 LinkedIn</a>
             <a href="https://github.com/denoso1993/k8s-portfolio-iac" target="_blank" class="w95-btn">🐙 Cluster K8s Github</a>
-            <a href="mailto:denis_oliveira@rocketmail.com" class="w95-btn">📧 Email</a>
+            <a href="mailto:denis_oliveira@rocketmail.com" class="w95-btn">📧 E-mail</a>
           </div>
         </div>
       </div>
@@ -125,20 +127,20 @@ data:
     <!-- LINHA 3: Paint / Grafana -->
     <div class="w">
       <div class="wt"><span>🎨 paint.exe - grafana-dashboard.bmp</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
-      <div style="background:#c0c0c0;border-bottom:1px solid #808080;padding:3px 6px;display:flex;gap:6px;font-size:12px;">
-        <span style="padding:2px 10px;">Arquivo</span><span style="padding:2px 10px;">Editar</span>
-        <span style="padding:2px 10px;">Exibir</span><span style="padding:2px 10px;">Ajuda</span>
+      <div style="background:#c0c0c0;border-bottom:1px solid #808080;padding:4px 8px;display:flex;gap:8px;font-size:13px;">
+        <span style="padding:2px 12px;">Arquivo</span><span style="padding:2px 12px;">Editar</span>
+        <span style="padding:2px 12px;">Exibir</span><span style="padding:2px 12px;">Ajuda</span>
       </div>
-      <div style="display:flex;border:2px solid;border-color:#808080 #fff #fff #808080;margin:6px;background:#c0c0c0;min-height:140px;">
+      <div style="display:flex;border:2px solid;border-color:#808080 #fff #fff #808080;margin:8px;background:#c0c0c0;min-height:180px;">
         <div class="paint-tools">
           <span class="pt">✏️</span><span class="pt">🖌️</span><span class="pt">🔲</span><span class="pt">◯</span>
-          <span class="pt">🪣</span><span class="pt">🔵</span><span class="pt">🟥</span><span class="pt">🟡</span>
+          <span class="pt">🪣</span><span class="pt">🔵</span>
         </div>
         <div style="flex:1;margin:6px;background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;overflow:hidden;">
-          <iframe src="https://grafana.denisdeoliveira.com.br/d/cluster-metrics/cluster?orgId=1&kiosk=tv" width="100%" height="280" frameborder="0" style="display:block;"></iframe>
+          <iframe src="https://grafana.denisdeoliveira.com.br/d/cluster-metrics/cluster?orgId=1&kiosk=tv" width="100%" height="320" frameborder="0" style="display:block;"></iframe>
         </div>
       </div>
-      <div class="sb"><span>🖼️ 640x480 · 16 cores</span><span>🔌 Para Ajuda, F1</span></div>
+      <div class="sb"><span>🖼️ 640x480 · 256 cores</span><span>🔌 Para Ajuda, F1</span></div>
     </div>
 
     </div>
@@ -156,13 +158,22 @@ data:
     async function l(){try{
       let r=await fetch("http://172.19.105.82:8001/api/v1/pods?limit=50");
       let d=await r.json();
-      let p=d.items.map(x=>{let s=(x.metadata.namespace+"        ").slice(0,14);let n=(x.metadata.name+"                         ").slice(0,30);return s+" "+n+"  "+(x.status.phase=="Running"?"1/1":"0/1")+"    "+x.status.phase}).join("\\n");
+      let p=d.items.map(x=>{
+        let s=(x.metadata.namespace+"        ").slice(0,14);
+        let n=(x.metadata.name+"                         ").slice(0,30);
+        return s+" "+n+"  "+(x.status.phase=="Running"?"1/1":"0/1")+"    "+x.status.phase;
+      }).join("\\n");
       document.getElementById("pod-output").textContent=p;
       let r2=await fetch("http://172.19.105.82:8001/api/v1/nodes");
       let d2=await r2.json();
-      let ns=d2.items.map(n=>{let c=n.status.conditions.find(x=>x.type=="Ready");return (n.metadata.name+"          ").slice(0,30)+" "+(c&&c.status=="True"?"Ready":"NotReady")}).join("\\n");
+      let ns=d2.items.map(n=>{
+        let c=n.status.conditions.find(x=>x.type=="Ready");
+        return (n.metadata.name+"          ").slice(0,30)+" "+(c&&c.status=="True"?"Ready":"NotReady");
+      }).join("\\n");
       document.getElementById("node-output").textContent=ns;
-    }catch(e){document.getElementById("pod-output").textContent="API: "+e.message}}
+    }catch(e){
+      document.getElementById("pod-output").textContent="⚠️ Mixed Content: " + e.message + ". O navegador bloqueou. Use HTTP local.";
+    }}
     l();setInterval(l,10000);
     </script>
     </body>

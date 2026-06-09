@@ -77,6 +77,7 @@ data:
             <span>Kubernetes</span><span>Docker</span><span>Kind</span><span>Helm</span><span>nginx</span>
             <span>PostgreSQL</span><span>ArgoCD</span><span>GitOps</span><span>Prometheus</span>
             <span>Grafana</span><span>Loki</span><span>cert-manager</span>
+            <span>Kyverno</span>
             <span>Cloudflare</span><span>PowerShell</span><span>Linux</span><span>Windows</span>
           </div></div>
         </div>

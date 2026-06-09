@@ -102,7 +102,7 @@ data:
     </div>
 
     <!-- PAINT / DASHBOARD -->
-    <div class="w" style="top:785px;left:auto;right:8px;width:540px;height:380px;z-index:2" onclick="bringFwd(this)">
+    <div class="w" style="top:460px;left:50%;width:1000px;height:400px;margin-left:-500px;z-index:2" onclick="bringFwd(this)">
       <div class="wt"><span>🎨 paint.exe - grafana-dashboard.bmp</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
       <div style="background:#c0c0c0;border-bottom:1px solid #808080;padding:2px 6px;display:flex;gap:6px;font-size:11px;flex-shrink:0">
         <span>Arquivo</span><span>Editar</span><span>Exibir</span><span>Ajuda</span>

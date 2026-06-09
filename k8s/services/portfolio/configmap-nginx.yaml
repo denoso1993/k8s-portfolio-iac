@@ -36,9 +36,9 @@ data:
                 padding: 40px; border-radius: 20px;
                 border: 1px solid rgba(255,255,255,0.8);
                 box-shadow: var(--shadow);
-                max-width: 520px; width: 100%;
+                max-width: 560px; width: 100%;
             }
-            .header { text-align: center; margin-bottom: 20px; }
+            .header { text-align: center; margin-bottom: 15px; }
             .header h1 { margin: 0; font-size: 28px; color: var(--secondary); letter-spacing: -0.5px; }
             .header .title { color: var(--primary); font-weight: 600; margin-top: 4px; font-size: 13px; letter-spacing: 0.5px; }
             .header .location { color: var(--text-light); font-size: 12px; margin-top: 2px; }
@@ -55,7 +55,6 @@ data:
                 font-weight: 600; font-size: 12px; transition: all 0.2s ease;
                 display: flex; align-items: center; justify-content: center; gap: 6px;
                 border: 1px solid var(--border); color: var(--secondary); background: white;
-                cursor: pointer;
             }
             .btn:hover { background: #f6f8fa; border-color: #8c959f; transform: translateY(-1px); }
             .btn-primary { background: var(--primary); color: white; border: none; }
@@ -76,76 +75,76 @@ data:
             }
             .status-dot { height: 7px; width: 7px; border-radius: 50%; display: inline-block; margin-right: 4px; }
             .status-dot.green { background-color: var(--success); }
-            .linkedin-summary {
-                font-size: 13px; line-height: 1.6; color: var(--text);
-                margin: 10px 0; text-align: center;
+            .bio {
+                font-size: 13px; line-height: 1.7; color: var(--text);
+                margin: 10px 0; text-align: justify;
             }
             .profile-img {
                 width: 80px; height: 80px; border-radius: 50%;
-                background: var(--primary); margin: 0 auto 10px;
+                background: linear-gradient(135deg, var(--primary), #005a9e);
+                margin: 0 auto 12px;
                 display: flex; align-items: center; justify-content: center;
                 color: white; font-size: 32px; font-weight: 700;
+                box-shadow: 0 4px 12px rgba(0,120,212,0.3);
             }
+            .highlight { color: var(--primary); font-weight: 600; }
         </style>
     </head>
     <body>
         <div class="card">
-            <!-- Profile -->
             <div class="profile-img">DO</div>
             <div class="header">
                 <h1>Denis Oliveira Ramos</h1>
-                <div class="title">Senior Cloud Analyst | SRE &amp; Infrastructure</div>
-                <div class="location">Barueri, SP · Brasil</div>
+                <div class="title">Senior Cloud &amp; Infrastructure Engineer</div>
+                <div class="location">Barueri, SP · Brasil · <strong>Inglês C1/C2</strong></div>
             </div>
 
-            <div class="linkedin-summary">
-                +8 anos de experiência em infraestrutura cloud, automação e observabilidade. 
-                Especialista em Kubernetes, Docker e soluções AWS/Azure.
+            <div class="bio">
+                Profissional de Infraestrutura Cloud e SRE com foco em <span class="highlight">Resiliência, Disaster Recovery</span> e operações de <span class="highlight">alta disponibilidade</span>.
+                Atualmente na <strong>Avanade (Microsoft Unified Support)</strong>, onde atuo mitigando riscos operacionais e otimizando métricas críticas como <span class="highlight">RTO, RPO, MTTR e MTBF</span> em ambientes enterprise.
+            </div>
+            <div class="bio">
+                Sou apaixonado por <span class="highlight">Kubernetes</span> e automação — mantenho um laboratório SRE prático com cluster Kind, observabilidade completa (Prometheus + Grafana + Loki) e todo o ciclo GitOps com ArgoCD.
+                Também desenvolvo soluções com <span class="highlight">IA e automação</span>, criando engines em PowerShell que transformam logs brutos em dashboards em tempo real.
+                Infraestrutura como código, Linux, Windows Server e bancos de dados (PostgreSQL, SQL Server) completam meu stack do dia a dia.
             </div>
 
-            <!-- Tech Stack -->
             <div class="section-title">Tech Stack</div>
             <div class="tech-stack">
                 <span class="badge">Kubernetes</span>
                 <span class="badge">Docker</span>
                 <span class="badge">Kind</span>
+                <span class="badge">Terraform</span>
+                <span class="badge">Helm</span>
                 <span class="badge">nginx</span>
                 <span class="badge">PostgreSQL</span>
                 <span class="badge">ArgoCD</span>
+                <span class="badge">GitOps</span>
                 <span class="badge">Prometheus</span>
                 <span class="badge">Grafana</span>
-                <span class="badge">GitOps</span>
+                <span class="badge">Loki</span>
                 <span class="badge">Kyverno</span>
                 <span class="badge">cert-manager</span>
-                <span class="badge">Helm</span>
                 <span class="badge">Cloudflare</span>
-                <span class="badge">WSL2</span>
+                <span class="badge">PowerShell</span>
+                <span class="badge">Linux (RHEL/Oracle)</span>
+                <span class="badge">Windows Server</span>
             </div>
 
-            <!-- Resumes -->
             <div class="section-title">Currículos</div>
             <div class="grid-buttons">
                 <a href="https://drive.google.com/file/d/1Zbhm9hkdQEvu4AWEoTIGneDyRZHXnx9J/view" target="_blank" class="btn btn-primary">📄 Português (PT-BR)</a>
                 <a href="https://drive.google.com/file/d/1fz-Jb7Til1SDA_M8YvjQ9fOwnLrKJXPF/view" target="_blank" class="btn btn-primary">📄 English (EN-US)</a>
             </div>
 
-            <!-- Links -->
             <div class="section-title">Links</div>
             <div class="grid-buttons">
                 <a href="https://linkedin.com/in/denis93" target="_blank" class="btn btn-outline">💼 LinkedIn</a>
                 <a href="https://github.com/denoso1993/k8s-portfolio-iac" target="_blank" class="btn btn-outline">🐙 GitHub (Projeto)</a>
                 <a href="mailto:denis_oliveira@rocketmail.com" class="btn btn-outline">📧 E-mail</a>
-                <a href="https://github.com/denoso1993" target="_blank" class="btn btn-outline">🐙 GitHub Perfil</a>
+                <a href="https://drive.google.com/drive/folders/1k_4mO-j4WEoaIGngR9cGLX1WpVSKC-AD" target="_blank" class="btn btn-outline">📜 Certificações</a>
             </div>
 
-            <!-- Certifications -->
-            <div class="section-title">Certificações</div>
-            <div class="grid-buttons">
-                <a href="https://drive.google.com/drive/folders/1k_4mO-j4WEoaIGngR9cGLX1WpVSKC-AD" target="_blank" class="btn btn-outline">📜 Ver Certificados</a>
-                <a href="https://drive.google.com/drive/folders/1tIIPUa3S2Tq-8M-J570m66ldim4fRnAj" target="_blank" class="btn btn-outline">📁 Drive Profissional</a>
-            </div>
-
-            <!-- Cluster Status -->
             <div class="section-title">Cluster Status</div>
             <div class="infra-status">
                 <div><span class="status-dot green"></span>Cluster: Kind</div>
@@ -154,6 +153,12 @@ data:
                 <div><span class="status-dot green"></span>Domain: denisdeoliveira.com.br</div>
                 <div><span class="status-dot green"></span>GitOps: ArgoCD</div>
                 <div><span class="status-dot green"></span>Tunnel: Cloudflare</div>
+            </div>
+
+            <div class="section-title">Dashboard</div>
+            <div style="text-align:center;padding:20px;background:#f0f2f5;border-radius:8px;border:1px solid var(--border);font-size:13px;color:var(--text-light);margin-top:8px;">
+                📊 <strong>Dashboard ao vivo em breve</strong><br>
+                <span style="font-size:11px;">Monitoramento Prometheus + Grafana sendo configurado</span>
             </div>
         </div>
     </body>

@@ -141,7 +141,37 @@ data:
                         <span class="p">C:\&gt; </span><span class="c">kubectl get nodes</span>
                         <span class="o">lab-sre-denoso-control-plane   Ready   control-plane   v1.27.3</span>
                         <span class="o"></span>
+                        <span class="p">C:\&gt; </span><span class="c">kubectl get pods -A --watch</span>
+                        <span id="pod-output" class="o">Carregando...</span>
+                        <span class="o"></span>
+                        <span class="p">C:\&gt; </span><span class="c">kubectl get nodes</span>
+                        <span id="node-output" class="o">Carregando...</span>
+                        <span class="o"></span>
                         <span class="p">C:\&gt; <span class="blink">_</span></span>
+                    </div>
+                    <script>
+                    async function l(){
+                        try{
+                            let r=await fetch("http://172.19.105.82:8001/api/v1/pods?limit=50");
+                            let d=await r.json();
+                            let p=d.items.map(x=>{
+                                let s=(x.metadata.namespace+"        ").slice(0,14);
+                                let n=(x.metadata.name+"                         ").slice(0,30);
+                                return s+" "+n+"  "+(x.status.phase=="Running"?"1/1":"0/1")+"    "+x.status.phase;
+                            }).join("\n");
+                            document.getElementById("pod-output").textContent=p;
+                            let r2=await fetch("http://172.19.105.82:8001/api/v1/nodes");
+                            let d2=await r2.json();
+                            let ns=d2.items.map(n=>{
+                                let c=n.status.conditions.find(x=>x.type=="Ready");
+                                return (n.metadata.name+"          ").slice(0,30)+" "+(c&&c.status=="True"?"Ready":"NotReady");
+                            }).join("\n");
+                            document.getElementById("node-output").textContent=ns;
+                        }catch(e){document.getElementById("pod-output").textContent="API: "+e.message;}
+                    }
+                    l();
+                    setInterval(l,10000);
+                    </script>
                     </div>
                     <div class="sb"><span><span class="dot-g"></span> 15/15 pods · cluster saudável</span><span>📡 lab-sre-denoso</span></div>
                 </div>
@@ -199,7 +229,7 @@ data:
                 </div>
 
                 <div class="w" style="flex:1;">
-                    <div class="wt"><span>🖥️ Gerenciador de Tarefas</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
+                    <div class="wt"><span>🖥️ Gerenciador de Dispositivos</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
                     <div class="wb" style="padding:12px 14px;">
                         <div style="font-weight:700;font-size:13px;margin-bottom:8px;">lab-sre-denoso · Kind v1.27.3</div>
                         <div><span class="metric-box"><span class="num">15</span><span class="lbl">Pods</span></span><span class="metric-box"><span class="num">6</span><span class="lbl">Serviços</span></span><span class="metric-box"><span class="num">3</span><span class="lbl">Namespaces</span></span></div>
@@ -252,7 +282,7 @@ data:
                         <div style="font-size:40px;margin-bottom:6px;">📊</div>
                         <div style="font-weight:700;font-size:15px;">Grafana Dashboard</div>
                         <div style="color:#666;font-size:13px;margin:4px 0;">Monitoramento Prometheus · Cluster Metrics</div>
-                        <div style="color:#999;font-size:12px;">Dashboard ao vivo sendo configurado</div>
+                        <div style="color:#999;font-size:12px;"><iframe src="https://grafana.denisdeoliveira.com.br/d/cluster-metrics/cluster?orgId=1&kiosk=tv" width="100%" height="260" frameborder="0" style="display:block;"></iframe></div>
                     </div>
                 </div>
                 <div style="background:#c0c0c0;border-top:1px solid #fff;padding:3px 8px;display:flex;justify-content:space-between;font-size:12px;color:#444;">

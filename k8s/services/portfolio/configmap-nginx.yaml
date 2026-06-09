@@ -11,66 +11,71 @@ data:
     <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:'MS Sans Serif','Courier New',monospace;background:#008080;min-height:100vh;font-size:13px;padding:24px 24px 48px}
-    .desk{max-width:1200px;margin:0 auto}
-    .w{background:#c0c0c0;border:2px solid;border-color:#fff #808080 #808080 #fff;box-shadow:2px 2px 0 0 #404040;margin-bottom:22px;display:flex;flex-direction:column}
-    .wt{background:linear-gradient(90deg,#000080,#1084d0);color:#fff;font-weight:700;font-size:14px;padding:6px 8px 6px 10px;display:flex;align-items:center;justify-content:space-between;min-height:30px}
+    .desk{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+    .w{background:#c0c0c0;border:2px solid;border-color:#fff #808080 #808080 #fff;box-shadow:2px 2px 0 0 #404040;display:flex;flex-direction:column}
+    .w:focus-within{z-index:1}
+    .wt{background:linear-gradient(90deg,#000080,#1084d0);color:#fff;font-weight:700;font-size:14px;padding:6px 8px 6px 10px;display:flex;align-items:center;justify-content:space-between;min-height:30px;cursor:default}
     .wt .btns{display:flex;gap:3px}
     .wt .btns span{width:20px;height:17px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;font-size:12px;color:#000;cursor:default}
     .wb{padding:18px 20px 22px;flex:1;font-size:14px;line-height:1.7;color:#222}
-    .row{display:flex;gap:22px;flex-wrap:wrap}
-    .col{flex:1;min-width:240px}.col2{flex:2;min-width:300px}.col3{flex:3;min-width:360px}
-    .term{background:#000;color:#0f0;font-family:'Courier New',monospace;font-size:13px;padding:14px 16px;border:2px solid;border-color:#808080 #fff #fff #808080;min-height:200px;overflow:auto;max-height:320px}
+    .row{display:flex;gap:18px;flex-wrap:wrap}
+    .col{flex:1;min-width:220px}
+    .term{background:#000;color:#0f0;font-family:'Courier New',monospace;font-size:12px;padding:12px 14px;border:2px solid;border-color:#808080 #fff #fff #808080;min-height:160px;overflow:auto;max-height:260px}
     .term .p{color:#0f0}.term .c{color:#fff}.term .o{color:#0f0;display:block;padding-left:14px;white-space:pre;font-size:12px}
     .blink{animation:blink 1s step-end infinite}@keyframes blink{50%{opacity:0}}
     .sb{background:#c0c0c0;border-top:1px solid #fff;padding:5px 12px;display:flex;justify-content:space-between;font-size:13px;color:#444}
     .dot-g{width:10px;height:10px;background:#0a0;border:1px solid #080;display:inline-block;margin-right:5px;vertical-align:middle}
-    .tg{display:flex;flex-wrap:wrap;gap:7px}
+    .tg{display:flex;flex-wrap:wrap;gap:6px}
     .tg span{background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:5px 13px;font-size:13px;color:#222}
     .mb{background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:8px 16px;text-align:center;display:inline-block;margin:3px;min-width:65px}
     .mb .n{font-size:20px;font-weight:700;color:#000}.mb .l{font-size:11px;color:#555}
-    .w95-btn{background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;padding:7px 18px;font-family:inherit;font-size:13px;display:inline-flex;align-items:center;gap:5px;text-decoration:none;color:#222;margin:4px}
+    .w95-btn{background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;padding:6px 16px;font-family:inherit;font-size:13px;display:inline-flex;align-items:center;gap:5px;text-decoration:none;color:#222;margin:3px}
     .taskbar{background:#c0c0c0;border-top:2px solid #fff;padding:4px 6px;display:flex;align-items:center;gap:4px;position:fixed;bottom:0;left:0;right:0;z-index:100}
     .taskbar .start{background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;padding:3px 14px;font-weight:700;font-size:14px;font-family:inherit;display:flex;align-items:center;gap:4px;cursor:pointer}
     .taskbar .task{background:#c0c0c0;border:1px solid;border-color:#808080 #fff #fff #808080;padding:3px 16px;font-size:13px;display:flex;align-items:center}
     .taskbar .time{margin-left:auto;border:1px solid;border-color:#808080 #fff #fff #808080;padding:3px 10px;font-size:13px;background:#c0c0c0}
-    a{color:#000080}.paint-tools{background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;padding:4px;display:grid;grid-template-columns:1fr 1fr;gap:3px;width:70px;flex-shrink:0}
-    .pt{width:26px;height:26px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:default}
-    @media(max-width:720px){.row{flex-direction:column}}
+    a{color:#000080}
+    .profile-photo{width:72px;height:72px;border:2px inset #808080;background:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#000080;flex-shrink:0;background:linear-gradient(135deg,#e8f0fe,#fff)}
+    .about-row{display:flex;gap:18px;align-items:flex-start}
+    @media(max-width:720px){.row{flex-direction:column}.about-row{flex-direction:column}}
     </style></head>
     <body>
     <div class="desk">
 
-    <div class="row">
-      <div class="col3">
-        <div class="w">
-          <div class="wt"><span>💻 Command Prompt - kubectl</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
-          <div class="term">
-            <span class="p">C:\&gt; </span><span class="c">kubectl get pods -A</span>
-            <span id="pod-output" class="o">Carregando...</span>
-            <span class="o"></span>
-            <span class="p">C:\&gt; </span><span class="c">kubectl get nodes</span>
-            <span id="node-output" class="o">Carregando...</span>
-            <span class="o"></span>
-            <span class="p">C:\&gt; <span class="blink">_</span></span>
-          </div>
-        </div>
-      </div>
-      <div class="col2">
-        <div class="w">
-          <div class="wt"><span>🪟 Sobre - Notepad</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
-          <div class="wb">
+    <!-- SOBRE - Full Width Top (Janela Master) -->
+    <div class="w" style="z-index:2">
+      <div class="wt"><span>🪟 Sobre - Notepad</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
+      <div class="wb">
+        <div class="about-row">
+          <div class="profile-photo">DO</div>
+          <div style="flex:1">
             <div style="font-size:22px;font-weight:700;">Denis Oliveira Ramos</div>
-            <div style="font-size:15px;color:#444;">Senior Cloud &amp; Infrastructure Engineer</div>
-            <div style="font-size:13px;color:#666;margin:4px 0 14px;">📍 Barueri, SP · 🌐 Inglês C1/C2</div>
-            <p style="margin-bottom:10px;">Sou um Analista Cloud Sênior com forte especialização em ambientes <strong>Linux</strong>, <strong>Bancos de Dados</strong> e ecossistemas <strong>Cloud Native</strong>. Meu foco prático é a engenharia de infraestrutura automatizada, garantindo que sistemas complexos sejam resilientes, escaláveis e previsíveis.</p>
-
-<p style="margin-bottom:10px;">Este portfólio é a <strong>prova de conceito</strong> da minha metodologia de trabalho. Em vez de uma página estática, você está acessando uma aplicação hospedada em um <strong>cluster Kubernetes</strong> local e declarativo. A infraestrutura deste laboratório vivo é integralmente mantida através de <strong>Infrastructure as Code (IaC)</strong>, provisionada e orquestrada via <strong>Terraform</strong> e <strong>Helm</strong>. É neste ambiente que testo, quebro e reconstruo topologias de rede, observabilidade e confiabilidade de sistemas.</p>
+            <div style="font-size:15px;color:#444;margin:2px 0 4px;">Senior Cloud &amp; Infrastructure Engineer</div>
+            <div style="font-size:13px;color:#666;margin-bottom:8px;">📍 Barueri, SP · 🌐 Inglês C1/C2</div>
+            <p style="margin-bottom:8px;">Sou um Analista Cloud Sênior com forte especialização em ambientes <strong>Linux</strong>, <strong>Bancos de Dados</strong> e ecossistemas <strong>Cloud Native</strong>. Meu foco prático é a engenharia de infraestrutura automatizada, garantindo que sistemas complexos sejam resilientes, escaláveis e previsíveis.</p>
+            <p style="margin-bottom:8px;">Este portfólio é a <strong>prova de conceito</strong> da minha metodologia de trabalho. Em vez de uma página estática, você está acessando uma aplicação hospedada em um <strong>cluster Kubernetes</strong> local e declarativo. A infraestrutura deste laboratório vivo é integralmente mantida através de <strong>Infrastructure as Code (IaC)</strong>, provisionada e orquestrada via <strong>Terraform</strong> e <strong>Helm</strong>.</p>
             <p>Tenho trabalhado com <strong>Kubernetes</strong> — mantenho esse laboratório SRE com Kind, Prometheus, Grafana, Loki e ArgoCD. <strong>Este site roda no cluster, 100% no WSL2.</strong></p>
           </div>
         </div>
       </div>
+      <div class="sb"><span><span class="dot-g"></span> Online · Kind · WSL2 · Cloudflare</span><span>15/15 pods · 0 erros</span></div>
     </div>
 
+    <!-- COMMAND PROMPT -->
+    <div class="w">
+      <div class="wt"><span>💻 Command Prompt - kubectl</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
+      <div class="term">
+        <span class="p">C:\&gt; </span><span class="c">kubectl get pods -A</span>
+        <span id="pod-output" class="o">Carregando...</span>
+        <span class="o"></span>
+        <span class="p">C:\&gt; </span><span class="c">kubectl get nodes</span>
+        <span id="node-output" class="o">Carregando...</span>
+        <span class="o"></span>
+        <span class="p">C:\&gt; <span class="blink">_</span></span>
+      </div>
+    </div>
+
+    <!-- LINHA INFERIOR: Painel + Gerenciador + Links -->
     <div class="row">
       <div class="col">
         <div class="w">
@@ -79,7 +84,6 @@ data:
             <span>Kubernetes</span><span>Docker</span><span>Kind</span><span>Helm</span><span>nginx</span>
             <span>PostgreSQL</span><span>ArgoCD</span><span>GitOps</span><span>Prometheus</span>
             <span>Grafana</span><span>Loki</span><span>cert-manager</span>
-            <span>Kyverno</span>
             <span>Cloudflare</span><span>PowerShell</span><span>Linux</span><span>Windows</span>
           </div></div>
         </div>
@@ -88,13 +92,9 @@ data:
         <div class="w">
           <div class="wt"><span>🖥️ Gerenciador de Dispositivos</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
           <div class="wb">
-            <div style="font-weight:700;font-size:14px;margin-bottom:8px;">lab-sre-denoso · Kind v1.27.3</div>
-            <div style="display:flex;gap:10px;margin-bottom:10px;">
-              <span style="background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:8px 16px;text-align:center;min-width:65px;"><span style="font-size:20px;font-weight:700;display:block;">15</span><span style="font-size:11px;color:#555;">Pods</span></span>
-              <span style="background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:8px 16px;text-align:center;min-width:65px;"><span style="font-size:20px;font-weight:700;display:block;">6</span><span style="font-size:11px;color:#555;">Svcs</span></span>
-              <span style="background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:8px 16px;text-align:center;min-width:65px;"><span style="font-size:20px;font-weight:700;display:block;">3</span><span style="font-size:11px;color:#555;">NS</span></span>
-            </div>
-            <div style="font-size:13px;">
+            <div style="font-weight:700;font-size:14px;margin-bottom:6px;">lab-sre-denoso · Kind v1.27.3</div>
+            <div><span class="mb"><span class="n">15</span><span class="l">Pods</span></span><span class="mb"><span class="n">6</span><span class="l">Svcs</span></span><span class="mb"><span class="n">3</span><span class="l">NS</span></span></div>
+            <div style="margin-top:8px;font-size:13px;">
               🟢 Kind · nginx · ArgoCD · Cloudflare<br>
               🟢 cert-manager · HPA<br>
               🟢 Prometheus · Grafana · Loki<br>
@@ -108,30 +108,36 @@ data:
         <div class="w">
           <div class="wt"><span>📄 Links</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
           <div class="wb">
-            <div style="font-weight:700;margin-bottom:8px;">Currículos</div>
+            <div style="font-weight:700;margin-bottom:6px;">Currículos</div>
             <a href="https://drive.google.com/file/d/1Zbhm9hkdQEvu4AWEoTIGneDyRZHXnx9J/view" target="_blank" class="w95-btn">📄 PT-BR</a>
             <a href="https://drive.google.com/file/d/1fz-Jb7Til1SDA_M8YvjQ9fOwnLrKJXPF/view" target="_blank" class="w95-btn">📄 EN-US</a>
-            <div style="font-weight:700;margin:10px 0 6px;">Links</div>
+            <div style="font-weight:700;margin:8px 0 6px;">Links</div>
             <a href="https://linkedin.com/in/denis93" target="_blank" class="w95-btn">💼 LinkedIn</a>
-            <a href="https://github.com/denoso1993/k8s-portfolio-iac" target="_blank" class="w95-btn">🐙 Cluster K8s Github</a>
-            <a href="mailto:denis_oliveira@rocketmail.com" class="w95-btn">📧 E-mail</a>
+            <a href="https://github.com/denoso1993/k8s-portfolio-iac" target="_blank" class="w95-btn">🐙 Cluster K8s</a>
+            <a href="mailto:denis_oliveira@rocketmail.com" class="w95-btn">📧 Email</a>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- PAINT / GRAFANA - Rodapé -->
     <div class="w">
       <div class="wt"><span>🎨 paint.exe - grafana-dashboard.bmp</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
-      <div style="background:#c0c0c0;border-bottom:1px solid #808080;padding:4px 8px;display:flex;gap:8px;font-size:13px;">
-        <span>Arquivo</span><span>Editar</span><span>Exibir</span><span>Ajuda</span>
+      <div style="background:#c0c0c0;border-bottom:1px solid #808080;padding:3px 6px;display:flex;gap:6px;font-size:13px;">
+        <span style="padding:2px 10px;">Arquivo</span><span style="padding:2px 10px;">Editar</span>
+        <span style="padding:2px 10px;">Exibir</span><span style="padding:2px 10px;">Ajuda</span>
       </div>
-      <div style="display:flex;border:2px solid;border-color:#808080 #fff #fff #808080;margin:8px;background:#c0c0c0;min-height:180px;">
-        <div class="paint-tools">
-          <span class="pt">✏️</span><span class="pt">🖌️</span><span class="pt">🔲</span><span class="pt">◯</span>
-          <span class="pt">🪣</span><span class="pt">🔵</span>
+      <div style="display:flex;border:2px solid;border-color:#808080 #fff #fff #808080;margin:6px;background:#c0c0c0;min-height:160px;">
+        <div style="background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;padding:4px;display:grid;grid-template-columns:1fr 1fr;gap:2px;width:64px;flex-shrink:0;">
+          <span style="width:24px;height:24px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">✏️</span>
+          <span style="width:24px;height:24px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">🖌️</span>
+          <span style="width:24px;height:24px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">🔲</span>
+          <span style="width:24px;height:24px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">◯</span>
         </div>
-        <div style="flex:1;margin:6px;background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;overflow:hidden;">
-          <div style="width:100%;height:320px;overflow:hidden;position:relative;"><iframe src="https://grafana.denisdeoliveira.com.br/d/cluster-sre/cluster-sre?orgId=1" width="100%" height="360" frameborder="0" style="display:block;position:absolute;top:-42px;left:0;"></iframe></div>
+        <div style="flex:1;margin:4px;background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;overflow:hidden;">
+          <div style="width:100%;height:320px;overflow:hidden;position:relative;">
+            <iframe src="https://grafana.denisdeoliveira.com.br/d/cluster-sre/cluster-sre?orgId=1" width="100%" height="360" frameborder="0" style="display:block;position:absolute;top:-42px;left:0;"></iframe>
+          </div>
         </div>
       </div>
       <div class="sb"><span>🖼️ 640x480 · 256 cores</span><span>🔌 Para Ajuda, F1</span></div>
@@ -141,8 +147,8 @@ data:
 
     <div class="taskbar">
       <button class="start" onclick='alert("Win95 + K8s")'><span>🪟</span> Iniciar</button>
-      <div class="task">💻 Prompt</div>
       <div class="task">📄 Sobre</div>
+      <div class="task">💻 Prompt</div>
       <div class="task">🎨 Paint</div>
       <div class="time" id="clock"></div>
     </div>
@@ -150,20 +156,21 @@ data:
     <script>
     function c(){const d=new Date();document.getElementById("clock").textContent=d.getHours().toString().padStart(2,"0")+":"+d.getMinutes().toString().padStart(2,"0")}c();setInterval(c,10000);
     async function l(){try{
-      let r=await fetch("/k8s/api/v1/pods?limit=50");
+      let r=await fetch("/k8s/api/v1/pods?limit=40");
       let d=await r.json();
       document.getElementById("pod-output").textContent=d.items.map(x=>{
         let s=(x.metadata.namespace+"        ").slice(0,14);
         let n=(x.metadata.name+"                         ").slice(0,30);
         return s+" "+n+"  "+(x.status.phase=="Running"?"1/1":"0/1")+"    "+x.status.phase;
-      }).join("\n");
+      }).join("\\n");
       let r2=await fetch("/k8s/api/v1/nodes");
       let d2=await r2.json();
       document.getElementById("node-output").textContent=d2.items.map(n=>{
         let c=n.status.conditions.find(x=>x.type=="Ready");
         return (n.metadata.name+"          ").slice(0,30)+" "+(c&&c.status=="True"?"Ready":"NotReady");
-      }).join("\n");
-    }catch(e){document.getElementById("pod-output").textContent="API: "+e.message}}
+      }).join("\\n");
+    }catch(e){document.getElementById("pod-output").textContent="API: "+e.message}
+    }
     l();setInterval(l,15000);
     </script>
     </body>

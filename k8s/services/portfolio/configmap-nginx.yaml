@@ -211,7 +211,7 @@ data:
       }).join("\n");
     }catch(e){document.getElementById("pod-output").textContent="API: "+e.message}
     }
-    l();setInterval(l,15000);
+    l();document.getElementById("clock").onclick=function(){var vw=innerWidth,vh=innerHeight;var r="VIEW "+vw+"x"+vh;alert(r);};setInterval(l,15000);
     </script>
     </body>
     </html>

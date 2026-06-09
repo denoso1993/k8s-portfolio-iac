@@ -39,7 +39,9 @@
 
 Este repositorio define a infraestrutura como codigo de um cluster Kubernetes rodando localmente com Kind. O projeto foi construido para demonstrar tecnicas de Site Reliability Engineering na pratica: GitOps, observabilidade, hardening de seguranca, politicas como codigo e gerenciamento de recursos.
 
-O cluster executa um site pessoal de portifolio (nginx) e um banco PostgreSQL, ambos gerenciados pelo ArgoCD com sincronizacao automatica a partir deste repositorio. Toda a configuracao e declarativa e versionada.
+O cluster executa um **site pessoal de portfolio no estilo Windows 95** (nginx) e um banco PostgreSQL, ambos gerenciados pelo ArgoCD com sincronizacao automatica a partir deste repositorio. Toda a configuracao e declarativa e versionada.
+
+O portfolio possui layout **flexbox responsivo** (funciona em qualquer tela, de mobile a 4K), com tema visual Windows 95, terminal interativo com dados reais do kubectl via API proxy, e dashboard Grafana embutido com metricas ao vivo do cluster.
 
 ---
 

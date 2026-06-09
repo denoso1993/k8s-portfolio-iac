@@ -1,253 +1,199 @@
 apiVersion: v1
+data:
+  index.html: "<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\"
+    content=\"width=device-width,initial-scale=1.0\">\n<title>Denis Oliveira Ramos</title>\n<style>\n*{margin:0;padding:0;box-sizing:border-box}\nhtml,body{width:100%;height:100%}\nbody{\n
+    \ background:#008080;\n  font-family:'MS Sans Serif','Courier New',monospace;\n
+    \ font-size:13px;\n  overflow-y:auto;\n  overflow-x:hidden;\n  padding:16px 16px
+    48px;\n  min-height:100vh;\n}\n\n/* Desktop flex container */\n.desktop{\n  max-width:1100px;\n
+    \ margin:0 auto;\n  display:flex;\n  flex-direction:column;\n  gap:12px;\n}\n\n/*
+    Row for horizontal grouping */\n.row{\n  display:flex;\n  flex-wrap:wrap;\n  gap:12px;\n}\n\n/*
+    Column variants */\n.col{flex:1;min-width:280px;display:flex;flex-direction:column;}\n.col-2{flex:2;min-width:350px;display:flex;flex-direction:column;}\n.col-3{flex:3;min-width:300px;display:flex;flex-direction:column;}\n\n/*
+    Win95 window */\n.w{\n  position:relative;\n  background:#c0c0c0;\n  border:2px
+    solid;\n  border-color:#fff #808080 #808080 #fff;\n  box-shadow:2px 2px 0 0 #404040;\n
+    \ display:flex;\n  flex-direction:column;\n  width:100%;\n  min-height:100px;\n}\n\n/*
+    Title bar */\n.wt{\n  background:linear-gradient(90deg,#000080,#1084d0);\n  color:#fff;\n
+    \ font-weight:700;\n  font-size:14px;\n  padding:5px 8px 5px 10px;\n  display:flex;\n
+    \ align-items:center;\n  justify-content:space-between;\n  min-height:28px;\n
+    \ cursor:default;\n  user-select:none;\n  flex-shrink:0;\n}\n.wt .btns{display:flex;gap:2px;flex-shrink:0}\n.wt
+    .btns span{\n  width:18px;height:16px;background:#c0c0c0;\n  border:1px solid;border-color:#fff
+    #808080 #808080 #fff;\n  display:flex;align-items:center;justify-content:center;\n
+    \ font-size:11px;color:#000;\n}\n\n/* Window body */\n.wb{padding:8px 12px;flex:1;font-size:12px;line-height:1.3;color:#222;overflow:auto;}\n\n/*
+    Status bar */\n.sb{\n  background:#c0c0c0;border-top:1px solid #fff;\n  padding:2px
+    8px;display:flex;justify-content:space-between;\n  font-size:11px;color:#444;flex-shrink:0;\n}\n\n/*
+    Terminal */\n.term{\n  background:#000;color:#0f0;font-family:'Courier New',monospace;font-size:12px;\n
+    \ padding:8px 10px;\n  border:2px solid;border-color:#808080 #fff #fff #808080;\n
+    \ flex:1;overflow-y:auto;overflow-x:auto;\n}\n.term .p{color:#0f0}.term .c{color:#fff}.term
+    .o{\n  color:#0f0;display:block;padding-left:8px;white-space:pre-wrap;word-break:break-all;font-size:12px;line-height:1.4;\n}\n\n/*
+    Blink cursor */\n.blink{animation:blink 1s step-end infinite}\n@keyframes blink{50%{opacity:0}}\n\n/*
+    Tag cloud */\n.tg{display:flex;flex-wrap:wrap;gap:3px;align-content:flex-start;}\n.tg
+    span{\n  background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;\n
+    \ padding:3px 8px;font-size:11px;color:#222;\n}\n\n/* Metric box */\n.mbox{\n
+    \ background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;\n  padding:3px
+    8px;text-align:center;display:inline-block;margin:1px;min-width:42px;\n}\n.mbox
+    .n{font-size:18px;font-weight:700;color:#000;display:block;}\n.mbox .l{font-size:9px;color:#555;}\n\n/*
+    Win95 button */\n.w95-btn{\n  background:#c0c0c0;border:1px solid;border-color:#fff
+    #808080 #808080 #fff;\n  padding:3px 10px;font-family:inherit;font-size:11px;\n
+    \ display:inline-flex;align-items:center;gap:4px;\n  text-decoration:none;color:#222;margin:1px;\n}\n\n/*
+    Taskbar */\n.taskbar{\n  position:fixed;bottom:0;left:0;right:0;z-index:999;\n
+    \ background:#c0c0c0;border-top:2px solid #fff;\n  padding:3px 6px;display:flex;align-items:center;gap:4px;height:30px;\n}\n.taskbar
+    .start{\n  background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080
+    #fff;\n  padding:2px 10px;font-weight:700;font-size:13px;font-family:inherit;\n
+    \ display:flex;align-items:center;gap:4px;cursor:pointer;height:22px;\n}\n.taskbar
+    .task{\n  background:#c0c0c0;border:1px solid;border-color:#808080 #fff #fff #808080;\n
+    \ padding:2px 12px;font-size:11px;display:flex;align-items:center;\n}\n.taskbar
+    .time{\n  margin-left:auto;border:1px solid;border-color:#808080 #fff #fff #808080;\n
+    \ padding:2px 8px;font-size:11px;background:#c0c0c0;cursor:pointer;\n}\n\n/* PAINT
+    toolbar */\n.paint-toolbar{\n  background:#c0c0c0;border:1px solid;border-color:#fff
+    #808080 #808080 #fff;\n  padding:3px;display:grid;grid-template-columns:1fr 1fr;gap:2px;\n
+    \ width:54px;flex-shrink:0;align-content:start;\n}\n.paint-toolbar span{\n  width:23px;height:23px;background:#c0c0c0;\n
+    \ border:1px solid;border-color:#fff #808080 #808080 #fff;\n  display:flex;align-items:center;justify-content:center;\n}\n.paint-menu{padding:2px
+    6px;display:flex;gap:8px;font-size:11px;flex-shrink:0;}\n.paint-menu span{padding:1px
+    8px;}\n.paint-canvas{flex:1;margin:3px;background:#fff;border:1px solid;border-color:#808080
+    #fff #fff #808080;overflow:hidden;}\n.color-box{width:14px;height:14px;border:1px
+    solid #808080;}\n\n/* Profile photo */\n.profile-photo{\n  width:80px;height:80px;object-fit:cover;\n
+    \ border:2px inset #808080;display:block;\n}\n\n/* Green dot */\n.dot-g{width:7px;height:7px;background:#0a0;border:1px
+    solid #080;display:inline-block;margin-right:3px;vertical-align:middle;}\n\n/*
+    Links */\na{color:#000080;}\n</style>\n</head>\n<body>\n\n<div class=\"desktop\">\n\n<!--
+    ROW 1: SOBRE + LINKS -->\n<div class=\"row\">\n  <div class=\"col-3\">\n    <div
+    class=\"w\">\n      <div class=\"wt\"><span>&#x1F5AA; Sobre - Denis Oliveira Ramos</span><div
+    class=\"btns\"><span>_</span><span>&#x25A1;</span><span>&#x2715;</span></div></div>\n
+    \     <div class=\"wb\" style=\"padding:12px 16px;font-size:15px;line-height:1.5\">\n
+    \       <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"border:none;\">\n
+    \         <tr>\n            <td valign=\"top\" width=\"95\" style=\"padding-right:18px;\">\n
+    \             <img src=\"https://i.imgur.com/lJoDtkK.jpeg\" class=\"profile-photo\"
+    alt=\"Denis\">\n            </td>\n            <td valign=\"top\">\n              <div
+    style=\"font-size:20px;font-weight:700;margin-bottom:1px;\">Denis Oliveira Ramos</div>\n
+    \             <div style=\"font-size:13px;color:#444;margin-bottom:2px;\">Senior
+    Cloud &amp; Infrastructure Engineer</div>\n              <div style=\"font-size:12px;color:#666;margin-bottom:6px;\">\n
+    \               &#x1F4CD; Barueri, SP &middot; &#x1F310; Ingl&ecirc;s C1/C2 &middot;
+    &#x1F4C5; +8 anos\n              </div>\n            </td>\n          </tr>\n
+    \       </table>\n        <div style=\"font-size:14px;line-height:1.6;\">\n          <p
+    style=\"margin-bottom:4px;\"><strong>Sobre mim</strong></p>\n          <p style=\"margin-bottom:4px;\">Profissional
+    de Infraestrutura Cloud com forte especializa&ccedil;&atilde;o em ambientes <strong>Linux</strong>,
+    <strong>Bancos de Dados</strong> e ecossistemas <strong>Cloud Native</strong>.
+    Atualmente dispon&iacute;vel para novos desafios, com experi&ecirc;ncia em <strong>Cloud
+    Infrastructure</strong>, <strong>SRE</strong> e engenharia de plataforma.</p>\n
+    \         <p style=\"margin-bottom:4px;\">Minha abordagem &eacute; pr&aacute;tica
+    e anal&iacute;tica, focada em entregar solu&ccedil;&otilde;es escal&aacute;veis
+    e automatizadas. Este portf&oacute;lio &eacute; a <strong>prova de conceito</strong>
+    &mdash; uma aplica&ccedil;&atilde;o hospedada em cluster Kubernetes 100% declarativo,
+    mantido via <strong>IaC</strong> com <strong>Terraform</strong> e <strong>Helm</strong>,
+    com observabilidade completa via <strong>Prometheus + Grafana + Loki</strong>
+    e GitOps com <strong>ArgoCD</strong>. <strong>Tudo rodando no WSL2.</strong></p>\n
+    \         <p style=\"margin-bottom:0;\"><strong>Principais compet&ecirc;ncias:</strong>
+    Kubernetes, Docker, Terraform, Helm, ArgoCD, GitOps, Prometheus, Grafana, Linux
+    (RHEL/Oracle), Windows Server, PostgreSQL, SQL Server, PowerShell, Cloudflare,
+    NetworkPolicies, Disaster Recovery, RTO/RPO/MTTR.</p>\n        </div>\n      </div>\n
+    \     <div class=\"sb\"><span><span class=\"dot-g\"></span> Online &middot; Kind
+    &middot; Cloudflare &middot; WSL2</span><span>15/15 pods &middot; &#x1F4E1; Live</span></div>\n
+    \   </div>\n  </div>\n  <div class=\"col\">\n    <div class=\"w\">\n      <div
+    class=\"wt\"><span>&#x1F4C4; Links</span><div class=\"btns\"><span>_</span><span>&#x25A1;</span><span>&#x2715;</span></div></div>\n
+    \     <div class=\"wb\" style=\"padding:6px 10px\">\n        <div style=\"font-weight:700;margin-bottom:2px;\">Curr&iacute;culos</div>\n
+    \       <a href=\"https://drive.google.com/drive/folders/1HsHI4QwXOS5NkfCRBcZzUDqrOpnHI1OV\"
+    target=\"_blank\" class=\"w95-btn\">&#x1F4C4; Curriculo PT-BR / EN-US</a>\n        <div
+    style=\"font-weight:700;margin:4px 0 2px;\">Links</div>\n        <a href=\"https://linkedin.com/in/denis93\"
+    target=\"_blank\" class=\"w95-btn\">&#x1F4BC; LinkedIn</a>\n        <a href=\"https://github.com/denoso1993/k8s-portfolio-iac\"
+    target=\"_blank\" class=\"w95-btn\">&#x1F419; Cluster K8s</a>\n        <a href=\"mailto:denis_oliveira@rocketmail.com\"
+    class=\"w95-btn\">&#x1F4E7; Email</a>\n        <a href=\"https://drive.google.com/drive/folders/1FcYD8bK9-_ELUoMHFNZzyWU-5mOJTy3H\"
+    target=\"_blank\" class=\"w95-btn\">&#x1F4C1; Projetos + Scripts</a>\n        <a
+    href=\"https://drive.google.com/drive/folders/1k_4mO-j4WEoaIGngR9cGLX1WpVSKC-AD\"
+    target=\"_blank\" class=\"w95-btn\">&#x1F4DC; Certificados</a>\n        <a href=\"https://drive.google.com/drive/folders/1yI8Hf9Ku_jncA5YtFkkkc0zN3oq1j5Xv\"
+    target=\"_blank\" class=\"w95-btn\">&#x1F310; Cert. English Proficiency</a>\n
+    \     </div>\n    </div>\n  </div>\n</div>\n\n<!-- ROW 2: TERMINAL + PAINEL -->\n<div
+    class=\"row\">\n  <div class=\"col\">\n    <div class=\"w\" style=\"min-height:360px;\">\n
+    \     <div class=\"wt\"><span>&#x1F4BB; Command Prompt - kubectl</span><div class=\"btns\"><span>_</span><span>&#x25A1;</span><span>&#x2715;</span></div></div>\n
+    \     <div class=\"term\">\n        <span class=\"p\">C:\\&gt; </span><span class=\"c\">kubectl
+    get pods -A</span>\n        <span id=\"pod-output\" class=\"o\">Carregando...</span>\n
+    \       <span class=\"o\"></span>\n        <span class=\"p\">C:\\&gt; </span><span
+    class=\"c\">kubectl get nodes</span>\n        <span id=\"node-output\" class=\"o\">Carregando...</span>\n
+    \       <span class=\"o\"></span>\n        <span class=\"p\">C:\\&gt; <span class=\"blink\">_</span></span>\n
+    \     </div>\n    </div>\n  </div>\n  <div class=\"col\">\n    <div class=\"w\">\n
+    \     <div class=\"wt\"><span>&#x2699;&#xFE0F; Painel de Controle</span><div class=\"btns\"><span>_</span><span>&#x25A1;</span><span>&#x2715;</span></div></div>\n
+    \     <div class=\"wb\" style=\"padding:8px 10px;\">\n        <div class=\"tg\">\n
+    \         <span>Kubernetes</span><span>Docker</span><span>Kind</span><span>Helm</span><span>nginx</span>\n
+    \         <span>PostgreSQL</span><span>ArgoCD</span><span>Prometheus</span><span>Grafana</span>\n
+    \         <span>Loki</span><span>cert-manager</span><span>Cloudflare</span>\n
+    \       </div>\n      </div>\n    </div>\n    \n    <div class=\"w\" style=\"margin-top:12px;\">\n
+    \     <div class=\"wt\"><span>&#x1F5A5;&#xFE0F; Gerenciador de Dispositivos</span><div
+    class=\"btns\"><span>_</span><span>&#x25A1;</span><span>&#x2715;</span></div></div>\n
+    \     <div class=\"wb\" style=\"padding:8px 10px;font-size:11px\">\n        <div
+    style=\"font-weight:700;font-size:13px;margin-bottom:4px;color:#000080;\">&#x1F4E6;
+    lab-sre-denoso &middot; Kind v1.27.3</div>\n        <div style=\"display:flex;gap:4px;margin-bottom:4px;flex-wrap:wrap;\">\n
+    \         <span class=\"mbox\"><span class=\"n\">15</span><span class=\"l\">Pods</span></span>\n
+    \         <span class=\"mbox\"><span class=\"n\">6</span><span class=\"l\">Svcs</span></span>\n
+    \         <span class=\"mbox\"><span class=\"n\">3</span><span class=\"l\">NS</span></span>\n
+    \         <span class=\"mbox\"><span class=\"n\">1</span><span class=\"l\">No</span></span>\n
+    \         <span class=\"mbox\"><span class=\"n\">99%</span><span class=\"l\">Uptime</span></span>\n
+    \       </div>\n        <div style=\"border-top:1px solid #808080;border-bottom:1px
+    solid #fff;padding-top:3px;margin-bottom:3px;\"></div>\n        <div style=\"font-size:11px;line-height:1.6;\">\n
+    \         <div>&#x25B6; <strong>Cluster:</strong> Kind (WSL2) &middot; K8s v1.27.3</div>\n
+    \         <div>&#x25B6; <strong>Ingress:</strong> nginx-controller &middot; NodePort
+    30080</div>\n          <div>&#x25B6; <strong>GitOps:</strong> ArgoCD v2.12.3 &middot;
+    auto-sync</div>\n          <div>&#x25B6; <strong>Cert:</strong> cert-manager &middot;
+    Let&rsquo;s Encrypt</div>\n          <div>&#x25B6; <strong>DB:</strong> PostgreSQL
+    15 &middot; StatefulSet + PVC</div>\n          <div>&#x25B6; <strong>Monitor:</strong>
+    Prometheus + Grafana + Loki</div>\n          <div>&#x25B6; <strong>Policy:</strong>
+    Kyverno &middot; NetworkPolicies &middot; HPA</div>\n          <div>&#x25B6; <strong>Tunnel:</strong>
+    Cloudflare &middot; TLS edge</div>\n          <div>&#x25B6; <strong>API:</strong>
+    kubectl proxy &middot; /k8s/ endpoint</div>\n        </div>\n      </div>\n    </div>\n
+    \ </div>\n</div>\n\n<!-- ROW 3: PAINT / DASHBOARD FULL WIDTH -->\n<div class=\"row\">\n
+    \ <div class=\"col-2\">\n    <div class=\"w\" style=\"min-height:440px;\">\n      <div
+    class=\"wt\"><span>&#x1F3A8; paint.exe - grafana-dashboard.bmp</span><div class=\"btns\"><span>_</span><span>&#x25A1;</span><span>&#x2715;</span></div></div>\n
+    \     <div class=\"paint-menu\">\n        <span>Arquivo</span><span>Editar</span><span>Exibir</span><span>Imagem</span><span>Op&ccedil;&otilde;es</span><span>Ajuda</span>\n
+    \     </div>\n      <div style=\"display:flex;flex:1;border:2px solid;border-color:#808080
+    #fff #fff #808080;margin:4px 4px 2px 4px;background:#c0c0c0;\">\n        <div
+    class=\"paint-toolbar\">\n          <span>&#x270F;&#xFE0F;</span><span>&#x1F58C;&#xFE0F;</span><span>&#x270D;&#xFE0F;</span><span>&#x1F58B;&#xFE0F;</span><span>&#x1FAA3;</span><span>&#x1F4DD;</span>\n
+    \         <span>&#x1F50D;</span><span>&#x1F3A8;</span><span>&#x2571;</span><span>&#x25C7;</span><span>&#x25EF;</span><span>&#x25AD;</span>\n
+    \         <span>&#x2B1F;</span>\n        </div>\n        <div class=\"paint-canvas\">\n
+    \         <div style=\"width:100%;height:380px;overflow:hidden;position:relative;\">\n
+    \           <iframe src=\"https://grafana.denisdeoliveira.com.br/d/cluster-sre/cluster-sre?orgId=1&amp;kiosk=tv\"
+    width=\"100%\" height=\"455\" frameborder=\"0\" style=\"display:block;position:absolute;top:-75px;left:0;width:100%;height:125%;border:none;\"></iframe>\n
+    \         </div>\n        </div>\n      </div>\n      <div style=\"background:#c0c0c0;border-top:1px
+    solid #fff;padding:3px 6px;display:flex;align-items:center;gap:3px;flex-shrink:0;\">\n
+    \       <div style=\"border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;padding:2px;background:#fff;\">\n
+    \         <div style=\"width:16px;height:16px;background:#000;border:1px solid
+    #808080;\"></div>\n        </div>\n        <div style=\"display:flex;flex-wrap:wrap;gap:1px;\">\n
+    \         <span class=\"color-box\" style=\"background:#000;\"></span>\n          <span
+    class=\"color-box\" style=\"background:#fff;\"></span>\n          <span class=\"color-box\"
+    style=\"background:#808080;\"></span>\n          <span class=\"color-box\" style=\"background:#800000;\"></span>\n
+    \         <span class=\"color-box\" style=\"background:#008000;\"></span>\n          <span
+    class=\"color-box\" style=\"background:#808000;\"></span>\n          <span class=\"color-box\"
+    style=\"background:#000080;\"></span>\n          <span class=\"color-box\" style=\"background:#800080;\"></span>\n
+    \         <span class=\"color-box\" style=\"background:#008080;\"></span>\n          <span
+    class=\"color-box\" style=\"background:#c0c0c0;\"></span>\n          <span class=\"color-box\"
+    style=\"background:#ff0000;\"></span>\n          <span class=\"color-box\" style=\"background:#00ff00;\"></span>\n
+    \         <span class=\"color-box\" style=\"background:#ffff00;\"></span>\n          <span
+    class=\"color-box\" style=\"background:#0000ff;\"></span>\n          <span class=\"color-box\"
+    style=\"background:#ff00ff;\"></span>\n          <span class=\"color-box\" style=\"background:#00ffff;\"></span>\n
+    \       </div>\n      </div>\n      <div class=\"sb\"><span>&#x1F5BC;&#xFE0F;
+    640x480 &middot; 256 cores</span><span>&#x1F50C; Para Ajuda, pressione F1</span></div>\n
+    \   </div>\n  </div>\n</div>\n\n</div><!-- desktop -->\n\n<!-- TASKBAR -->\n<div
+    class=\"taskbar\">\n  <button class=\"start\" onclick='alert(\"Windows 95 + Kubernetes
+    = Win95Ops\")'><span>&#x1FA9F;</span> Iniciar</button>\n  <div class=\"task\">&#x1F4C4;
+    Sobre</div>\n  <div class=\"task\">&#x1F4BB; Prompt</div>\n  <div class=\"task\">&#x1F3A8;
+    Paint</div>\n  <div class=\"time\" id=\"clock\"></div>\n</div>\n\n<script>\nfunction
+    updateClock(){\n  var d=new Date();\n  document.getElementById(\"clock\").textContent=\n
+    \   d.getHours().toString().padStart(2,\"0\")+\":\"+\n    d.getMinutes().toString().padStart(2,\"0\");\n}\nupdateClock();\nsetInterval(updateClock,10000);\n\n//
+    Click on clock shows viewport info\ndocument.getElementById(\"clock\").onclick=function(){\n
+    \ alert(\"VIEW \"+window.innerWidth+\"x\"+window.innerHeight);\n};\n\n// Live
+    kubectl data\nasync function loadKubeData(){\n  try{\n    var r=await fetch(\"/k8s/api/v1/pods?limit=40\");\n
+    \   var d=await r.json();\n    document.getElementById(\"pod-output\").textContent=\n
+    \     d.items.map(function(x){\n        var ns=(x.metadata.namespace+\"       \").slice(0,12);\n
+    \       var nm=(x.metadata.name+\"                       \").slice(0,28);\n        var
+    st=x.status.phase==\"Running\"?\"1/1\":\"0/1\";\n        return ns+\" \"+nm+\"
+    \"+st+\"  \"+x.status.phase;\n      }).join(\"\\n\");\n  }catch(e){\n    document.getElementById(\"pod-output\").textContent=\"API:
+    \"+e.message;\n  }\n  try{\n    var r2=await fetch(\"/k8s/api/v1/nodes\");\n    var
+    d2=await r2.json();\n    document.getElementById(\"node-output\").textContent=\n
+    \     d2.items.map(function(n){\n        var c=n.status.conditions.find(function(x){return
+    x.type==\"Ready\";});\n        return (n.metadata.name+\"          \").slice(0,28)+\"
+    \"+\n               (c&&c.status==\"True\"?\"Ready\":\"NotReady\");\n      }).join(\"\\n\");\n
+    \ }catch(e){\n    document.getElementById(\"node-output\").textContent=\"API:
+    \"+e.message;\n  }\n}\nloadKubeData();\nsetInterval(loadKubeData,15000);\n</script>\n\n</body>\n</html>\n"
 kind: ConfigMap
 metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"index.html":"\u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n\u003chead\u003e\n\u003cmeta charset=\"UTF-8\"\u003e\n\u003cmeta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\"\u003e\n\u003ctitle\u003eDenis Oliveira Ramos\u003c/title\u003e\n\u003cstyle\u003e\n*{margin:0;padding:0;box-sizing:border-box}\nhtml,body{width:100%;height:100%}\nbody{\n  background:#008080;\n  font-family:'MS Sans Serif','Courier New',monospace;\n  font-size:13px;\n  overflow-y:auto;\n  overflow-x:hidden;\n  padding:16px 16px 48px;\n  min-height:100vh;\n}\n\n/* Desktop flex container */\n.desktop{\n  max-width:1100px;\n  margin:0 auto;\n  display:flex;\n  flex-direction:column;\n  gap:12px;\n}\n\n/* Row for horizontal grouping */\n.row{\n  display:flex;\n  flex-wrap:wrap;\n  gap:12px;\n}\n\n/* Column variants */\n.col{flex:1;min-width:280px;display:flex;flex-direction:column;}\n.col-2{flex:2;min-width:350px;display:flex;flex-direction:column;}\n.col-3{flex:3;min-width:300px;display:flex;flex-direction:column;}\n\n/* Win95 window */\n.w{\n  position:relative;\n  background:#c0c0c0;\n  border:2px solid;\n  border-color:#fff #808080 #808080 #fff;\n  box-shadow:2px 2px 0 0 #404040;\n  display:flex;\n  flex-direction:column;\n  width:100%;\n  min-height:100px;\n}\n\n/* Title bar */\n.wt{\n  background:linear-gradient(90deg,#000080,#1084d0);\n  color:#fff;\n  font-weight:700;\n  font-size:14px;\n  padding:5px 8px 5px 10px;\n  display:flex;\n  align-items:center;\n  justify-content:space-between;\n  min-height:28px;\n  cursor:default;\n  user-select:none;\n  flex-shrink:0;\n}\n.wt .btns{display:flex;gap:2px;flex-shrink:0}\n.wt .btns span{\n  width:18px;height:16px;background:#c0c0c0;\n  border:1px solid;border-color:#fff #808080 #808080 #fff;\n  display:flex;align-items:center;justify-content:center;\n  font-size:11px;color:#000;\n}\n\n/* Window body */\n.wb{padding:8px 12px;flex:1;font-size:12px;line-height:1.3;color:#222;overflow:auto;}\n\n/* Status bar */\n.sb{\n  background:#c0c0c0;border-top:1px solid #fff;\n  padding:2px 8px;display:flex;justify-content:space-between;\n  font-size:11px;color:#444;flex-shrink:0;\n}\n\n/* Terminal */\n.term{\n  background:#000;color:#0f0;font-family:'Courier New',monospace;font-size:12px;\n  padding:8px 10px;\n  border:2px solid;border-color:#808080 #fff #fff #808080;\n  flex:1;overflow-y:auto;overflow-x:auto;\n}\n.term .p{color:#0f0}.term .c{color:#fff}.term .o{\n  color:#0f0;display:block;padding-left:8px;white-space:pre-wrap;word-break:break-all;font-size:12px;line-height:1.4;\n}\n\n/* Blink cursor */\n.blink{animation:blink 1s step-end infinite}\n@keyframes blink{50%{opacity:0}}\n\n/* Tag cloud */\n.tg{display:flex;flex-wrap:wrap;gap:3px;align-content:flex-start;}\n.tg span{\n  background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;\n  padding:3px 8px;font-size:11px;color:#222;\n}\n\n/* Metric box */\n.mbox{\n  background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;\n  padding:3px 8px;text-align:center;display:inline-block;margin:1px;min-width:42px;\n}\n.mbox .n{font-size:18px;font-weight:700;color:#000;display:block;}\n.mbox .l{font-size:9px;color:#555;}\n\n/* Win95 button */\n.w95-btn{\n  background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;\n  padding:3px 10px;font-family:inherit;font-size:11px;\n  display:inline-flex;align-items:center;gap:4px;\n  text-decoration:none;color:#222;margin:1px;\n}\n\n/* Taskbar */\n.taskbar{\n  position:fixed;bottom:0;left:0;right:0;z-index:999;\n  background:#c0c0c0;border-top:2px solid #fff;\n  padding:3px 6px;display:flex;align-items:center;gap:4px;height:30px;\n}\n.taskbar .start{\n  background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;\n  padding:2px 10px;font-weight:700;font-size:13px;font-family:inherit;\n  display:flex;align-items:center;gap:4px;cursor:pointer;height:22px;\n}\n.taskbar .task{\n  background:#c0c0c0;border:1px solid;border-color:#808080 #fff #fff #808080;\n  padding:2px 12px;font-size:11px;display:flex;align-items:center;\n}\n.taskbar .time{\n  margin-left:auto;border:1px solid;border-color:#808080 #fff #fff #808080;\n  padding:2px 8px;font-size:11px;background:#c0c0c0;cursor:pointer;\n}\n\n/* PAINT toolbar */\n.paint-toolbar{\n  background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;\n  padding:3px;display:grid;grid-template-columns:1fr 1fr;gap:2px;\n  width:54px;flex-shrink:0;align-content:start;\n}\n.paint-toolbar span{\n  width:23px;height:23px;background:#c0c0c0;\n  border:1px solid;border-color:#fff #808080 #808080 #fff;\n  display:flex;align-items:center;justify-content:center;\n}\n.paint-menu{padding:2px 6px;display:flex;gap:8px;font-size:11px;flex-shrink:0;}\n.paint-menu span{padding:1px 8px;}\n.paint-canvas{flex:1;margin:3px;background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;overflow:hidden;}\n.color-box{width:14px;height:14px;border:1px solid #808080;}\n\n/* Profile photo */\n.profile-photo{\n  width:80px;height:80px;object-fit:cover;\n  border:2px inset #808080;display:block;\n}\n\n/* Green dot */\n.dot-g{width:7px;height:7px;background:#0a0;border:1px solid #080;display:inline-block;margin-right:3px;vertical-align:middle;}\n\n/* Links */\na{color:#000080;}\n\u003c/style\u003e\n\u003c/head\u003e\n\u003cbody\u003e\n\n\u003cdiv class=\"desktop\"\u003e\n\n\u003c!-- ROW 1: SOBRE + LINKS --\u003e\n\u003cdiv class=\"row\"\u003e\n  \u003cdiv class=\"col-3\"\u003e\n    \u003cdiv class=\"w\"\u003e\n      \u003cdiv class=\"wt\"\u003e\u003cspan\u003e\u0026#x1F5AA; Sobre - Denis Oliveira Ramos\u003c/span\u003e\u003cdiv class=\"btns\"\u003e\u003cspan\u003e_\u003c/span\u003e\u003cspan\u003e\u0026#x25A1;\u003c/span\u003e\u003cspan\u003e\u0026#x2715;\u003c/span\u003e\u003c/div\u003e\u003c/div\u003e\n      \u003cdiv class=\"wb\" style=\"padding:12px 16px;font-size:15px;line-height:1.5\"\u003e\n        \u003ctable width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"border:none;\"\u003e\n          \u003ctr\u003e\n            \u003ctd valign=\"top\" width=\"95\" style=\"padding-right:18px;\"\u003e\n              \u003cimg src=\"https://i.imgur.com/lJoDtkK.jpeg\" class=\"profile-photo\" alt=\"Denis\"\u003e\n            \u003c/td\u003e\n            \u003ctd valign=\"top\"\u003e\n              \u003cdiv style=\"font-size:20px;font-weight:700;margin-bottom:1px;\"\u003eDenis Oliveira Ramos\u003c/div\u003e\n              \u003cdiv style=\"font-size:13px;color:#444;margin-bottom:2px;\"\u003eSenior Cloud \u0026amp; Infrastructure Engineer\u003c/div\u003e\n              \u003cdiv style=\"font-size:12px;color:#666;margin-bottom:6px;\"\u003e\n                \u0026#x1F4CD; Barueri, SP \u0026middot; \u0026#x1F310; Ingl\u0026ecirc;s C1/C2 \u0026middot; \u0026#x1F4C5; +8 anos\n              \u003c/div\u003e\n            \u003c/td\u003e\n          \u003c/tr\u003e\n        \u003c/table\u003e\n        \u003cdiv style=\"font-size:14px;line-height:1.6;\"\u003e\n          \u003cp style=\"margin-bottom:4px;\"\u003e\u003cstrong\u003eSobre mim\u003c/strong\u003e\u003c/p\u003e\n          \u003cp style=\"margin-bottom:4px;\"\u003eProfissional de Infraestrutura Cloud com forte especializa\u0026ccedil;\u0026atilde;o em ambientes \u003cstrong\u003eLinux\u003c/strong\u003e, \u003cstrong\u003eBancos de Dados\u003c/strong\u003e e ecossistemas \u003cstrong\u003eCloud Native\u003c/strong\u003e. Atualmente dispon\u0026iacute;vel para novos desafios, com experi\u0026ecirc;ncia em \u003cstrong\u003eCloud Infrastructure\u003c/strong\u003e, \u003cstrong\u003eSRE\u003c/strong\u003e e engenharia de plataforma.\u003c/p\u003e\n          \u003cp style=\"margin-bottom:4px;\"\u003eMinha abordagem \u0026eacute; pr\u0026aacute;tica e anal\u0026iacute;tica, focada em entregar solu\u0026ccedil;\u0026otilde;es escal\u0026aacute;veis e automatizadas. Este portf\u0026oacute;lio \u0026eacute; a \u003cstrong\u003eprova de conceito\u003c/strong\u003e \u0026mdash; uma aplica\u0026ccedil;\u0026atilde;o hospedada em cluster Kubernetes 100% declarativo, mantido via \u003cstrong\u003eIaC\u003c/strong\u003e com \u003cstrong\u003eTerraform\u003c/strong\u003e e \u003cstrong\u003eHelm\u003c/strong\u003e, com observabilidade completa via \u003cstrong\u003ePrometheus + Grafana + Loki\u003c/strong\u003e e GitOps com \u003cstrong\u003eArgoCD\u003c/strong\u003e. \u003cstrong\u003eTudo rodando no WSL2.\u003c/strong\u003e\u003c/p\u003e\n          \u003cp style=\"margin-bottom:0;\"\u003e\u003cstrong\u003ePrincipais compet\u0026ecirc;ncias:\u003c/strong\u003e Kubernetes, Docker, Terraform, Helm, ArgoCD, GitOps, Prometheus, Grafana, Linux (RHEL/Oracle), Windows Server, PostgreSQL, SQL Server, PowerShell, Cloudflare, NetworkPolicies, Disaster Recovery, RTO/RPO/MTTR.\u003c/p\u003e\n        \u003c/div\u003e\n      \u003c/div\u003e\n      \u003cdiv class=\"sb\"\u003e\u003cspan\u003e\u003cspan class=\"dot-g\"\u003e\u003c/span\u003e Online \u0026middot; Kind \u0026middot; Cloudflare \u0026middot; WSL2\u003c/span\u003e\u003cspan\u003e15/15 pods \u0026middot; \u0026#x1F4E1; Live\u003c/span\u003e\u003c/div\u003e\n    \u003c/div\u003e\n  \u003c/div\u003e\n  \u003cdiv class=\"col\"\u003e\n    \u003cdiv class=\"w\"\u003e\n      \u003cdiv class=\"wt\"\u003e\u003cspan\u003e\u0026#x1F4C4; Links\u003c/span\u003e\u003cdiv class=\"btns\"\u003e\u003cspan\u003e_\u003c/span\u003e\u003cspan\u003e\u0026#x25A1;\u003c/span\u003e\u003cspan\u003e\u0026#x2715;\u003c/span\u003e\u003c/div\u003e\u003c/div\u003e\n      \u003cdiv class=\"wb\" style=\"padding:6px 10px\"\u003e\n        \u003cdiv style=\"font-weight:700;margin-bottom:2px;\"\u003eCurr\u0026iacute;culos\u003c/div\u003e\n        \u003ca href=\"https://drive.google.com/drive/folders/1HsHI4QwXOS5NkfCRBcZzUDqrOpnHI1OV\" target=\"_blank\" class=\"w95-btn\"\u003e\u0026#x1F4C4; Curriculo PT-BR / EN-US\u003c/a\u003e\n        \u003cdiv style=\"font-weight:700;margin:4px 0 2px;\"\u003eLinks\u003c/div\u003e\n        \u003ca href=\"https://linkedin.com/in/denis93\" target=\"_blank\" class=\"w95-btn\"\u003e\u0026#x1F4BC; LinkedIn\u003c/a\u003e\n        \u003ca href=\"https://github.com/denoso1993/k8s-portfolio-iac\" target=\"_blank\" class=\"w95-btn\"\u003e\u0026#x1F419; Cluster K8s\u003c/a\u003e\n        \u003ca href=\"mailto:denis_oliveira@rocketmail.com\" class=\"w95-btn\"\u003e\u0026#x1F4E7; Email\u003c/a\u003e\n        \u003ca href=\"https://drive.google.com/drive/folders/1FcYD8bK9-_ELUoMHFNZzyWU-5mOJTy3H\" target=\"_blank\" class=\"w95-btn\"\u003e\u0026#x1F4C1; Projetos + Scripts\u003c/a\u003e\n        \u003ca href=\"https://drive.google.com/drive/folders/1k_4mO-j4WEoaIGngR9cGLX1WpVSKC-AD\" target=\"_blank\" class=\"w95-btn\"\u003e\u0026#x1F4DC; Certificados\u003c/a\u003e\n        \u003ca href=\"https://drive.google.com/drive/folders/1yI8Hf9Ku_jncA5YtFkkkc0zN3oq1j5Xv\" target=\"_blank\" class=\"w95-btn\"\u003e\u0026#x1F310; Cert. English Proficiency\u003c/a\u003e\n      \u003c/div\u003e\n    \u003c/div\u003e\n  \u003c/div\u003e\n\u003c/div\u003e\n\n\u003c!-- ROW 2: TERMINAL + PAINEL --\u003e\n\u003cdiv class=\"row\"\u003e\n  \u003cdiv class=\"col\"\u003e\n    \u003cdiv class=\"w\" style=\"min-height:360px;\"\u003e\n      \u003cdiv class=\"wt\"\u003e\u003cspan\u003e\u0026#x1F4BB; Command Prompt - kubectl\u003c/span\u003e\u003cdiv class=\"btns\"\u003e\u003cspan\u003e_\u003c/span\u003e\u003cspan\u003e\u0026#x25A1;\u003c/span\u003e\u003cspan\u003e\u0026#x2715;\u003c/span\u003e\u003c/div\u003e\u003c/div\u003e\n      \u003cdiv class=\"term\"\u003e\n        \u003cspan class=\"p\"\u003eC:\\\u0026gt; \u003c/span\u003e\u003cspan class=\"c\"\u003ekubectl get pods -A\u003c/span\u003e\n        \u003cspan id=\"pod-output\" class=\"o\"\u003eCarregando...\u003c/span\u003e\n        \u003cspan class=\"o\"\u003e\u003c/span\u003e\n        \u003cspan class=\"p\"\u003eC:\\\u0026gt; \u003c/span\u003e\u003cspan class=\"c\"\u003ekubectl get nodes\u003c/span\u003e\n        \u003cspan id=\"node-output\" class=\"o\"\u003eCarregando...\u003c/span\u003e\n        \u003cspan class=\"o\"\u003e\u003c/span\u003e\n        \u003cspan class=\"p\"\u003eC:\\\u0026gt; \u003cspan class=\"blink\"\u003e_\u003c/span\u003e\u003c/span\u003e\n      \u003c/div\u003e\n    \u003c/div\u003e\n  \u003c/div\u003e\n  \u003cdiv class=\"col\"\u003e\n    \u003cdiv class=\"w\"\u003e\n      \u003cdiv class=\"wt\"\u003e\u003cspan\u003e\u0026#x2699;\u0026#xFE0F; Painel de Controle\u003c/span\u003e\u003cdiv class=\"btns\"\u003e\u003cspan\u003e_\u003c/span\u003e\u003cspan\u003e\u0026#x25A1;\u003c/span\u003e\u003cspan\u003e\u0026#x2715;\u003c/span\u003e\u003c/div\u003e\u003c/div\u003e\n      \u003cdiv class=\"wb\" style=\"padding:8px 10px;\"\u003e\n        \u003cdiv class=\"tg\"\u003e\n          \u003cspan\u003eKubernetes\u003c/span\u003e\u003cspan\u003eDocker\u003c/span\u003e\u003cspan\u003eKind\u003c/span\u003e\u003cspan\u003eHelm\u003c/span\u003e\u003cspan\u003enginx\u003c/span\u003e\n          \u003cspan\u003ePostgreSQL\u003c/span\u003e\u003cspan\u003eArgoCD\u003c/span\u003e\u003cspan\u003ePrometheus\u003c/span\u003e\u003cspan\u003eGrafana\u003c/span\u003e\n          \u003cspan\u003eLoki\u003c/span\u003e\u003cspan\u003ecert-manager\u003c/span\u003e\u003cspan\u003eCloudflare\u003c/span\u003e\n        \u003c/div\u003e\n      \u003c/div\u003e\n    \u003c/div\u003e\n    \n    \u003cdiv class=\"w\" style=\"margin-top:12px;\"\u003e\n      \u003cdiv class=\"wt\"\u003e\u003cspan\u003e\u0026#x1F5A5;\u0026#xFE0F; Gerenciador de Dispositivos\u003c/span\u003e\u003cdiv class=\"btns\"\u003e\u003cspan\u003e_\u003c/span\u003e\u003cspan\u003e\u0026#x25A1;\u003c/span\u003e\u003cspan\u003e\u0026#x2715;\u003c/span\u003e\u003c/div\u003e\u003c/div\u003e\n      \u003cdiv class=\"wb\" style=\"padding:8px 10px;font-size:11px\"\u003e\n        \u003cdiv style=\"font-weight:700;font-size:13px;margin-bottom:4px;color:#000080;\"\u003e\u0026#x1F4E6; lab-sre-denoso \u0026middot; Kind v1.27.3\u003c/div\u003e\n        \u003cdiv style=\"display:flex;gap:4px;margin-bottom:4px;flex-wrap:wrap;\"\u003e\n          \u003cspan class=\"mbox\"\u003e\u003cspan class=\"n\"\u003e15\u003c/span\u003e\u003cspan class=\"l\"\u003ePods\u003c/span\u003e\u003c/span\u003e\n          \u003cspan class=\"mbox\"\u003e\u003cspan class=\"n\"\u003e6\u003c/span\u003e\u003cspan class=\"l\"\u003eSvcs\u003c/span\u003e\u003c/span\u003e\n          \u003cspan class=\"mbox\"\u003e\u003cspan class=\"n\"\u003e3\u003c/span\u003e\u003cspan class=\"l\"\u003eNS\u003c/span\u003e\u003c/span\u003e\n          \u003cspan class=\"mbox\"\u003e\u003cspan class=\"n\"\u003e1\u003c/span\u003e\u003cspan class=\"l\"\u003eNo\u003c/span\u003e\u003c/span\u003e\n          \u003cspan class=\"mbox\"\u003e\u003cspan class=\"n\"\u003e99%\u003c/span\u003e\u003cspan class=\"l\"\u003eUptime\u003c/span\u003e\u003c/span\u003e\n        \u003c/div\u003e\n        \u003cdiv style=\"border-top:1px solid #808080;border-bottom:1px solid #fff;padding-top:3px;margin-bottom:3px;\"\u003e\u003c/div\u003e\n        \u003cdiv style=\"font-size:11px;line-height:1.6;\"\u003e\n          \u003cdiv\u003e\u0026#x25B6; \u003cstrong\u003eCluster:\u003c/strong\u003e Kind (WSL2) \u0026middot; K8s v1.27.3\u003c/div\u003e\n          \u003cdiv\u003e\u0026#x25B6; \u003cstrong\u003eIngress:\u003c/strong\u003e nginx-controller \u0026middot; NodePort 30080\u003c/div\u003e\n          \u003cdiv\u003e\u0026#x25B6; \u003cstrong\u003eGitOps:\u003c/strong\u003e ArgoCD v2.12.3 \u0026middot; auto-sync\u003c/div\u003e\n          \u003cdiv\u003e\u0026#x25B6; \u003cstrong\u003eCert:\u003c/strong\u003e cert-manager \u0026middot; Let\u0026rsquo;s Encrypt\u003c/div\u003e\n          \u003cdiv\u003e\u0026#x25B6; \u003cstrong\u003eDB:\u003c/strong\u003e PostgreSQL 15 \u0026middot; StatefulSet + PVC\u003c/div\u003e\n          \u003cdiv\u003e\u0026#x25B6; \u003cstrong\u003eMonitor:\u003c/strong\u003e Prometheus + Grafana + Loki\u003c/div\u003e\n          \u003cdiv\u003e\u0026#x25B6; \u003cstrong\u003ePolicy:\u003c/strong\u003e Kyverno \u0026middot; NetworkPolicies \u0026middot; HPA\u003c/div\u003e\n          \u003cdiv\u003e\u0026#x25B6; \u003cstrong\u003eTunnel:\u003c/strong\u003e Cloudflare \u0026middot; TLS edge\u003c/div\u003e\n          \u003cdiv\u003e\u0026#x25B6; \u003cstrong\u003eAPI:\u003c/strong\u003e kubectl proxy \u0026middot; /k8s/ endpoint\u003c/div\u003e\n        \u003c/div\u003e\n      \u003c/div\u003e\n    \u003c/div\u003e\n  \u003c/div\u003e\n\u003c/div\u003e\n\n\u003c!-- ROW 3: PAINT / DASHBOARD FULL WIDTH --\u003e\n\u003cdiv class=\"row\"\u003e\n  \u003cdiv class=\"col-2\"\u003e\n    \u003cdiv class=\"w\" style=\"min-height:440px;\"\u003e\n      \u003cdiv class=\"wt\"\u003e\u003cspan\u003e\u0026#x1F3A8; paint.exe - grafana-dashboard.bmp\u003c/span\u003e\u003cdiv class=\"btns\"\u003e\u003cspan\u003e_\u003c/span\u003e\u003cspan\u003e\u0026#x25A1;\u003c/span\u003e\u003cspan\u003e\u0026#x2715;\u003c/span\u003e\u003c/div\u003e\u003c/div\u003e\n      \u003cdiv class=\"paint-menu\"\u003e\n        \u003cspan\u003eArquivo\u003c/span\u003e\u003cspan\u003eEditar\u003c/span\u003e\u003cspan\u003eExibir\u003c/span\u003e\u003cspan\u003eImagem\u003c/span\u003e\u003cspan\u003eOp\u0026ccedil;\u0026otilde;es\u003c/span\u003e\u003cspan\u003eAjuda\u003c/span\u003e\n      \u003c/div\u003e\n      \u003cdiv style=\"display:flex;flex:1;border:2px solid;border-color:#808080 #fff #fff #808080;margin:4px 4px 2px 4px;background:#c0c0c0;\"\u003e\n        \u003cdiv class=\"paint-toolbar\"\u003e\n          \u003cspan\u003e\u0026#x270F;\u0026#xFE0F;\u003c/span\u003e\u003cspan\u003e\u0026#x1F58C;\u0026#xFE0F;\u003c/span\u003e\u003cspan\u003e\u0026#x270D;\u0026#xFE0F;\u003c/span\u003e\u003cspan\u003e\u0026#x1F58B;\u0026#xFE0F;\u003c/span\u003e\u003cspan\u003e\u0026#x1FAA3;\u003c/span\u003e\u003cspan\u003e\u0026#x1F4DD;\u003c/span\u003e\n          \u003cspan\u003e\u0026#x1F50D;\u003c/span\u003e\u003cspan\u003e\u0026#x1F3A8;\u003c/span\u003e\u003cspan\u003e\u0026#x2571;\u003c/span\u003e\u003cspan\u003e\u0026#x25C7;\u003c/span\u003e\u003cspan\u003e\u0026#x25EF;\u003c/span\u003e\u003cspan\u003e\u0026#x25AD;\u003c/span\u003e\n          \u003cspan\u003e\u0026#x2B1F;\u003c/span\u003e\n        \u003c/div\u003e\n        \u003cdiv class=\"paint-canvas\"\u003e\n          \u003cdiv style=\"width:100%;height:380px;overflow:hidden;position:relative;\"\u003e\n            \u003ciframe src=\"https://grafana.denisdeoliveira.com.br/d/cluster-sre/cluster-sre?orgId=1\u0026amp;kiosk=tv\" width=\"100%\" height=\"455\" frameborder=\"0\" style=\"display:block;position:absolute;top:-75px;left:0;width:100%;height:125%;border:none;\"\u003e\u003c/iframe\u003e\n          \u003c/div\u003e\n        \u003c/div\u003e\n      \u003c/div\u003e\n      \u003cdiv style=\"background:#c0c0c0;border-top:1px solid #fff;padding:3px 6px;display:flex;align-items:center;gap:3px;flex-shrink:0;\"\u003e\n        \u003cdiv style=\"border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;padding:2px;background:#fff;\"\u003e\n          \u003cdiv style=\"width:16px;height:16px;background:#000;border:1px solid #808080;\"\u003e\u003c/div\u003e\n        \u003c/div\u003e\n        \u003cdiv style=\"display:flex;flex-wrap:wrap;gap:1px;\"\u003e\n          \u003cspan class=\"color-box\" style=\"background:#000;\"\u003e\u003c/span\u003e\n          \u003cspan class=\"color-box\" style=\"background:#fff;\"\u003e\u003c/span\u003e\n          \u003cspan class=\"color-box\" style=\"background:#808080;\"\u003e\u003c/span\u003e\n          \u003cspan class=\"color-box\" style=\"background:#800000;\"\u003e\u003c/span\u003e\n          \u003cspan class=\"color-box\" style=\"background:#008000;\"\u003e\u003c/span\u003e\n          \u003cspan class=\"color-box\" style=\"background:#808000;\"\u003e\u003c/span\u003e\n          \u003cspan class=\"color-box\" style=\"background:#000080;\"\u003e\u003c/span\u003e\n          \u003cspan class=\"color-box\" style=\"background:#800080;\"\u003e\u003c/span\u003e\n          \u003cspan class=\"color-box\" style=\"background:#008080;\"\u003e\u003c/span\u003e\n          \u003cspan class=\"color-box\" style=\"background:#c0c0c0;\"\u003e\u003c/span\u003e\n          \u003cspan class=\"color-box\" style=\"background:#ff0000;\"\u003e\u003c/span\u003e\n          \u003cspan class=\"color-box\" style=\"background:#00ff00;\"\u003e\u003c/span\u003e\n          \u003cspan class=\"color-box\" style=\"background:#ffff00;\"\u003e\u003c/span\u003e\n          \u003cspan class=\"color-box\" style=\"background:#0000ff;\"\u003e\u003c/span\u003e\n          \u003cspan class=\"color-box\" style=\"background:#ff00ff;\"\u003e\u003c/span\u003e\n          \u003cspan class=\"color-box\" style=\"background:#00ffff;\"\u003e\u003c/span\u003e\n        \u003c/div\u003e\n      \u003c/div\u003e\n      \u003cdiv class=\"sb\"\u003e\u003cspan\u003e\u0026#x1F5BC;\u0026#xFE0F; 640x480 \u0026middot; 256 cores\u003c/span\u003e\u003cspan\u003e\u0026#x1F50C; Para Ajuda, pressione F1\u003c/span\u003e\u003c/div\u003e\n    \u003c/div\u003e\n  \u003c/div\u003e\n\u003c/div\u003e\n\n\u003c/div\u003e\u003c!-- desktop --\u003e\n\n\u003c!-- TASKBAR --\u003e\n\u003cdiv class=\"taskbar\"\u003e\n  \u003cbutton class=\"start\" onclick='alert(\"Windows 95 + Kubernetes = Win95Ops\")'\u003e\u003cspan\u003e\u0026#x1FA9F;\u003c/span\u003e Iniciar\u003c/button\u003e\n  \u003cdiv class=\"task\"\u003e\u0026#x1F4C4; Sobre\u003c/div\u003e\n  \u003cdiv class=\"task\"\u003e\u0026#x1F4BB; Prompt\u003c/div\u003e\n  \u003cdiv class=\"task\"\u003e\u0026#x1F3A8; Paint\u003c/div\u003e\n  \u003cdiv class=\"time\" id=\"clock\"\u003e\u003c/div\u003e\n\u003c/div\u003e\n\n\u003cscript\u003e\nfunction updateClock(){\n  var d=new Date();\n  document.getElementById(\"clock\").textContent=\n    d.getHours().toString().padStart(2,\"0\")+\":\"+\n    d.getMinutes().toString().padStart(2,\"0\");\n}\nupdateClock();\nsetInterval(updateClock,10000);\n\n// Click on clock shows viewport info\ndocument.getElementById(\"clock\").onclick=function(){\n  alert(\"VIEW \"+window.innerWidth+\"x\"+window.innerHeight);\n};\n\n// Live kubectl data\nasync function loadKubeData(){\n  try{\n    var r=await fetch(\"/k8s/api/v1/pods?limit=40\");\n    var d=await r.json();\n    document.getElementById(\"pod-output\").textContent=\n      d.items.map(function(x){\n        var ns=(x.metadata.namespace+\"       \").slice(0,12);\n        var nm=(x.metadata.name+\"                       \").slice(0,28);\n        var st=x.status.phase==\"Running\"?\"1/1\":\"0/1\";\n        return ns+\" \"+nm+\" \"+st+\"  \"+x.status.phase;\n      }).join(\"\\n\");\n  }catch(e){\n    document.getElementById(\"pod-output\").textContent=\"API: \"+e.message;\n  }\n  try{\n    var r2=await fetch(\"/k8s/api/v1/nodes\");\n    var d2=await r2.json();\n    document.getElementById(\"node-output\").textContent=\n      d2.items.map(function(n){\n        var c=n.status.conditions.find(function(x){return x.type==\"Ready\";});\n        return (n.metadata.name+\"          \").slice(0,28)+\" \"+\n               (c\u0026\u0026c.status==\"True\"?\"Ready\":\"NotReady\");\n      }).join(\"\\n\");\n  }catch(e){\n    document.getElementById(\"node-output\").textContent=\"API: \"+e.message;\n  }\n}\nloadKubeData();\nsetInterval(loadKubeData,15000);\n\u003c/script\u003e\n\n\u003c/body\u003e\n\u003c/html\u003e\n"},"kind":"ConfigMap","metadata":{"annotations":{},"creationTimestamp":null,"name":"nginx-html-config","namespace":"default"}}
+  
   name: nginx-html-config
-data:
-  index.html: |
-    data:
-      index.html: |
-    <!DOCTYPE html>
-    <html>
-    <head><meta charset="UTF-8">
-    <title>Denis Oliveira Ramos</title>
-    <style>
-    html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#008080;display:flex;align-items:center;justify-content:center;}
-    
-        
-    .desk-wrap{width:2560px;height:1440px;transform-origin:top left;position:relative;}
-    body{overflow:hidden;background:#008080;margin:0;width:100vw;height:100vh;}
-    
-    .desk-wrap{width:2560px;height:1440px;transform-origin:top left;position:relative;}
-    body{overflow:hidden;background:#008080;margin:0;width:100vw;height:100vh;}
-    
-    *{margin:0;padding:0;box-sizing:border-box}
-    html,body{margin:0;padding:0;width:100%;height:100%}
-    body{overflow-y:auto;overflow-x:auto;font-family:'MS Sans Serif','Courier New',monospace;font-size:13px}
-    .desktop{position:relative;width:2560px;background:#008080;display:flex;flex-direction:column;}
-    .w{position:relative;background:#c0c0c0;border:2px solid;border-color:#fff #808080 #808080 #fff;box-shadow:2px 2px 0 0 #404040;display:flex;flex-direction:column;flex:1;min-width:280px;}
-    .wt{background:linear-gradient(90deg,#000080,#1084d0);color:#fff;font-weight:700;font-size:14px;padding:5px 8px 5px 10px;display:flex;align-items:center;justify-content:space-between;min-height:28px;cursor:default;user-select:none;flex-shrink:0}
-    .wt .btns{display:flex;gap:2px;flex-shrink:0}
-    .wt .btns span{width:18px;height:16px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;font-size:11px;color:#000;cursor:default}
-    .wb{padding:6px 10px;flex:1;font-size:12px;line-height:1.3;color:#222;overflow:hidden}
-    .term{background:#000;color:#0f0;font-family:'Courier New',monospace;font-size:12px;padding:8px 10px;border:2px solid;border-color:#808080 #fff #fff #808080;flex:1;overflow-y:auto;overflow-x:hidden}
-    .term .p{color:#0f0}.term .c{color:#fff}.term .o{color:#0f0;display:block;padding-left:8px;white-space:pre-wrap;word-break:break-all;font-size:12px;line-height:1.4}
-    .blink{animation:blink 1s step-end infinite}@keyframes blink{50%{opacity:0}}
-    .sb{background:#c0c0c0;border-top:1px solid #fff;padding:2px 8px;display:flex;justify-content:space-between;font-size:11px;color:#444;flex-shrink:0}
-    .dot-g{width:7px;height:7px;background:#0a0;border:1px solid #080;display:inline-block;margin-right:3px;vertical-align:middle}
-    .tg{display:flex;flex-wrap:wrap;gap:3px}
-    .tg span{background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:3px 8px;font-size:11px;color:#222}
-    .mb{background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:3px 8px;text-align:center;display:inline-block;margin:1px;min-width:40px}
-    .mb .n{font-size:22px;font-weight:700;color:#000}.mb .l{font-size:9px;color:#555}
-    .w95-btn{background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;padding:3px 10px;font-family:inherit;font-size:11px;display:inline-flex;align-items:center;gap:4px;text-decoration:none;color:#222;margin:1px}
-    .taskbar{background:#c0c0c0;border-top:2px solid #fff;padding:3px 6px;display:flex;align-items:center;gap:4px;width:100%;height:30px;margin-top:auto;}
-    .taskbar .start{background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;padding:2px 10px;font-weight:700;font-size:13px;font-family:inherit;display:flex;align-items:center;gap:4px;cursor:pointer;height:22px}
-    .taskbar .task{background:#c0c0c0;border:1px solid;border-color:#808080 #fff #fff #808080;padding:2px 12px;font-size:11px;display:flex;align-items:center}
-    .taskbar .time{margin-left:auto;border:1px solid;border-color:#808080 #fff #fff #808080;padding:2px 8px;font-size:11px;background:#c0c0c0}
-    a{color:#000080}
-    .profile-photo{width:80px;height:80px;border:2px inset #808080;background:linear-gradient(135deg,#e8f0fe,#fff);display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:700;color:#000080;flex-shrink:0;float:left;margin-right:8px}
-    </style>
-        <script>
-        (function(){
-          var s=window.innerWidth/2560;
-          var d=document.getElementById("deskAll");
-          if(d){d.style.transform="scale("+s+")";d.style.transformOrigin="top left";}
-          document.body.style.overflow="hidden";
-          window.addEventListener("resize",function(){
-            var s=window.innerWidth/2560;
-            var d=document.getElementById("deskAll");
-            if(d){d.style.transform="scale("+s+")";}
-          });
-        })();
-        </script>
-    
-    </head>
-    <body style="margin:0;padding:0;overflow:hidden;background:#008080;width:100vw;height:100vh;">
-    <div class="desk-wrap" id="deskWrap"><div id="deskAll" style="width:2560px;transform-origin:top left;position:relative;"><div class="desktop">
-    
-    <!-- SOBRE -->
-    <div class="w" onclick="bringFwd(this)">
-      <div class="wt"><span>🖪 Sobre - Denis Oliveira Ramos</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
-      <div class="wb" style="padding:15px 20px;font-size:13px;line-height:1.4">
-        <table width="100%" cellpadding="0" cellspacing="0" style="border:none;">
-          <tr>
-            <td valign="top" width="90" style="padding-right:18px;">
-              <img src="https://i.imgur.com/lJoDtkK.jpeg" style="width:80px;height:80px;border:2px inset #808080;object-fit:cover;display:block;" alt="Denis Oliveira Ramos">
-            </td>
-            <td valign="top">
-              <div style="font-size:20px;font-weight:700;margin-bottom:1px;">Denis Oliveira Ramos</div>
-              <div style="font-size:13px;color:#444;margin-bottom:2px;">Senior Cloud &amp; Infrastructure Engineer</div>
-              <div style="font-size:12px;color:#666;margin-bottom:6px;">
-                📍 Barueri, SP · 🌐 Inglês C1/C2 · 📅 +8 anos
-              </div>
-            </td>
-          </tr>
-        </table>
-        <div style="font-size:12px;line-height:1.5;">
-          <p style="margin-bottom:4px;"><strong>Sobre mim</strong></p>
-          <p style="margin-bottom:4px;">Profissional de Infraestrutura Cloud com forte especialização em ambientes <strong>Linux</strong>, <strong>Bancos de Dados</strong> e ecossistemas <strong>Cloud Native</strong>. Atualmente disponível para novos desafios, com experiência em <strong>Cloud Infrastructure</strong>, <strong>SRE</strong> e engenharia de plataforma.</p>
-          <p style="margin-bottom:4px;">Minha abordagem é prática e analítica, focada em entregar soluções escaláveis e automatizadas. Este portfólio é a <strong>prova de conceito</strong> — uma aplicação hospedada em cluster Kubernetes 100% declarativo, mantido via <strong>IaC</strong> com <strong>Terraform</strong> e <strong>Helm</strong>, com observabilidade completa via <strong>Prometheus + Grafana + Loki</strong> e GitOps com <strong>ArgoCD</strong>. <strong>Tudo rodando no WSL2.</strong></p>
-          <p style="margin-bottom:0;"><strong>Principais competências:</strong> Kubernetes, Docker, Terraform, Helm, ArgoCD, GitOps, Prometheus, Grafana, Linux (RHEL/Oracle), Windows Server, PostgreSQL, SQL Server, PowerShell, Cloudflare, NetworkPolicies, Disaster Recovery, RTO/RPO/MTTR.</p>
-        </div>
-      </div>
-      <div class="sb"><span><span class="dot-g"></span> Online · Kind · Cloudflare · WSL2</span><span>15/15 pods · 📡 Live</span></div>
-    <!-- TERMINAL -->
-    <div class="w" onclick="bringFwd(this)">
-      <div class="wt"><span>💻 Command Prompt - kubectl</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
-      <div class="term">
-        <span class="p">C:\&gt; </span><span class="c">kubectl get pods -A</span>
-        <span id="pod-output" class="o">Carregando...</span>
-        <span class="o"></span>
-        <span class="p">C:\&gt; </span><span class="c">kubectl get nodes</span>
-        <span id="node-output" class="o">Carregando...</span>
-        <span class="o"></span>
-        <span class="p">C:\&gt; <span class="blink">_</span></span>
-      </div>
-    </div>
-    
-    <!-- PAINEL -->
-    <div class="w" onclick="bringFwd(this)">
-      <div class="wt"><span>⚙️ Painel de Controle</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
-      <div class="wb"><div class="tg">
-        <span>Kubernetes</span><span>Docker</span><span>Kind</span><span>Helm</span><span>nginx</span>
-        <span>PostgreSQL</span><span>ArgoCD</span><span>Prometheus</span><span>Grafana</span>
-        <span>Loki</span><span>cert-manager</span><span>Cloudflare</span>
-      </div></div>
-    </div>
-    
-    <!-- DISPOSITIVOS -->
-    <div class="w" onclick="bringFwd(this)">
-      <div class="wt"><span>🖥️ Gerenciador de Dispositivos</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
-      <div class="wb" style="padding:8px 10px;font-size:11px">
-        <div style="font-weight:700;font-size:13px;margin-bottom:4px;color:#000080;">📦 lab-sre-denoso · Kind v1.27.3</div>
-        <div style="display:flex;gap:4px;margin-bottom:4px;flex-wrap:wrap;">
-          <span style="background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:4px 8px;text-align:center;min-width:44px;"><span style="font-size:15px;font-weight:700;display:block;">15</span><span style="font-size:9px;color:#555;">Pods</span></span>
-          <span style="background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:4px 8px;text-align:center;min-width:44px;"><span style="font-size:15px;font-weight:700;display:block;">6</span><span style="font-size:9px;color:#555;">Svcs</span></span>
-          <span style="background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:4px 8px;text-align:center;min-width:44px;"><span style="font-size:15px;font-weight:700;display:block;">3</span><span style="font-size:9px;color:#555;">NS</span></span>
-          <span style="background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:4px 8px;text-align:center;min-width:44px;"><span style="font-size:15px;font-weight:700;display:block;">1</span><span style="font-size:9px;color:#555;">No</span></span>
-          <span style="background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:4px 8px;text-align:center;min-width:44px;"><span style="font-size:15px;font-weight:700;display:block;">99%</span><span style="font-size:9px;color:#555;">Uptime</span></span>
-        </div>
-        <div style="border-top:1px solid #808080;border-bottom:1px solid #fff;padding-top:3px;margin-bottom:3px;"></div>
-        <div style="font-size:11px;line-height:1.6;">
-          <div>▶ <strong>Cluster:</strong> Kind (WSL2) · K8s v1.27.3</div>
-          <div>▶ <strong>Ingress:</strong> nginx-controller · NodePort 30080</div>
-          <div>▶ <strong>GitOps:</strong> ArgoCD v2.12.3 · auto-sync</div>
-          <div>▶ <strong>Cert:</strong> cert-manager · Let’s Encrypt</div>
-          <div>▶ <strong>DB:</strong> PostgreSQL 15 · StatefulSet + PVC</div>
-          <div>▶ <strong>Monitor:</strong> Prometheus + Grafana + Loki</div>
-          <div>▶ <strong>Policy:</strong> Kyverno · NetworkPolicies · HPA</div>
-          <div>▶ <strong>Tunnel:</strong> Cloudflare · TLS edge</div>
-          <div>▶ <strong>API:</strong> kubectl proxy · /k8s/ endpoint</div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- LINKS -->
-    <div class="w" onclick="bringFwd(this)">
-      <div class="wt"><span>📄 Links</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
-      <div class="wb" style="padding:6px 10px">
-        <div style="font-weight:700;margin-bottom:2px;">Currículos</div>
-        <a href="https://drive.google.com/file/d/1Zbhm9hkdQEvu4AWEoTIGneDyRZHXnx9J/view" target="_blank" class="w95-btn">📄 PT-BR</a>
-        <a href="https://drive.google.com/file/d/1fz-Jb7Til1SDA_M8YvjQ9fOwnLrKJXPF/view" target="_blank" class="w95-btn">📄 EN-US</a>
-        <div style="font-weight:700;margin:4px 0 2px;">Links</div>
-        <a href="https://linkedin.com/in/denis93" target="_blank" class="w95-btn">💼 LinkedIn</a>
-        <a href="https://github.com/denoso1993/k8s-portfolio-iac" target="_blank" class="w95-btn">🐙 Cluster K8s</a>
-        <a href="mailto:denis_oliveira@rocketmail.com" class="w95-btn">📧 Email</a>
-      </div>
-    </div>
-    
-    <!-- PAINT / DASHBOARD -->
-    <div class="w" onclick="bringFwd(this)">
-      <div class="wt"><span>🎨 paint.exe - grafana-dashboard.bmp</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
-      <div style="background:#c0c0c0;border-bottom:1px solid #808080;padding:2px 6px;display:flex;gap:8px;font-size:11px;flex-shrink:0">
-        <span style="padding:1px 8px;">Arquivo</span><span style="padding:1px 8px;">Editar</span><span style="padding:1px 8px;">Exibir</span><span style="padding:1px 8px;">Imagem</span><span style="padding:1px 8px;">Opções</span><span style="padding:1px 8px;">Ajuda</span>
-      </div>
-      <div style="display:flex;flex:1;border:2px solid;border-color:#808080 #fff #fff #808080;margin:4px 4px 2px 4px;background:#c0c0c0;">
-        <div style="background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;padding:3px;display:grid;grid-template-columns:1fr 1fr;gap:2px;width:54px;flex-shrink:0;align-content:start;">
-          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">✏️</span>
-          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">🖌️</span>
-          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">✍️</span>
-          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">🖋️</span>
-          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">🪣</span>
-          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">📝</span>
-          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">🔍</span>
-          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">🎨</span>
-          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">╱</span>
-          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">◇</span>
-          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">◯</span>
-          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">▭</span>
-          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">⬟</span>
-          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">◟</span>
-        </div>
-        <div style="flex:1;margin:3px;background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;overflow:hidden;">
-          <div style="width:100%;height:320px;overflow:hidden;position:relative;">
-            <iframe src="https://grafana.denisdeoliveira.com.br/d/cluster-sre/cluster-sre?orgId=1&kiosk=tv" width="100%" height="400" frameborder="0" style="display:block;position:absolute;top:-60px;left:-30px;width:110%;height:120%;border:none;"></iframe>
-          </div>
-        </div>
-      </div>
-      <div style="background:#c0c0c0;border-top:1px solid #fff;padding:3px 6px;display:flex;align-items:center;gap:3px;flex-shrink:0;">
-        <div style="border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;padding:2px;background:#fff;">
-          <div style="width:16px;height:16px;background:#000;border:1px solid #808080;"></div>
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:1px;">
-          <span style="width:14px;height:14px;background:#000;border:1px solid #808080;"></span>
-          <span style="width:14px;height:14px;background:#fff;border:1px solid #808080;"></span>
-          <span style="width:14px;height:14px;background:#808080;border:1px solid #808080;"></span>
-          <span style="width:14px;height:14px;background:#800000;border:1px solid #808080;"></span>
-          <span style="width:14px;height:14px;background:#008000;border:1px solid #808080;"></span>
-          <span style="width:14px;height:14px;background:#808000;border:1px solid #808080;"></span>
-          <span style="width:14px;height:14px;background:#000080;border:1px solid #808080;"></span>
-          <span style="width:14px;height:14px;background:#800080;border:1px solid #808080;"></span>
-          <span style="width:14px;height:14px;background:#008080;border:1px solid #808080;"></span>
-          <span style="width:14px;height:14px;background:#c0c0c0;border:1px solid #808080;"></span>
-          <span style="width:14px;height:14px;background:#ff0000;border:1px solid #808080;"></span>
-          <span style="width:14px;height:14px;background:#00ff00;border:1px solid #808080;"></span>
-          <span style="width:14px;height:14px;background:#ffff00;border:1px solid #808080;"></span>
-          <span style="width:14px;height:14px;background:#0000ff;border:1px solid #808080;"></span>
-          <span style="width:14px;height:14px;background:#ff00ff;border:1px solid #808080;"></span>
-          <span style="width:14px;height:14px;background:#00ffff;border:1px solid #808080;"></span>
-        </div>
-      </div>
-      <div class="sb"><span>🖼️ 640x480 · 256 cores</span><span>🔌 Para Ajuda, pressione F1</span></div>
-    </div></div></div>
-    <div class="taskbar">
-      <button class="start" onclick='alert("Win95 + K8s")'><span>🪟</span> Iniciar</button>
-      <div class="task">📄 Sobre</div>
-      <div class="task">💻 Prompt</div>
-      <div class="task">🎨 Paint</div>
-      <div class="time" id="clock"></div>
-    </div>
-    
-    <script>
-    function c(){const d=new Date();document.getElementById("clock").textContent=d.getHours().toString().padStart(2,"0")+":"+d.getMinutes().toString().padStart(2,"0")}c();setInterval(c,10000);
-    var maxZ=10;
-    function bringFwd(el){maxZ++;el.style.zIndex=maxZ}
-    async function l(){try{
-      let r=await fetch("/k8s/api/v1/pods?limit=40");
-      let d=await r.json();
-      document.getElementById("pod-output").textContent=d.items.map(x=>{
-        let s=(x.metadata.namespace+"       ").slice(0,12);
-        let n=(x.metadata.name+"                       ").slice(0,28);
-        return s+" "+n+" "+(x.status.phase=="Running"?"1/1":"0/1")+"  "+x.status.phase;
-      }).join("\n");
-      let r2=await fetch("/k8s/api/v1/nodes");
-      let d2=await r2.json();
-      document.getElementById("node-output").textContent=d2.items.map(n=>{
-        let c=n.status.conditions.find(x=>x.type=="Ready");
-        return (n.metadata.name+"          ").slice(0,28)+" "+(c&&c.status=="True"?"Ready":"NotReady");
-      }).join("\n");
-    }catch(e){document.getElementById("pod-output").textContent="API: "+e.message}
-    }
-    l();document.getElementById("clock").onclick=function(){var vw=innerWidth,vh=innerHeight;var r="VIEW "+vw+"x"+vh;alert(r);};setInterval(l,15000);
-    
-    function fs(){var w=document.getElementById('deskWrap');if(!w)return;var sx=window.innerWidth/2560;var sy=(window.innerHeight-30)/1440;var s=sx<sy?sx:sy;w.style.transform='scale('+s+')';}window.addEventListener('load',fs);window.addEventListener('resize',fs);
-    
-    function fs(){var w=document.getElementById('deskWrap');if(!w)return;var sx=window.innerWidth/2560;var sy=(window.innerHeight-30)/1440;var s=sx<sy?sx:sy;w.style.transform='scale('+s+')';}window.addEventListener('load',fs);window.addEventListener('resize',fs);
-    
-        function fs(){var w=document.getElementById('deskWrap');if(!w)return;var sx=window.innerWidth/2560;var sy=(window.innerHeight-30)/1440;var s=sx<sy?sx:sy;w.style.transform='scale('+s+')';}window.addEventListener('load',fs);window.addEventListener('resize',fs);
-    </script>
-    </div>
-    </body>
-    </html>
-    
-    
-    
+  namespace: default

@@ -39,7 +39,7 @@ data:
     <div class="desktop">
 
     <!-- SOBRE -->
-    <div class="w" style="top:50%;left:50%;width:480px;height:240px;margin-left:-240px;margin-top:-120px;z-index:5" onclick="bringFwd(this)">
+    <div class="w" style="top:30px;left:50%;width:1500px;height:700px;margin-left:-750px;z-index:5" onclick="bringFwd(this)">
       <div class="wt"><span>🪟 Sobre - Notepad</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
       <div class="wb" style="padding:12px 14px;font-size:13px;line-height:1.4">
         <div class="profile-photo">DO</div>
@@ -52,7 +52,7 @@ data:
     </div>
 
     <!-- TERMINAL -->
-    <div class="w" style="top:145px;left:8px;width:580px;height:400px;z-index:4" onclick="bringFwd(this)">
+    <div class="w" style="top:760px;left:30px;width:1200px;height:500px;z-index:4" onclick="bringFwd(this)">
       <div class="wt"><span>💻 Command Prompt - kubectl</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
       <div class="term">
         <span class="p">C:\&gt; </span><span class="c">kubectl get pods -A</span>
@@ -66,7 +66,7 @@ data:
     </div>
 
     <!-- PAINEL -->
-    <div class="w" style="top:145px;right:8px;width:280px;z-index:4" onclick="bringFwd(this)">
+    <div class="w" style="top:760px;right:30px;width:600px;z-index:4" onclick="bringFwd(this)">
       <div class="wt"><span>⚙️ Painel de Controle</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
       <div class="wb"><div class="tg">
         <span>Kubernetes</span><span>Docker</span><span>Kind</span><span>Helm</span><span>nginx</span>
@@ -76,7 +76,7 @@ data:
     </div>
 
     <!-- DISPOSITIVOS -->
-    <div class="w" style="top:565px;left:8px;width:580px;height:200px;z-index:3" onclick="bringFwd(this)">
+    <div class="w" style="top:1280px;left:30px;width:1200px;height:200px;z-index:3" onclick="bringFwd(this)">
       <div class="wt"><span>🖥️ Gerenciador de Dispositivos</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
       <div class="wb" style="padding:6px 10px">
         <div style="font-weight:700;font-size:12px;margin-bottom:1px;">lab-sre-denoso · Kind v1.27.3</div>
@@ -88,7 +88,7 @@ data:
     </div>
 
     <!-- LINKS -->
-    <div class="w" style="top:430px;right:8px;width:280px;z-index:3" onclick="bringFwd(this)">
+    <div class="w" style="top:1280px;right:30px;width:600px;z-index:3" onclick="bringFwd(this)">
       <div class="wt"><span>📄 Links</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
       <div class="wb" style="padding:6px 10px">
         <div style="font-weight:700;margin-bottom:2px;">Currículos</div>
@@ -102,7 +102,7 @@ data:
     </div>
 
     <!-- PAINT / DASHBOARD -->
-    <div class="w" style="top:785px;left:auto;right:8px;width:540px;height:380px;z-index:2" onclick="bringFwd(this)">
+    <div class="w" style="top:1500px;left:30px;right:30px;width:auto;height:550px;z-index:2" onclick="bringFwd(this)">
       <div class="wt"><span>🎨 paint.exe - grafana-dashboard.bmp</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
       <div style="background:#c0c0c0;border-bottom:1px solid #808080;padding:2px 6px;display:flex;gap:6px;font-size:11px;flex-shrink:0">
         <span>Arquivo</span><span>Editar</span><span>Exibir</span><span>Ajuda</span>
@@ -116,7 +116,7 @@ data:
         </div>
         <div style="flex:1;margin:3px;background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;overflow:hidden;">
           <div style="width:100%;height:310px;overflow:hidden;position:relative;">
-            <iframe src="https://grafana.denisdeoliveira.com.br/d/cluster-sre/cluster-sre?orgId=1&kiosk=tv" width="100%" height="360" frameborder="0" style="display:block;position:absolute;top:-71px;left:-104px;"></iframe>
+            <iframe src="https://grafana.denisdeoliveira.com.br/d/cluster-sre/cluster-sre?orgId=1&kiosk=tv" width="100%" height="360" frameborder="0" style="display:block;position:absolute;top:-71px;left:-84px;"></iframe>
           </div>
         </div>
       </div>

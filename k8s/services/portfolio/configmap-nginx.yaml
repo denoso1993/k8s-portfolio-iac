@@ -11,9 +11,6 @@ data:
     <head><meta charset="UTF-8">
     <title>Denis Oliveira Ramos</title>
     <style>
-    html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#008080;}
-    #scaleWrap{width:2560px;transform-origin:top left;position:relative;margin:0 auto;}
-    
         
     .desk-wrap{width:2560px;height:1440px;transform-origin:top left;position:relative;}
     body{overflow:hidden;background:#008080;margin:0;width:100vw;height:100vh;}
@@ -25,7 +22,7 @@ data:
     html,body{margin:0;padding:0;width:100%;height:100%}
     body{overflow-y:auto;overflow-x:auto;font-family:'MS Sans Serif','Courier New',monospace;font-size:13px}
     .desktop{position:relative;width:2560px;background:#008080;display:flex;flex-direction:column;}
-    .w{position:absolute;background:#c0c0c0;border:2px solid;border-color:#fff #808080 #808080 #fff;box-shadow:2px 2px 0 0 #404040;display:flex;flex-direction:column}
+    .w{position:relative;background:#c0c0c0;border:2px solid;border-color:#fff #808080 #808080 #fff;box-shadow:2px 2px 0 0 #404040;display:flex;flex-direction:column;flex:1;min-width:280px;}
     .wt{background:linear-gradient(90deg,#000080,#1084d0);color:#fff;font-weight:700;font-size:14px;padding:5px 8px 5px 10px;display:flex;align-items:center;justify-content:space-between;min-height:28px;cursor:default;user-select:none;flex-shrink:0}
     .wt .btns{display:flex;gap:2px;flex-shrink:0}
     .wt .btns span{width:18px;height:16px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;font-size:11px;color:#000;cursor:default}
@@ -40,7 +37,7 @@ data:
     .mb{background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;padding:3px 8px;text-align:center;display:inline-block;margin:1px;min-width:40px}
     .mb .n{font-size:22px;font-weight:700;color:#000}.mb .l{font-size:9px;color:#555}
     .w95-btn{background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;padding:3px 10px;font-family:inherit;font-size:11px;display:inline-flex;align-items:center;gap:4px;text-decoration:none;color:#222;margin:1px}
-    .taskbar{position:fixed;bottom:0;left:0;right:0;z-index:999;background:#c0c0c0;border-top:2px solid #fff;padding:3px 6px;display:flex;align-items:center;gap:4px;position:fixed;bottom:0;left:0;right:0;z-index:999;height:30px}
+    .taskbar{background:#c0c0c0;border-top:2px solid #fff;padding:3px 6px;display:flex;align-items:center;gap:4px;width:100%;height:30px;margin-top:auto;}
     .taskbar .start{background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;padding:2px 10px;font-weight:700;font-size:13px;font-family:inherit;display:flex;align-items:center;gap:4px;cursor:pointer;height:22px}
     .taskbar .task{background:#c0c0c0;border:1px solid;border-color:#808080 #fff #fff #808080;padding:2px 12px;font-size:11px;display:flex;align-items:center}
     .taskbar .time{margin-left:auto;border:1px solid;border-color:#808080 #fff #fff #808080;padding:2px 8px;font-size:11px;background:#c0c0c0}
@@ -61,14 +58,12 @@ data:
         })();
         </script>
     
-    
-    <script>var s=window.innerWidth/2560;var w=document.getElementById('scaleWrap');if(w){w.style.transform='scale('+s+')';w.style.height=(1440*s)+'px';}window.addEventListener('resize',function(){var s=window.innerWidth/2560;var w=document.getElementById('scaleWrap');if(w){w.style.transform='scale('+s+')';w.style.height=(1440*s)+'px';}});</script>
     </head>
     <body style="margin:0;padding:0;overflow:hidden;background:#008080;width:100vw;height:100vh;">
     <div class="desk-wrap" id="deskWrap"><div id="deskAll" style="width:2560px;transform-origin:top left;position:relative;"><div class="desktop">
     
     <!-- SOBRE -->
-    <div class="w" style="top:30px;left:50%;width:900px;height:400px;margin-left:-450px;z-index:5" onclick="bringFwd(this)">
+    <div class="w" onclick="bringFwd(this)">
       <div class="wt"><span>🖪 Sobre - Denis Oliveira Ramos</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
       <div class="wb" style="padding:15px 20px;font-size:13px;line-height:1.4">
         <table width="100%" cellpadding="0" cellspacing="0" style="border:none;">
@@ -94,7 +89,7 @@ data:
       </div>
       <div class="sb"><span><span class="dot-g"></span> Online · Kind · Cloudflare · WSL2</span><span>15/15 pods · 📡 Live</span></div>
     <!-- TERMINAL -->
-    <div class="w" style="top:30px;left:calc(50% - 970px);width:500px;height:500px;z-index:4" onclick="bringFwd(this)">
+    <div class="w" onclick="bringFwd(this)">
       <div class="wt"><span>💻 Command Prompt - kubectl</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
       <div class="term">
         <span class="p">C:\&gt; </span><span class="c">kubectl get pods -A</span>
@@ -108,7 +103,7 @@ data:
     </div>
     
     <!-- PAINEL -->
-    <div class="w" style="top:30px;left:calc(50% + 470px);width:400px;height:300px;z-index:4" onclick="bringFwd(this)">
+    <div class="w" onclick="bringFwd(this)">
       <div class="wt"><span>⚙️ Painel de Controle</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
       <div class="wb"><div class="tg">
         <span>Kubernetes</span><span>Docker</span><span>Kind</span><span>Helm</span><span>nginx</span>
@@ -118,7 +113,7 @@ data:
     </div>
     
     <!-- DISPOSITIVOS -->
-    <div class="w" style="top:550px;left:calc(50% - 970px);width:400px;height:300px;z-index:3" onclick="bringFwd(this)">
+    <div class="w" onclick="bringFwd(this)">
       <div class="wt"><span>🖥️ Gerenciador de Dispositivos</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
       <div class="wb" style="padding:8px 10px;font-size:11px">
         <div style="font-weight:700;font-size:13px;margin-bottom:4px;color:#000080;">📦 lab-sre-denoso · Kind v1.27.3</div>
@@ -145,7 +140,7 @@ data:
     </div>
     
     <!-- LINKS -->
-    <div class="w" style="top:350px;left:calc(50% + 470px);width:300px;height:200px;z-index:3" onclick="bringFwd(this)">
+    <div class="w" onclick="bringFwd(this)">
       <div class="wt"><span>📄 Links</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
       <div class="wb" style="padding:6px 10px">
         <div style="font-weight:700;margin-bottom:2px;">Currículos</div>
@@ -159,7 +154,7 @@ data:
     </div>
     
     <!-- PAINT / DASHBOARD -->
-    <div class="w" style="top:560px;left:50%;width:1000px;height:420px;margin-left:-500px;z-index:2" onclick="bringFwd(this)">
+    <div class="w" onclick="bringFwd(this)">
       <div class="wt"><span>🎨 paint.exe - grafana-dashboard.bmp</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
       <div style="background:#c0c0c0;border-bottom:1px solid #808080;padding:2px 6px;display:flex;gap:8px;font-size:11px;flex-shrink:0">
         <span style="padding:1px 8px;">Arquivo</span><span style="padding:1px 8px;">Editar</span><span style="padding:1px 8px;">Exibir</span><span style="padding:1px 8px;">Imagem</span><span style="padding:1px 8px;">Opções</span><span style="padding:1px 8px;">Ajuda</span>
@@ -248,7 +243,6 @@ data:
     
         function fs(){var w=document.getElementById('deskWrap');if(!w)return;var sx=window.innerWidth/2560;var sy=(window.innerHeight-30)/1440;var s=sx<sy?sx:sy;w.style.transform='scale('+s+')';}window.addEventListener('load',fs);window.addEventListener('resize',fs);
     </script>
-    </div>
     </body>
     </html>
     

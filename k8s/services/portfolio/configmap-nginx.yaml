@@ -130,29 +130,59 @@ data:
     </div>
 
     <!-- PAINT / DASHBOARD -->
-    <div class="w" style="top:560px;left:50%;width:1000px;height:400px;margin-left:-500px;z-index:2" onclick="bringFwd(this)">
+    <div class="w" style="top:560px;left:50%;width:1000px;height:420px;margin-left:-500px;z-index:2" onclick="bringFwd(this)">
       <div class="wt"><span>🎨 paint.exe - grafana-dashboard.bmp</span><div class="btns"><span>_</span><span>□</span><span>✕</span></div></div>
-      <div style="background:#c0c0c0;border-bottom:1px solid #808080;padding:2px 6px;display:flex;gap:6px;font-size:11px;flex-shrink:0">
-        <span>Arquivo</span><span>Editar</span><span>Exibir</span><span>Ajuda</span>
+      <div style="background:#c0c0c0;border-bottom:1px solid #808080;padding:2px 6px;display:flex;gap:8px;font-size:11px;flex-shrink:0">
+        <span style="padding:1px 8px;">Arquivo</span><span style="padding:1px 8px;">Editar</span><span style="padding:1px 8px;">Exibir</span><span style="padding:1px 8px;">Imagem</span><span style="padding:1px 8px;">Opções</span><span style="padding:1px 8px;">Ajuda</span>
       </div>
-      <div style="display:flex;flex:1;border:2px solid;border-color:#808080 #fff #fff #808080;margin:4px;background:#c0c0c0;">
-        <div style="background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;padding:3px;display:grid;grid-template-columns:1fr 1fr;gap:2px;width:48px;flex-shrink:0;">
-          <span style="width:18px;height:18px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;">✏️</span>
-          <span style="width:18px;height:18px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;">🖌️</span>
-          <span style="width:18px;height:18px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;">🔲</span>
-          <span style="width:18px;height:18px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;">◯</span>
+      <div style="display:flex;flex:1;border:2px solid;border-color:#808080 #fff #fff #808080;margin:4px 4px 2px 4px;background:#c0c0c0;">
+        <div style="background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;padding:3px;display:grid;grid-template-columns:1fr 1fr;gap:2px;width:54px;flex-shrink:0;align-content:start;">
+          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">✏️</span>
+          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">🖌️</span>
+          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">✍️</span>
+          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">🖋️</span>
+          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">🪣</span>
+          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">📝</span>
+          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">🔍</span>
+          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">🎨</span>
+          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">╱</span>
+          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">◇</span>
+          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">◯</span>
+          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">▭</span>
+          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">⬟</span>
+          <span style="width:23px;height:23px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;align-items:center;justify-content:center;">◟</span>
         </div>
         <div style="flex:1;margin:3px;background:#fff;border:1px solid;border-color:#808080 #fff #fff #808080;overflow:hidden;">
-          <div style="width:100%;height:310px;overflow:hidden;position:relative;">
-            <iframe src="https://grafana.denisdeoliveira.com.br/d/cluster-sre/cluster-sre?orgId=1&kiosk=tv" width="100%" height="360" frameborder="0" style="display:block;position:absolute;top:-71px;left:-104px;"></iframe>
+          <div style="width:100%;height:320px;overflow:hidden;position:relative;">
+            <iframe src="https://grafana.denisdeoliveira.com.br/d/cluster-sre/cluster-sre?orgId=1&kiosk=tv" width="100%" height="370" frameborder="0" style="display:block;position:absolute;top:-64px;left:-90px;"></iframe>
           </div>
         </div>
       </div>
-      <div class="sb"><span>🖼️ 640x480</span><span>🔌 Ajuda F1</span></div>
+      <div style="background:#c0c0c0;border-top:1px solid #fff;padding:3px 6px;display:flex;align-items:center;gap:3px;flex-shrink:0;">
+        <div style="border:1px solid;border-color:#fff #808080 #808080 #fff;display:flex;padding:2px;background:#fff;">
+          <div style="width:16px;height:16px;background:#000;border:1px solid #808080;"></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:1px;">
+          <span style="width:14px;height:14px;background:#000;border:1px solid #808080;"></span>
+          <span style="width:14px;height:14px;background:#fff;border:1px solid #808080;"></span>
+          <span style="width:14px;height:14px;background:#808080;border:1px solid #808080;"></span>
+          <span style="width:14px;height:14px;background:#800000;border:1px solid #808080;"></span>
+          <span style="width:14px;height:14px;background:#008000;border:1px solid #808080;"></span>
+          <span style="width:14px;height:14px;background:#808000;border:1px solid #808080;"></span>
+          <span style="width:14px;height:14px;background:#000080;border:1px solid #808080;"></span>
+          <span style="width:14px;height:14px;background:#800080;border:1px solid #808080;"></span>
+          <span style="width:14px;height:14px;background:#008080;border:1px solid #808080;"></span>
+          <span style="width:14px;height:14px;background:#c0c0c0;border:1px solid #808080;"></span>
+          <span style="width:14px;height:14px;background:#ff0000;border:1px solid #808080;"></span>
+          <span style="width:14px;height:14px;background:#00ff00;border:1px solid #808080;"></span>
+          <span style="width:14px;height:14px;background:#ffff00;border:1px solid #808080;"></span>
+          <span style="width:14px;height:14px;background:#0000ff;border:1px solid #808080;"></span>
+          <span style="width:14px;height:14px;background:#ff00ff;border:1px solid #808080;"></span>
+          <span style="width:14px;height:14px;background:#00ffff;border:1px solid #808080;"></span>
+        </div>
+      </div>
+      <div class="sb"><span>🖼️ 640x480 · 256 cores</span><span>🔌 Para Ajuda, pressione F1</span></div>
     </div>
-
-    </div>
-
     <div class="taskbar">
       <button class="start" onclick='alert("Win95 + K8s")'><span>🪟</span> Iniciar</button>
       <div class="task">📄 Sobre</div>

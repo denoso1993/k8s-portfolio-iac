@@ -62,7 +62,7 @@ data:
             <div style="font-size:22px;font-weight:700;">Denis Oliveira Ramos</div>
             <div style="font-size:15px;color:#444;">Senior Cloud &amp; Infrastructure Engineer</div>
             <div style="font-size:13px;color:#666;margin:4px 0 14px;">📍 Barueri, SP · 🌐 Inglês C1/C2</div>
-            <p style="margin-bottom:10px;">Profissional de Infraestrutura Cloud com foco em <strong>Infrastructure as Code (IaC)</strong>, <strong>GitOps</strong> e ambientes <strong>totalmente declarativos</strong>. Todo o ambiente é versionado no GitHub, provisionado via <strong>Helm</strong>, <strong>Terraform</strong> e <strong>kubectl</strong>, com políticas definidas como código via <strong>Kyverno</strong> e observabilidade completa com <strong>Prometheus + Grafana + Loki</strong>.</p>
+            <p style="margin-bottom:10px;">Profissional de Infraestrutura Cloud com foco em <strong>Infrastructure as Code (IaC)</strong>, <strong>GitOps</strong> e ambientes <strong>totalmente declarativos</strong>. Todo o ambiente é versionado no GitHub, provisionado via <strong>Helm</strong>, <strong>Terraform</strong> e <strong>kubectl</strong>, e observabilidade completa com <strong>Prometheus + Grafana + Loki</strong>.</p>
             <p>Tenho trabalhado com <strong>Kubernetes</strong> — mantenho esse laboratório SRE com Kind, Prometheus, Grafana, Loki e ArgoCD. <strong>Este site roda no cluster, 100% no WSL2.</strong></p>
           </div>
         </div>
@@ -76,7 +76,7 @@ data:
           <div class="wb"><div class="tg">
             <span>Kubernetes</span><span>Docker</span><span>Kind</span><span>Helm</span><span>nginx</span>
             <span>PostgreSQL</span><span>ArgoCD</span><span>GitOps</span><span>Prometheus</span>
-            <span>Grafana</span><span>Loki</span><span>Kyverno</span><span>cert-manager</span>
+            <span>Grafana</span><span>Loki</span><span>cert-manager</span>
             <span>Cloudflare</span><span>PowerShell</span><span>Linux</span><span>Windows</span>
           </div></div>
         </div>
@@ -93,7 +93,7 @@ data:
             </div>
             <div style="font-size:13px;">
               🟢 Kind · nginx · ArgoCD · Cloudflare<br>
-              🟢 cert-manager · Kyverno · HPA<br>
+              🟢 cert-manager · HPA<br>
               🟢 Prometheus · Grafana · Loki<br>
               🟢 PostgreSQL 15 · StatefulSet<br>
               🟢 NetworkPolicies · Quotas

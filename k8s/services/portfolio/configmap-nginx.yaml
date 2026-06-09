@@ -62,7 +62,7 @@ data:
             <div style="font-size:22px;font-weight:700;">Denis Oliveira Ramos</div>
             <div style="font-size:15px;color:#444;">Senior Cloud &amp; Infrastructure Engineer</div>
             <div style="font-size:13px;color:#666;margin:4px 0 14px;">📍 Barueri, SP · 🌐 Inglês C1/C2</div>
-            <p style="margin-bottom:10px;">Profissional de Cloud e SRE focado em <strong>Resiliência, Disaster Recovery</strong> e <strong>alta disponibilidade</strong>. Atuo otimizando métricas como <strong>RTO, RPO, MTTR e MTBF</strong>.</p>
+            <p style="margin-bottom:10px;">Profissional de Infraestrutura Cloud com foco em <strong>Infrastructure as Code (IaC)</strong>, <strong>GitOps</strong> e ambientes <strong>totalmente declarativos</strong>. Todo o ambiente é versionado no GitHub, provisionado via <strong>Helm</strong>, <strong>Terraform</strong> e <strong>kubectl</strong>, com políticas definidas como código via <strong>Kyverno</strong> e observabilidade completa com <strong>Prometheus + Grafana + Loki</strong>.</p>
             <p>Tenho trabalhado com <strong>Kubernetes</strong> — mantenho esse laboratório SRE com Kind, Prometheus, Grafana, Loki e ArgoCD. <strong>Este site roda no cluster, 100% no WSL2.</strong></p>
           </div>
         </div>

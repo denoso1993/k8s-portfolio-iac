@@ -29,7 +29,7 @@ while true; do
     # Check kubectl proxy
     if ! pgrep -f "kubectl proxy.*8001" > /dev/null 2>&1; then
         log "kubectl proxy DOWN - restarting..."
-        nohup kubectl proxy --address=0.0.0.0 --port=8001 --accept-hosts='localhost' --accept-paths='^/api/v1/(pods|nodes|services|namespaces)(/|$)' > /tmp/kubectl-proxy.log 2>&1 &
+        nohup kubectl proxy --address=0.0.0.0 --port=8001 --accept-hosts='localhost' --accept-paths='^/api/v1/(pods|nodes)(/|$)' > /tmp/kubectl-proxy.log 2>&1 &
         sleep 2
         log "kubectl proxy restarted"
     fi

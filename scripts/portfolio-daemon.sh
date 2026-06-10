@@ -29,6 +29,11 @@ fi
 
 echo $$ > "$PIDFILE"
 log "Daemon started (PID $$)"
+    # Start PF watchdog for dev-server if not running
+    if ! pgrep -f "pf-watchdog" > /dev/null 2>&1; then
+        nohup bash /home/administrator/k8s-portfolio-iac/scripts/pf-watchdog.sh > /tmp/pf-watchdog.log 2>&1 &
+        log "PF watchdog started"
+    fi
 
 while true; do
     # Kill old insecure proxy if somehow running
@@ -60,6 +65,13 @@ while true; do
         sleep 2
         log "port-forward grafana restarted"
     fi
+    # Check port-forward dev-server (DEV)
+    if ! pgrep -f "kubectl port-forward.*dev-server.*5500" > /dev/null 2>&1; then
+        log "port-forward dev-server DOWN - restarting..."
+        nohup kubectl port-forward --address 0.0.0.0 svc/dev-server-service -n default 5500:5500 > /tmp/pf-dev.log 2>&1 &
+        sleep 2
+        log "port-forward dev-server restarted"
+    fi
 
     # Check cluster pods
     if ! kubectl get pods -n default -o name 2>/dev/null | grep -q nginx; then
@@ -80,5 +92,5 @@ while true; do
         log "dev-server port-forward restarted"
     fi
 
-    sleep 30
+    sleep 5
 done

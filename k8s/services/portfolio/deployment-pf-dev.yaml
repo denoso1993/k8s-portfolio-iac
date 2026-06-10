@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pf-dev
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pf-dev
+  template:
+    metadata:
+      labels:
+        app: pf-dev
+    spec:
+      containers:
+      - name: kubectl
+        image: bitnami/kubectl:latest
+        command:
+        - kubectl
+        - port-forward
+        - --address
+        - 0.0.0.0
+        - svc/dev-server-service
+        - "5500:5500"
+        - "-n"
+        - default
+        - "--pod-running-timeout"
+        - "10s"

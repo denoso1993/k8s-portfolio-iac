@@ -53,6 +53,13 @@ if ! pgrep -f "kubectl port-forward.*grafana.*3000" >/dev/null 2>&1; then
     nohup kubectl port-forward --address 127.0.0.1 svc/grafana -n monitoring 3000:80 > /tmp/port-forward-grafana.log 2>&1 &
 fi
 
+# Dev server
+if ! pgrep -f "dev-server.py" >/dev/null 2>&1; then
+    log "Starting dev server (port 5500)..."
+    cd /home/administrator/k8s-portfolio-iac/local-dev
+    nohup python3 dev-server.py < /dev/null > /tmp/dev-server.log 2>&1 &
+fi
+
 # Daemon
 if ! pgrep -f "portfolio-daemon.sh" >/dev/null 2>&1; then
     log "Starting portfolio daemon..."

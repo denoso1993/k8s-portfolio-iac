@@ -1,31 +1,29 @@
 #!/usr/bin/env node
-const http = require("http");
-const fs = require("fs");
-const path = require("path");
-const PORT = parseInt(process.argv[2]) || 5500;
-const HTML_FILE = path.join(__dirname, "..", "tmp", "flex-final.html");
-const clients = [];
-fs.watch(path.join(__dirname, "..", "tmp"), (e, fn) => {
-  if (fn && fn.endsWith(".html")) {
-    console.log("[" + new Date().toLocaleTimeString() + "] HTML changed, reloading...");
-    clients.forEach(r => r.write("data: reload\n\n"));
-    clients.length = 0;
+var http=require("http"),fs=require("fs"),path=require("path");
+var PORT=parseInt(process.argv[2])||5500;
+var HTML=path.join(__dirname,"..","tmp","flex-final.html");
+var clients=[];
+
+fs.watch(path.join(__dirname,"..","tmp"),function(e,n){
+  if(n&&n.match(/\.html$/)){ 
+    console.log("["+new Date().toLocaleTimeString()+"] reload");
+    clients.forEach(function(r){try{r.write("data: reload\n\n")}catch(e){}});
+    clients.length=0;
   }
 });
-http.createServer((req, res) => {
-  if (req.url === "/live-reload") {
-    res.writeHead(200, {"Content-Type": "text/event-stream","Cache-Control": "no-cache","Access-Control-Allow-Origin": "*"});
-    clients.push(res);
-    req.on("close", () => { var i = clients.indexOf(res); if(i>=0) clients.splice(i,1); });
-    return;
+
+http.createServer(function(q,r){
+  if(q.url==="/_reload"){ 
+    r.writeHead(200,{"Content-Type":"text/event-stream"});
+    clients.push(r); 
+    q.on("close",function(){var i=clients.indexOf(r);if(i>=0)clients.splice(i,1);});
+    return; 
   }
-  if (fs.existsSync(HTML_FILE)) {
-    var html = fs.readFileSync(HTML_FILE, "utf-8");
-    html = html.replace("</body>", '<script>(function(){var s=new EventSource("/live-reload");s.onmessage=function(){location.reload();}})();</script>\n</body>');
-    res.writeHead(200, {"Content-Type": "text/html"});
-    res.end(html);
-  } else { res.writeHead(404); res.end("Extract HTML first: bash extract-html.sh"); }
-}).listen(PORT, function() {
-  console.log("Portfolio Dev Server: http://localhost:" + PORT);
-  console.log("Edit " + HTML_FILE + " and save - browser auto-reloads!");
+  if(!fs.existsSync(HTML)){r.writeHead(404);r.end("no html");return;}
+  var h=fs.readFileSync(HTML,"utf-8");
+  h=h.replace("</body>","<script>new EventSource('/_reload').onmessage=function(){location.reload()}<\/script></body>");
+  r.writeHead(200,{"Content-Type":"text/html"});
+  r.end(h);
+}).listen(PORT,"0.0.0.0",function(){
+  console.log("Dev: http://localhost:"+PORT);
 });

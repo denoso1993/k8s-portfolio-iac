@@ -68,5 +68,13 @@ while true; do
         sleep 5
     fi
 
+    # Check dev server (hot-reload, port 5500)
+    if ! pgrep -f "dev-server.py" > /dev/null 2>&1; then
+        log "dev server DOWN - restarting..."
+        nohup python3 /home/administrator/k8s-portfolio-iac/local-dev/dev-server.py > /tmp/dev-server.log 2>&1 &
+        sleep 2
+        log "dev server restarted"
+    fi
+
     sleep 30
 done

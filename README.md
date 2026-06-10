@@ -85,11 +85,8 @@ kind-config.yaml       definicao do cluster Kind
 | **ArgoCD** | Sincronizacao GitOps entre este repositorio e o cluster |
 | **cert-manager** | Gerenciamento do ciclo de vida de certificados TLS |
 | **Kyverno** | Motor de politicas como codigo (Policy-as-Code) |
-| **Goldilocks / VPA** | Recomendacoes de otimizacao de recursos |
 | **Prometheus / Grafana** | Coleta de metricas e visualizacao |
-| **Loki / Promtail** | Agregacao de logs centralizada |
 | **metrics-server** | Metricas de recursos para HPA |
-| **nginx-ingress-controller** | Roteamento HTTP/HTTPS |
 
 ---
 

@@ -1,6 +1,17 @@
 #!/bin/bash
 # Portfolio Daemon Monitor - roda em background, sem abrir terminal
 LOG=/tmp/portfolio-monitor.log
+
+# Detect WSL2 host IP for kubectl proxy
+detect_proxy_ip() {
+    # Get the IP of the docker bridge or use localhost
+    KUBECTL_IP=$(ip route get 1 2>/dev/null | head -1 | awk '{print $NF}' 2>/dev/null)
+    if [ -z "$KUBECTL_IP" ]; then
+        KUBECTL_IP="172.19.105.82"
+    fi
+    echo "$KUBECTL_IP"
+}
+
 PIDFILE=/tmp/portfolio-monitor.pid
 
 log() {

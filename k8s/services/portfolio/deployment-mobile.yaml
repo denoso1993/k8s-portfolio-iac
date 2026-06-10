@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mobile-server
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mobile-server
+  template:
+    metadata:
+      labels:
+        app: mobile-server
+    spec:
+      containers:
+      - name: mobile-server
+        image: python:3-alpine
+        command: ["python3", "-c"]
+        args:
+        - "import os\nfrom http.server import HTTPServer, BaseHTTPRequestHandler\nclass H(BaseHTTPRequestHandler):\n  def do_GET(self):\n    with open(\"/html/index.html\", \"rb\") as f:\n      self.send_response(200)\n      self.send_header(\"Content-Type\", \"text/html; charset=utf-8\")\n      self.end_headers()\n      self.wfile.write(f.read())\nHTTPServer((\"0.0.0.0\", 5599), H).serve_forever()"
+        volumeMounts:
+        - name: html-volume
+          mountPath: /html
+      volumes:
+      - name: html-volume
+        configMap:
+          name: mobile-html-config

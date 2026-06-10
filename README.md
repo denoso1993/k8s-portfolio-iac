@@ -201,6 +201,34 @@ kubectl logs -n ingress-nginx deploy/ingress-nginx-controller
 
 ---
 
+
+
+---
+
+## Seguranca
+
+O cluster passou por auditoria de seguranca em 10/06/2026. As seguintes medidas foram implementadas:
+
+### Web (nginx + HTML)
+- **Content-Security-Policy** (CSP) rigido: scripts apenas 'self', iframe apenas Grafana
+- **X-Frame-Options: DENY** ? protecao contra clickjacking
+- **X-Content-Type-Options: nosniff** ? protecao contra MIME sniffing
+- **Referrer-Policy** e **Permissions-Policy** configurados
+
+### Cluster (Kubernetes)
+- **kubectl proxy restrito**: apenas endpoints `/api/v1/pods` e `/api/v1/nodes` via `--accept-paths`
+- **Grafana**: port-forward restrito a localhost (`127.0.0.1`)
+- **NetworkPolicies**: default-deny ingress + regras especificas para nginx (8080) e postgres (5432)
+- **nginx**: `proxy_set_header Host localhost` ? evita host injection
+- **Containers**: non-root (nginx user 101, postgres user 70) com `capabilities drop: ALL`
+
+### Rede
+- **TLS**: Cloudflare com certificado valido
+- **Tunnel**: Cloudflare Tunnel (sem exposure de IP real)
+
+> Para detalhes completos, veja [SECURITY.md](SECURITY.md).
+
+
 ## Autor
 
 **Denis Oliveira Ramos**

@@ -24,7 +24,7 @@ fi
 # 3. Kubectl proxy (SECURE - pods/nodes only, Host: localhost required)
 if ! pgrep -f "kubectl proxy.*8001" > /dev/null 2>&1; then
     echo "[$(date)] Starting kubectl proxy (SECURE)..."
-    nohup kubectl proxy --address=0.0.0.0 --port=8001 --accept-hosts='localhost' --accept-paths='^/api/v1/(pods|nodes)(/|$)' > /tmp/kubectl-proxy.log 2>&1 &
+    nohup kubectl proxy --address=0.0.0.0 --port=8001 --accept-hosts='localhost' --accept-paths='^/api/v1/(pods|nodes|services|namespaces)(/|$)' > /tmp/kubectl-proxy.log 2>&1 &
 fi
 
 # 4. Port-forward nginx (public)

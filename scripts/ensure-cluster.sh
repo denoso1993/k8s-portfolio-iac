@@ -53,11 +53,15 @@ if ! pgrep -f "kubectl port-forward.*grafana.*3000" >/dev/null 2>&1; then
     nohup kubectl port-forward --address 127.0.0.1 svc/grafana -n monitoring 3000:80 > /tmp/port-forward-grafana.log 2>&1 &
 fi
 
-# Dev server
-if ! pgrep -f "dev-server.py" >/dev/null 2>&1; then
-    log "Starting dev server (port 5500)..."
-    cd /home/administrator/k8s-portfolio-iac/local-dev
-    nohup python3 dev-server.py < /dev/null > /tmp/dev-server.log 2>&1 &
+# Dev server pod
+if ! kubectl get pod -n default -l app=dev-server --no-headers 2>/dev/null | grep -q Running; then
+    log "Creating dev-server pod..."
+    kubectl apply -f /home/administrator/k8s-portfolio-iac/k8s/services/portfolio/deployment-dev-server.yaml 2>/dev/null || true
+    kubectl apply -f /home/administrator/k8s-portfolio-iac/k8s/services/portfolio/service-dev-server.yaml 2>/dev/null || true
+fi
+if ! pgrep -f "kubectl port-forward.*dev-server.*5500" >/dev/null 2>&1; then
+    log "Starting dev-server port-forward..."
+    nohup kubectl port-forward --address 0.0.0.0 svc/dev-server-service -n default 5500:5500 > /tmp/pf-dev.log 2>&1 &
 fi
 
 # Daemon

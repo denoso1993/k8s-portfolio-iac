@@ -68,12 +68,16 @@ while true; do
         sleep 5
     fi
 
-    # Check dev server (hot-reload, port 5500)
-    if ! pgrep -f "dev-server.py" > /dev/null 2>&1; then
-        log "dev server DOWN - restarting..."
-        nohup python3 /home/administrator/k8s-portfolio-iac/local-dev/dev-server.py > /tmp/dev-server.log 2>&1 &
+    # Check dev-server pod
+    if ! kubectl get pod -n default -l app=dev-server --no-headers 2>/dev/null | grep -q Running; then
+        log "dev-server pod missing - recreating..."
+        kubectl apply -f /home/administrator/k8s-portfolio-iac/k8s/services/portfolio/deployment-dev-server.yaml 2>/dev/null || true
+    fi
+    if ! pgrep -f "kubectl port-forward.*dev-server.*5500" > /dev/null 2>&1; then
+        log "dev-server port-forward DOWN - restarting..."
+        nohup kubectl port-forward --address 0.0.0.0 svc/dev-server-service -n default 5500:5500 > /tmp/pf-dev.log 2>&1 &
         sleep 2
-        log "dev server restarted"
+        log "dev-server port-forward restarted"
     fi
 
     sleep 30

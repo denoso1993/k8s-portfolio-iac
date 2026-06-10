@@ -68,7 +68,7 @@ kind-config.yaml       definicao do cluster Kind
 |------|-------|
 | Kubernetes | 1.27.3 |
 | No | 1 (control-plane) |
-| Capacidade | Compartilhado com WSL2 host (2.8GB RAM alocada ao VM) |
+| Capacidade | Compartilhado com WSL2 host (4GB RAM alocada ao WSL2 (notebook 8GB total)) |
 | Container runtime | containerd 1.7.1 |
 | Rede | Kind default (CNI: kindnet) |
 | Ambiente | WSL2 (Ubuntu 26.04) + Docker Desktop (29.5.3) |

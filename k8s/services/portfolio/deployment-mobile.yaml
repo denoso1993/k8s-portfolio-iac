@@ -1,28 +1,75 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "9"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"mobile-server","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"mobile-server"}},"template":{"metadata":{"labels":{"app":"mobile-server"}},"spec":{"containers":[{"image":"nginxinc/nginx-unprivileged:1.25-alpine","name":"nginx","ports":[{"containerPort":5599}],"volumeMounts":[{"mountPath":"/usr/share/nginx/html","name":"html-volume"}]}],"volumes":[{"configMap":{"name":"mobile-html-config"},"name":"html-volume"}]}}}}
+  creationTimestamp: "2026-06-10T19:39:52Z"
+  generation: 9
   name: mobile-server
   namespace: default
+  resourceVersion: "211908"
+  uid: a7a57cd8-65de-4a90-b9b8-53fca3075fb3
 spec:
+  progressDeadlineSeconds: 600
   replicas: 1
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: mobile-server
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   template:
     metadata:
+      annotations:
+        kubectl.kubernetes.io/restartedAt: "2026-06-10T17:41:16-03:00"
+      creationTimestamp: null
       labels:
         app: mobile-server
     spec:
       containers:
-      - name: mobile-server
-        image: python:3-alpine
-        command: ["python3", "-c"]
-        args:
-        - "import os\nfrom http.server import HTTPServer, BaseHTTPRequestHandler\nclass H(BaseHTTPRequestHandler):\n  def do_GET(self):\n    with open(\"/html/index.html\", \"rb\") as f:\n      self.send_response(200)\n      self.send_header(\"Content-Type\", \"text/html; charset=utf-8\")\n      self.end_headers()\n      self.wfile.write(f.read())\nHTTPServer((\"0.0.0.0\", 5599), H).serve_forever()"
+      - image: nginxinc/nginx-unprivileged:1.25-alpine
+        imagePullPolicy: IfNotPresent
+        name: nginx
+        ports:
+        - containerPort: 5599
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
         volumeMounts:
-        - name: html-volume
-          mountPath: /html
+        - mountPath: /usr/share/nginx/html
+          name: html-volume
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
       volumes:
-      - name: html-volume
-        configMap:
+      - configMap:
+          defaultMode: 420
           name: mobile-html-config
+        name: html-volume
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2026-06-10T19:39:53Z"
+    lastUpdateTime: "2026-06-10T19:39:53Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2026-06-10T19:39:52Z"
+    lastUpdateTime: "2026-06-10T20:41:17Z"
+    message: ReplicaSet "mobile-server-55cf99d459" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 9
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

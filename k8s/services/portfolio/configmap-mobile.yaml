@@ -293,5 +293,5 @@ data:
 kind: ConfigMap
 metadata:
   creationTimestamp: null
-  name: nginx-html-config
+  name: mobile-html-config
   namespace: default

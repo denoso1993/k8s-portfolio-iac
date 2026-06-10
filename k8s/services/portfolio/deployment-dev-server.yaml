@@ -1,23 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "57"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"dev-server","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"dev-server"}},"template":{"metadata":{"labels":{"app":"dev-server"}},"spec":{"containers":[{"args":["import os, sys, urllib.request\nfrom http.server import HTTPServer, BaseHTTPRequestHandler\nPORT = 5500\nHTML_FILE = \"/html/index.html\"\nK8S_PROXY = \"http://localhost:8001\"\nclass H(BaseHTTPRequestHandler):\n  def do_GET(self):\n    if self.path.startswith(\"/k8s/\"):\n      try:\n        url = K8S_PROXY + self.path[4:]\n        req = urllib.request.Request(url)\n        req.add_header(\"Host\", \"localhost\")\n        resp = urllib.request.urlopen(req, timeout=5)\n        d = resp.read()\n        self.send_response(resp.status)\n        self.send_header(\"Content-Type\", resp.headers.get(\"Content-Type\", \"application/json\"))\n        self.send_header(\"Access-Control-Allow-Origin\", \"*\")\n        self.end_headers()\n        self.wfile.write(d)\n      except Exception as e:\n        self.send_response(502)\n        self.send_header(\"Content-Type\", \"text/plain\")\n        self.end_headers()\n        self.wfile.write(str(e).encode())\n      return\n    if self.path in [\"/\", \"/index.html\"]:\n      if os.path.exists(HTML_FILE):\n        with open(HTML_FILE, \"rb\") as f:\n          self.send_response(200)\n          self.send_header(\"Content-Type\", \"text/html; charset=utf-8\")\n          self.end_headers()\n          self.wfile.write(f.read())\n        return\n    self.send_error(404)\nprint(\"Dev server on :\" + str(PORT))\nHTTPServer((\"0.0.0.0\", PORT), H).serve_forever()\n"],"command":["python3","-c"],"image":"python:3-alpine","name":"dev-server","volumeMounts":[{"mountPath":"/html","name":"html-volume"}]},{"command":["kubectl","proxy","--address=0.0.0.0","--port=8001"],"image":"bitnami/kubectl:latest","name":"kubectl-proxy"}],"volumes":[{"configMap":{"name":"dev-html-config"},"name":"html-volume"}]}}}}
+  creationTimestamp: "2026-06-10T11:40:30Z"
+  generation: 57
   name: dev-server
   namespace: default
+  resourceVersion: "208704"
+  uid: a17e4d78-ca4a-4475-9fe9-80402ac1fa9e
 spec:
+  progressDeadlineSeconds: 600
   replicas: 1
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: dev-server
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   template:
     metadata:
+      annotations:
+        kubectl.kubernetes.io/restartedAt: "2026-06-10T17:09:24-03:00"
+      creationTimestamp: null
       labels:
         app: dev-server
     spec:
       containers:
-      - name: dev-server
-        image: python:3-alpine
-        command: ["python3", "-c"]
-        args:
+      - args:
         - |
           import os, sys, urllib.request
           from http.server import HTTPServer, BaseHTTPRequestHandler
@@ -55,18 +70,55 @@ spec:
               self.send_error(404)
           print("Dev server on :" + str(PORT))
           HTTPServer(("0.0.0.0", PORT), H).serve_forever()
-        volumeMounts:
-        - name: html-volume
-          mountPath: /html
-      - name: kubectl-proxy
-        image: bitnami/kubectl:latest
         command:
+        - python3
+        - -c
+        image: python:3-alpine
+        imagePullPolicy: IfNotPresent
+        name: dev-server
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /html
+          name: html-volume
+      - command:
         - kubectl
         - proxy
         - --address=0.0.0.0
         - --port=8001
-        
+        image: bitnami/kubectl:latest
+        imagePullPolicy: Always
+        name: kubectl-proxy
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
       volumes:
-      - name: html-volume
-        configMap:
+      - configMap:
+          defaultMode: 420
           name: dev-html-config
+        name: html-volume
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2026-06-10T11:40:35Z"
+    lastUpdateTime: "2026-06-10T11:40:35Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2026-06-10T11:40:30Z"
+    lastUpdateTime: "2026-06-10T20:09:26Z"
+    message: ReplicaSet "dev-server-56676b76f7" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 57
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

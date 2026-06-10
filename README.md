@@ -41,7 +41,7 @@ Este repositorio define a infraestrutura como codigo de um cluster Kubernetes ro
 
 O cluster executa um **site pessoal de portfolio no estilo Windows 95** (nginx) e um banco PostgreSQL, ambos gerenciados pelo ArgoCD com sincronizacao automatica a partir deste repositorio. Toda a configuracao e declarativa e versionada.
 
-O portfolio possui layout **flexbox responsivo** (funciona em qualquer tela, de mobile a 4K), com tema visual Windows 95, terminal interativo com dados reais do kubectl via API proxy, e dashboard Grafana embutido com metricas ao vivo do cluster.
+O portfolio possui layout **Windows 95 classico** no desktop + **versao mobile dedicada** (CSS proprio, janelas centralizadas, sem wallpaper), com tema visual Windows 95, terminal interativo com dados reais do kubectl via API proxy, e dashboard Grafana embutido com metricas ao vivo do cluster.
 
 ---
 
@@ -76,6 +76,18 @@ kind-config.yaml       definicao do cluster Kind
 ---
 
 ## Componentes
+
+### Mobile (porta 5599)
+
+O cluster possui um deployment separado para mobile (mobile-server) com CSS otimizado:
+
+- **Seletores de alta especificidade** (div.w, div#x, div.di) para sobrescrever CSS desktop sem conflito
+- **Janelas centralizadas** ocupando 96vw de largura por calc(100dvh - 96px) de altura
+- **Icones no topo** em linha horizontal, centralizados
+- **Wallpaper removido** no mobile, apenas fundo verde agua (#008080)
+- **Service:** porta 5599 exterma → 8080 pod interno
+- **Cloudflare tunnel** configurado para o subdominio mobile
+
 
 | Componente | Finalidade |
 |------------|------------|

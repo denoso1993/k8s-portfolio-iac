@@ -12,11 +12,14 @@ data:
     / {\n      try_files $uri $uri/ /index.html;\n      expires 1h;\n      add_header
     Cache-Control \"public, must-revalidate\";\n    }\n    \n    location /k8s/ {\n
     \     proxy_pass http://172.19.105.82:8002/;\n      proxy_set_header Host localhost;\n
-    \     proxy_set_header X-Real-IP $remote_addr;\n    }\n  }\n}\n"
+    \     proxy_set_header X-Real-IP $remote_addr;\n    }\n  }\n}\n\n    location
+    /grafana/ {\n        proxy_pass http://127.0.0.1:3000/;\n        proxy_set_header
+    Host \\System.Management.Automation.Internal.Host.InternalHost;\n        proxy_set_header
+    X-Real-IP \\;\n    }\n"
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2026-06-11T17:59:15Z"
+  creationTimestamp: "2026-06-11T18:22:12Z"
   name: nginx-full-config
   namespace: default
-  resourceVersion: "2468"
-  uid: b618a1dc-eb01-43c4-9eea-621daab1c5ab
+  resourceVersion: "4877"
+  uid: 09236b94-de05-40a2-afa1-9cc261f44ae4

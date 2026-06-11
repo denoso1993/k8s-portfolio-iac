@@ -1,5 +1,4 @@
 {
-  "id": 2,
   "panels": [
     {
       "fieldConfig": {
@@ -32,11 +31,19 @@
       },
       "targets": [
         {
-          "expr": "count(kube_pod_info)"
+          "expr": "count(kube_pod_info)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          }
         }
       ],
       "title": "Pods",
-      "type": "gauge"
+      "type": "gauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      }
     },
     {
       "gridPos": {
@@ -47,11 +54,19 @@
       },
       "targets": [
         {
-          "expr": "count(up{job=\"kubernetes-nodes\"})"
+          "expr": "count(up{job=\"kubernetes-nodes\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          }
         }
       ],
       "title": "Nodes",
-      "type": "stat"
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      }
     },
     {
       "fieldConfig": {
@@ -85,11 +100,19 @@
       },
       "targets": [
         {
-          "expr": "sum(rate(container_cpu_usage_seconds_total[2m]))/sum(machine_cpu_cores)*100"
+          "expr": "sum(rate(container_cpu_usage_seconds_total[2m]))/sum(machine_cpu_cores)*100",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          }
         }
       ],
       "title": "CPU %",
-      "type": "gauge"
+      "type": "gauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      }
     },
     {
       "fieldConfig": {
@@ -123,11 +146,19 @@
       },
       "targets": [
         {
-          "expr": "sum(container_memory_working_set_bytes)/1024/1024/1024"
+          "expr": "sum(container_memory_working_set_bytes)/1024/1024/1024",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          }
         }
       ],
       "title": "Mem GB",
-      "type": "gauge"
+      "type": "gauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      }
     },
     {
       "gridPos": {
@@ -138,11 +169,19 @@
       },
       "targets": [
         {
-          "expr": "count(up{job=\"kubernetes-service-endpoints\"})"
+          "expr": "count(up{job=\"kubernetes-service-endpoints\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          }
         }
       ],
       "title": "Svcs",
-      "type": "stat"
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      }
     },
     {
       "gridPos": {
@@ -154,11 +193,19 @@
       "targets": [
         {
           "expr": "sum(rate(container_cpu_usage_seconds_total[2m]))by(namespace)",
-          "legendFormat": "{{namespace}}"
+          "legendFormat": "{{namespace}}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          }
         }
       ],
       "title": "CPU by NS",
-      "type": "timeseries"
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      }
     },
     {
       "gridPos": {
@@ -170,11 +217,19 @@
       "targets": [
         {
           "expr": "sum(container_memory_working_set_bytes)by(namespace)/1024/1024",
-          "legendFormat": "{{namespace}}"
+          "legendFormat": "{{namespace}}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          }
         }
       ],
       "title": "Mem by NS",
-      "type": "timeseries"
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      }
     },
     {
       "gridPos": {
@@ -186,14 +241,26 @@
       "targets": [
         {
           "expr": "count(kube_pod_info)by(namespace)",
-          "legendFormat": "{{namespace}}"
+          "legendFormat": "{{namespace}}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          }
         }
       ],
       "title": "Pods per NS",
-      "type": "bargauge"
+      "type": "bargauge",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      }
     }
   ],
   "title": "Cluster SRE",
   "uid": "cluster-sre",
-  "version": 1
+  "refresh": "5s",
+  "time": {
+    "from": "now-30m",
+    "to": "now"
+  }
 }

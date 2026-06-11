@@ -1,27 +1,48 @@
 apiVersion: v1
 data:
-  nginx.conf: "worker_processes auto;\nerror_log /var/log/nginx/error.log notice;\npid
-    /tmp/nginx.pid;\nevents {\n  worker_connections 2048;\n}\nhttp {\n  include /etc/nginx/mime.types;\n
-    \ default_type application/octet-stream;\n  \n  # Gzip\n  gzip on;\n  gzip_types
-    text/html text/css application/javascript application/json;\n  gzip_min_length
-    256;\n  gzip_vary on;\n  \n  # Security headers\n  add_header X-Frame-Options
-    DENY always;\n  add_header X-Content-Type-Options nosniff always;\n  add_header
-    Referrer-Policy no-referrer-when-downgrade always;\n  add_header Permissions-Policy
-    \"geolocation=(), microphone=(), camera=()\" always;\n  \n  server {\n    listen
-    8080;\n    root /usr/share/nginx/html;\n    index index.html;\n    \n    location
-    / {\n      try_files $uri $uri/ /index.html;\n      expires 1h;\n      add_header
-    Cache-Control \"public, must-revalidate\";\n    }\n    \n    location /k8s/ {\n
-    \   location /grafana/ {\n        proxy_pass http://grafana.monitoring.svc.cluster.local/;\n
-    \       proxy_set_header Host System.Management.Automation.Internal.Host.InternalHost;\n
-    \       proxy_set_header X-Real-IP ;\n    }\n\n      proxy_pass http://172.19.105.82:8002/;\n
-    \     proxy_set_header Host localhost;\n      proxy_set_header X-Real-IP $remote_addr;\n
-    \   }\n  }\n}\n\n    location /grafana/ {\n        proxy_pass http://grafana.monitoring.svc.cluster.local/;\n
-    \       proxy_set_header Host \\System.Management.Automation.Internal.Host.InternalHost;\n
-    \       proxy_set_header X-Real-IP \\;\n    }\n"
+  nginx.conf: |-
+    worker_processes auto;
+    error_log /var/log/nginx/error.log notice;
+    pid /tmp/nginx.pid;
+    events {
+      worker_connections 2048;
+    }
+    http {
+      include /etc/nginx/mime.types;
+      default_type application/octet-stream;
+      gzip on;
+      gzip_types text/html text/css application/javascript application/json;
+      gzip_min_length 256;
+      gzip_vary on;
+      add_header X-Content-Type-Options nosniff always;
+      add_header Referrer-Policy no-referrer-when-downgrade always;
+      add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
+      server {
+        listen 8080;
+        root /usr/share/nginx/html;
+        index index.html;
+        location / {
+          try_files $uri $uri/ /index.html;
+          expires 1h;
+          add_header Cache-Control "public, must-revalidate";
+          add_header X-Frame-Options DENY always;
+        }
+        location /k8s/ {
+          proxy_pass http://172.19.105.82:8002/;
+          proxy_set_header Host localhost;
+          proxy_set_header X-Real-IP $remote_addr;
+        }
+        location /grafana/ {
+          proxy_pass http://grafana.monitoring.svc.cluster.local/;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+        }
+      }
+    }
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2026-06-11T18:26:58Z"
+  creationTimestamp: "2026-06-11T18:50:39Z"
   name: nginx-full-config
   namespace: default
-  resourceVersion: "5444"
-  uid: 6a863498-231e-41f7-930e-8e5e2f25c6e2
+  resourceVersion: "7686"
+  uid: 58e25b49-e7f4-466e-91b6-a5c24bc17ecc

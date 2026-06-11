@@ -1,5 +1,4 @@
 {
-  "id": 3,
   "panels": [
     {
       "datasource": {
@@ -257,12 +256,11 @@
       "type": "bargauge"
     }
   ],
-  "refresh": "5s",
+  "refresh": "1s",
   "time": {
-    "from": "now-30m",
+    "from": "now-15m",
     "to": "now"
   },
   "title": "Cluster SRE",
-  "uid": "cluster-sre",
-  "version": 1
+  "uid": "cluster-sre"
 }

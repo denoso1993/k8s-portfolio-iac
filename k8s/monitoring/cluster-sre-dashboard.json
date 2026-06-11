@@ -1,6 +1,11 @@
 {
+  "id": 3,
   "panels": [
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "bfou9avcythj4c"
+      },
       "fieldConfig": {
         "defaults": {
           "max": 50,
@@ -31,21 +36,21 @@
       },
       "targets": [
         {
-          "expr": "count(kube_pod_info)",
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
-          }
+            "uid": "bfou9avcythj4c"
+          },
+          "expr": "count(kube_pod_info)"
         }
       ],
       "title": "Pods",
-      "type": "gauge",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      }
+      "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "bfou9avcythj4c"
+      },
       "gridPos": {
         "h": 4,
         "w": 4,
@@ -54,21 +59,21 @@
       },
       "targets": [
         {
-          "expr": "count(up{job=\"kubernetes-nodes\"})",
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
-          }
+            "uid": "bfou9avcythj4c"
+          },
+          "expr": "count(up{job=\"kubernetes-nodes\"})"
         }
       ],
       "title": "Nodes",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      }
+      "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "bfou9avcythj4c"
+      },
       "fieldConfig": {
         "defaults": {
           "max": 100,
@@ -100,21 +105,21 @@
       },
       "targets": [
         {
-          "expr": "sum(rate(container_cpu_usage_seconds_total[2m]))/sum(machine_cpu_cores)*100",
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
-          }
+            "uid": "bfou9avcythj4c"
+          },
+          "expr": "sum(rate(container_cpu_usage_seconds_total[2m]))/sum(machine_cpu_cores)*100"
         }
       ],
       "title": "CPU %",
-      "type": "gauge",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      }
+      "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "bfou9avcythj4c"
+      },
       "fieldConfig": {
         "defaults": {
           "max": 8,
@@ -146,21 +151,21 @@
       },
       "targets": [
         {
-          "expr": "sum(container_memory_working_set_bytes)/1024/1024/1024",
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
-          }
+            "uid": "bfou9avcythj4c"
+          },
+          "expr": "sum(container_memory_working_set_bytes)/1024/1024/1024"
         }
       ],
       "title": "Mem GB",
-      "type": "gauge",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      }
+      "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "bfou9avcythj4c"
+      },
       "gridPos": {
         "h": 4,
         "w": 4,
@@ -169,21 +174,21 @@
       },
       "targets": [
         {
-          "expr": "count(up{job=\"kubernetes-service-endpoints\"})",
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
-          }
+            "uid": "bfou9avcythj4c"
+          },
+          "expr": "count(up{job=\"kubernetes-service-endpoints\"})"
         }
       ],
       "title": "Svcs",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      }
+      "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "bfou9avcythj4c"
+      },
       "gridPos": {
         "h": 7,
         "w": 12,
@@ -192,22 +197,22 @@
       },
       "targets": [
         {
-          "expr": "sum(rate(container_cpu_usage_seconds_total[2m]))by(namespace)",
-          "legendFormat": "{{namespace}}",
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
-          }
+            "uid": "bfou9avcythj4c"
+          },
+          "expr": "sum(rate(container_cpu_usage_seconds_total[2m]))by(namespace)",
+          "legendFormat": "{{namespace}}"
         }
       ],
       "title": "CPU by NS",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      }
+      "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "bfou9avcythj4c"
+      },
       "gridPos": {
         "h": 7,
         "w": 12,
@@ -216,22 +221,22 @@
       },
       "targets": [
         {
-          "expr": "sum(container_memory_working_set_bytes)by(namespace)/1024/1024",
-          "legendFormat": "{{namespace}}",
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
-          }
+            "uid": "bfou9avcythj4c"
+          },
+          "expr": "sum(container_memory_working_set_bytes)by(namespace)/1024/1024",
+          "legendFormat": "{{namespace}}"
         }
       ],
       "title": "Mem by NS",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      }
+      "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "bfou9avcythj4c"
+      },
       "gridPos": {
         "h": 5,
         "w": 12,
@@ -240,27 +245,24 @@
       },
       "targets": [
         {
-          "expr": "count(kube_pod_info)by(namespace)",
-          "legendFormat": "{{namespace}}",
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
-          }
+            "uid": "bfou9avcythj4c"
+          },
+          "expr": "count(kube_pod_info)by(namespace)",
+          "legendFormat": "{{namespace}}"
         }
       ],
       "title": "Pods per NS",
-      "type": "bargauge",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      }
+      "type": "bargauge"
     }
   ],
-  "title": "Cluster SRE",
-  "uid": "cluster-sre",
   "refresh": "5s",
   "time": {
     "from": "now-30m",
     "to": "now"
-  }
+  },
+  "title": "Cluster SRE",
+  "uid": "cluster-sre",
+  "version": 1
 }

@@ -1,0 +1,234 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  data:
+    cluster-sre.json: |-
+      {
+        "id": 2,
+        "panels": [
+          {
+            "fieldConfig": {
+              "defaults": {
+                "max": 50,
+                "min": 0,
+                "thresholds": {
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 10
+                    },
+                    {
+                      "color": "green",
+                      "value": 20
+                    }
+                  ]
+                }
+              }
+            },
+            "gridPos": {
+              "h": 4,
+              "w": 4,
+              "x": 0,
+              "y": 0
+            },
+            "targets": [
+              {
+                "expr": "count(kube_pod_info)"
+              }
+            ],
+            "title": "Pods",
+            "type": "gauge"
+          },
+          {
+            "gridPos": {
+              "h": 4,
+              "w": 4,
+              "x": 4,
+              "y": 0
+            },
+            "targets": [
+              {
+                "expr": "count(up{job=\"kubernetes-nodes\"})"
+              }
+            ],
+            "title": "Nodes",
+            "type": "stat"
+          },
+          {
+            "fieldConfig": {
+              "defaults": {
+                "max": 100,
+                "min": 0,
+                "thresholds": {
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 40
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                },
+                "unit": "percent"
+              }
+            },
+            "gridPos": {
+              "h": 4,
+              "w": 4,
+              "x": 8,
+              "y": 0
+            },
+            "targets": [
+              {
+                "expr": "sum(rate(container_cpu_usage_seconds_total[2m]))/sum(machine_cpu_cores)*100"
+              }
+            ],
+            "title": "CPU %",
+            "type": "gauge"
+          },
+          {
+            "fieldConfig": {
+              "defaults": {
+                "max": 8,
+                "min": 0,
+                "thresholds": {
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 4
+                    },
+                    {
+                      "color": "red",
+                      "value": 6
+                    }
+                  ]
+                },
+                "unit": "gb"
+              }
+            },
+            "gridPos": {
+              "h": 4,
+              "w": 4,
+              "x": 12,
+              "y": 0
+            },
+            "targets": [
+              {
+                "expr": "sum(container_memory_working_set_bytes)/1024/1024/1024"
+              }
+            ],
+            "title": "Mem GB",
+            "type": "gauge"
+          },
+          {
+            "gridPos": {
+              "h": 4,
+              "w": 4,
+              "x": 16,
+              "y": 0
+            },
+            "targets": [
+              {
+                "expr": "count(up{job=\"kubernetes-service-endpoints\"})"
+              }
+            ],
+            "title": "Svcs",
+            "type": "stat"
+          },
+          {
+            "gridPos": {
+              "h": 7,
+              "w": 12,
+              "x": 0,
+              "y": 5
+            },
+            "targets": [
+              {
+                "expr": "sum(rate(container_cpu_usage_seconds_total[2m]))by(namespace)",
+                "legendFormat": "{{namespace}}"
+              }
+            ],
+            "title": "CPU by NS",
+            "type": "timeseries"
+          },
+          {
+            "gridPos": {
+              "h": 7,
+              "w": 12,
+              "x": 12,
+              "y": 5
+            },
+            "targets": [
+              {
+                "expr": "sum(container_memory_working_set_bytes)by(namespace)/1024/1024",
+                "legendFormat": "{{namespace}}"
+              }
+            ],
+            "title": "Mem by NS",
+            "type": "timeseries"
+          },
+          {
+            "gridPos": {
+              "h": 5,
+              "w": 12,
+              "x": 0,
+              "y": 13
+            },
+            "targets": [
+              {
+                "expr": "count(kube_pod_info)by(namespace)",
+                "legendFormat": "{{namespace}}"
+              }
+            ],
+            "title": "Pods per NS",
+            "type": "bargauge"
+          }
+        ],
+        "title": "Cluster SRE",
+        "uid": "cluster-sre",
+        "version": 1
+      }
+  kind: ConfigMap
+  metadata:
+    creationTimestamp: "2026-06-11T18:38:06Z"
+    name: grafana-dashboards
+    namespace: monitoring
+    resourceVersion: "6559"
+    uid: e0d52fab-86db-42d0-9207-4220f9d30df1
+- apiVersion: v1
+  data:
+    provider.yaml: |
+      apiVersion: 1
+      providers:
+      - name: 'portfolio'
+        orgId: 1
+        folder: ''
+        type: file
+        disableDeletion: true
+        editable: false
+        options:
+          path: /etc/grafana/provisioning/dashboards
+  kind: ConfigMap
+  metadata:
+    creationTimestamp: "2026-06-11T18:38:26Z"
+    name: grafana-dashboards-provider
+    namespace: monitoring
+    resourceVersion: "6627"
+    uid: 9f17e45b-69a3-42cf-93f2-edd3eee1ec38
+kind: List
+metadata:
+  resourceVersion: ""

@@ -125,8 +125,8 @@ data:
     <p style="margin-bottom:3px;">Este portfolio e uma <strong>PoC de um cluster K8s 100% declarativo</strong> rodando com <strong>Kind</strong> no WSL2 &mdash; servindo este site com nginx, PostgreSQL e dashboard Grafana, tudo versionado no GitHub.</p>
     <hr style="border:none;border-top:1px solid #808080;margin:4px 0;">
     <div style="font-weight:700;font-size:11px;margin-bottom:3px;">Stack do Cluster</div>
-    <div class="tg"><span>Kubernetes</span><span>Docker</span><span>Kind</span><span>Helm</span><span>nginx</span><span>PostgreSQL</span><span>ArgoCD</span><span>Prometheus</span><span>Grafana</span><span>Loki</span><span>cert-manager</span><span>Cloudflare</span></div>
-    <p style="margin-top:4px;font-size:11px;color:#555;"><strong>Competencias:</strong> K8s, Docker, Terraform, Helm, ArgoCD, Prometheus, Grafana, Linux, PostgreSQL, Cloudflare.</p>
+    <div class="tg"><span>Kubernetes</span><span>Docker</span><span>Kind</span><span>WSL2</span><span>Helm</span><span>kubectl</span><span>nginx</span><span>PostgreSQL</span><span>Terraform</span><span>ArgoCD</span><span>Prometheus</span><span>kube-state-metrics</span><span>Grafana</span><span>Loki</span><span>cert-manager</span><span>Cloudflare</span></div>
+    <p style="margin-top:4px;font-size:11px;color:#555;"><strong>Competencias:</strong> K8s, Docker, Terraform, Helm, kubectl, ArgoCD, Prometheus, Grafana, Loki, cert-manager, Linux, PostgreSQL, Cloudflare, WSL2, kube-state-metrics</p>
     <hr style="border:none;border-top:1px solid #808080;margin:4px 0;">
     <div style="background:#000080;color:#ffff00;padding:8px 10px;border:2px solid;border-color:#fff #808080 #808080 #fff;font-size:16px;font-weight:700;text-align:center;margin-top:4px;">Confira mais detalhes do Cluster nos outros icones!</div>
     <div style="font-size:12px;color:#444;margin-top:5px;text-align:center;line-height:1.6;">

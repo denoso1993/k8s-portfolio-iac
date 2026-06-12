@@ -143,7 +143,7 @@ kubectl apply -f bootstrap/argocd-app.yaml
 | Servico | Acesso Interno | Acesso Externo |
 |---------|----------------|-----------------|
 | Portfolio | ClusterIP:80 | kubectl port-forward svc/nginx-service 8083:80 |
-| Grafana | monitoring:80 | kubectl port-forward svc/grafana -n monitoring 3090:80 |
+| Grafana | monitoring:80 | kubectl port-forward svc/grafana -n monitoring 3000:80 |
 | Prometheus | monitoring:9090 | kubectl port-forward svc/prometheus-server -n monitoring 9090:9090 |
 | ArgoCD | argocd:443 | kubectl port-forward svc/argocd-server -n argocd 8080:443 |
 

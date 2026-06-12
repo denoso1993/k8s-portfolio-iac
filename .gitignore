@@ -1,8 +1,30 @@
-.terraform/
-*.tfstate
-*.tfstate.backup
-.terraform.lock.hcl
-*.tfvars
-terraform.tfstate*
-k8s-manifests/applicationset-crd.yaml
+# Temp files
+*.tmp
+*.log
+/tmp/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+
+# Secrets
+*secret*.yaml
+*.pg-password
+
+# Backups
 backups/
+*.tar.gz
+*.bak
+
+# Local dev
+local-dev/

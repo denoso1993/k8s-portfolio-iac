@@ -1,73 +1,63 @@
 #!/bin/bash
-# ensure-cluster.sh - Garante que o cluster e servicos estao rodando
-# Uso: bash ensure-cluster.sh
-# Pode ser chamado por tarefa agendada ou manualmente
+# ensure-cluster.sh - Garante que o cluster está rodando com todos os recursos
+set -e
 
-LOG=/tmp/ensure-cluster.log
-log() { echo "[$(date "+%H:%M")] $1" | tee -a $LOG; }
+CLUSTER="lab-sre-denoso"
+REPO_DIR="$HOME/k8s-portfolio-iac"
+K8S_BASE="$REPO_DIR/k8s"
 
-# Check Docker
-if ! docker info >/dev/null 2>&1; then
-    log "Docker not running - attempting start..."
-    sudo service docker start 2>/dev/null || true
-    sleep 10
-    if ! docker info >/dev/null 2>&1; then
-        log "FATAL: Docker cannot start"
-        exit 1
-    fi
-fi
-log "Docker OK"
-
-# Check Kind cluster
-if ! kind get clusters 2>/dev/null | grep -q lab-sre-denoso; then
-    log "Kind cluster not found - creating..."
-    kind create cluster --name lab-sre-denoso --config /home/administrator/k8s-portfolio-iac/kind-config.yaml
-    sleep 30
-    log "Applying manifests..."
-    kubectl apply -f /home/administrator/k8s-portfolio-iac/k8s/services/portfolio/
-    kubectl apply -f /home/administrator/k8s-portfolio-iac/k8s/security/network-policies/
+# Verificar se o cluster existe
+if ! kind get clusters 2>/dev/null | grep -q "$CLUSTER"; then
+    echo "[CREATE] Criando cluster Kind..."
+    kind create cluster --name "$CLUSTER" --config "$REPO_DIR/kind-config.yaml"
+    echo "[CREATE] Aguardando API..."; sleep 15
 else
-    log "Kind cluster OK"
+    echo "[CHECK] Cluster $CLUSTER existe"
 fi
 
-# Kill old insecure proxy
-if pgrep -f "kubectl proxy.*--accept-hosts=\\.\\*" >/dev/null 2>&1; then
-    sudo kill -9 $(pgrep -f "kubectl proxy.*--accept-hosts=\\.\\*" | head -1) 2>/dev/null || true
+# Aplicar recursos em ordem
+echo "[APPLY] Infrastructure..."
+kubectl apply -f $K8S_BASE/infrastructure/
+
+echo "[APPLY] Security (network policies, quotas, limits)..."
+kubectl apply -f $K8S_BASE/security/
+kubectl apply -f $K8S_BASE/security/network-policies/
+
+echo "[APPLY] Services..."
+kubectl apply -f $K8S_BASE/services/portfolio/
+kubectl apply -f $K8S_BASE/services/postgres/
+
+echo "[APPLY] Platform (Kyverno)..."
+kubectl apply -f $K8S_BASE/platform/
+
+echo "[CHECK] Aguardando pods..."
+kubectl wait --for=condition=ready pod -l app=nginx -n default --timeout=60s 2>/dev/null || true
+
+echo "[INSTALL] Monitoring stack if needed..."
+if ! kubectl get ns monitoring >/dev/null 2>&1; then
+    echo "Instalando Prometheus + Grafana..."
+    kubectl create ns monitoring --dry-run=client -o yaml | kubectl apply -f -
+    kubectl apply -f $K8S_BASE/monitoring/prometheus-manifests.yaml
+    kubectl apply -f $K8S_BASE/monitoring/grafana-manifests.yaml
+    kubectl apply -f $K8S_BASE/monitoring/loki-manifests.yaml 2>/dev/null || true
+    echo "Aguardando monitoring..."
+    sleep 20
 fi
 
-# Kubectl proxy
-if ! pgrep -f "kubectl proxy.*8001" >/dev/null 2>&1; then
-    log "Starting kubectl proxy..."
-    nohup kubectl proxy --address=0.0.0.0 --port=8001 --accept-hosts='localhost' --accept-paths='^/api/v1/(pods|nodes)(/|$)' > /tmp/kubectl-proxy.log 2>&1 &
-fi
+echo "[ADD] Grafana dashboard..."
+python3 /tmp/grafana-fix.py 2>/dev/null || python3 -c "
+import json, urllib.request, base64
+with open('$K8S_BASE/monitoring/cluster-sre-dashboard.json') as f:
+    dash = json.load(f)
+dash['schemaVersion'] = 39
+for p in dash.get('panels', []):
+    for t in p.get('targets', []):
+        t['datasource'] = {'type': 'prometheus', 'uid': 'PBFA97CFB590B2093'}
+req = urllib.request.Request('http://localhost:3000/api/dashboards/db',
+    data=json.dumps({'dashboard': dash, 'overwrite': True}).encode(),
+    headers={'Content-Type': 'application/json', 'Authorization': 'Basic ' + base64.b64encode(b'admin:admin').decode()})
+print('Dashboard:', json.loads(urllib.request.urlopen(req).read()).get('status'))
+" 2>/dev/null || echo "Grafana dashboard import skipped (Grafana may not be ready)"
 
-# Port-forward nginx
-if ! pgrep -f "kubectl port-forward.*nginx.*8083" >/dev/null 2>&1; then
-    log "Starting port-forward nginx:8083..."
-    nohup kubectl port-forward --address 0.0.0.0 svc/nginx-service -n default 8083:80 > /tmp/port-forward-nginx.log 2>&1 &
-fi
-
-# Port-forward grafana (localhost only)
-if ! pgrep -f "kubectl port-forward.*grafana.*3000" >/dev/null 2>&1; then
-    log "Starting port-forward grafana:3000 (localhost)..."
-    nohup kubectl port-forward --address 127.0.0.1 svc/grafana -n monitoring 3000:80 > /tmp/port-forward-grafana.log 2>&1 &
-fi
-
-# Dev server pod
-if ! kubectl get pod -n default -l app=dev-server --no-headers 2>/dev/null | grep -q Running; then
-    log "Creating dev-server pod..."
-    kubectl apply -f /home/administrator/k8s-portfolio-iac/k8s/services/portfolio/deployment-dev-server.yaml 2>/dev/null || true
-    kubectl apply -f /home/administrator/k8s-portfolio-iac/k8s/services/portfolio/service-dev-server.yaml 2>/dev/null || true
-fi
-if ! pgrep -f "kubectl port-forward.*dev-server.*5500" >/dev/null 2>&1; then
-    log "Starting dev-server port-forward..."
-    nohup kubectl port-forward --address 0.0.0.0 svc/dev-server-service -n default 5500:5500 > /tmp/pf-dev.log 2>&1 &
-fi
-
-# Daemon
-if ! pgrep -f "portfolio-daemon.sh" >/dev/null 2>&1; then
-    log "Starting portfolio daemon..."
-    nohup bash /home/administrator/k8s-portfolio-iac/scripts/portfolio-daemon.sh > /tmp/daemon.log 2>&1 &
-fi
-
-log "=== All services OK ==="
+echo "[DONE] Cluster pronto!"
+kubectl get pods -A 2>/dev/null | awk '{print $1, $2, $3}'

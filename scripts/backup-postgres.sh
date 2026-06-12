@@ -1,19 +1,38 @@
 #!/bin/bash
-# backup-postgres.sh - Backup do PostgreSQL
-# Salva em /home/administrator/k8s-portfolio-iac/backups/
+# backup-postgres.sh - Backup do banco PostgreSQL
+set -e
 
-BACKUP_DIR=/home/administrator/k8s-portfolio-iac/backups
-mkdir -p $BACKUP_DIR
+BACKUP_DIR="${1:-$HOME/backups/postgres}"
+mkdir -p "$BACKUP_DIR"
+RETENTION_DAYS=7
+PG_USER="postgres"
+PG_DB="portfolio"
+NAMESPACE="default"
+POD="postgres-sts-0"
 
-DATE=$(date "+%Y-%m-%d_%H-%M")
-FILE=$BACKUP_DIR/portfolio-$DATE.sql
+# Obter senha
+PG_PASS=$(kubectl get secret postgres-secret -n $NAMESPACE -o jsonpath="{.data.POSTGRES_PASSWORD}" 2>/dev/null | base64 -d)
+if [ -z "$PG_PASS" ]; then
+    PG_PASS=$(cat ~/.pg-password 2>/dev/null)
+fi
 
-echo "[$(date)] Backing up PostgreSQL..."
-kubectl exec -n default postgres-sts-0 -- pg_dump -U postgres portfolio > $FILE 2>/dev/null || kubectl exec -n default postgres-sts-0 -- pg_dumpall -U postgres > $FILE 2>/dev/null
+if [ -z "$PG_PASS" ]; then
+    echo "ERRO: Senha PostgreSQL nao encontrada" >&2
+    exit 1
+fi
 
-SIZE=$(wc -c < $FILE)
-echo "[$(date)] Backup saved: $FILE ($SIZE bytes)"
+BACKUP_FILE="$BACKUP_DIR/portfolio-$(date +%F_%H%M%S).sql.gz"
 
-# Keep only last 7 backups
-ls -t $BACKUP_DIR/portfolio-*.sql 2>/dev/null | tail -n +8 | xargs -r rm
-echo "[$(date)] Cleaned old backups"
+echo "[BACKUP] Iniciando backup PostgreSQL..."
+kubectl exec -n $NAMESPACE $POD -- sh -c "PGPASSWORD='$PG_PASS' pg_dump -U $PG_USER $PG_DB" 2>/dev/null | gzip > "$BACKUP_FILE"
+
+if [ -f "$BACKUP_FILE" ] && [ -s "$BACKUP_FILE" ]; then
+    echo "[BACKUP] OK: $(ls -lh "$BACKUP_FILE" | awk '{print $5}')"
+    
+    # Limpar backups antigos
+    find "$BACKUP_DIR" -name "portfolio-*.sql.gz" -mtime +$RETENTION_DAYS -delete
+    echo "[BACKUP] Limpeza: backups mais velhos que $RETENTION_DAYS dias removidos"
+else
+    echo "[BACKUP] ERRO: Falha ao criar backup" >&2
+    exit 1
+fi

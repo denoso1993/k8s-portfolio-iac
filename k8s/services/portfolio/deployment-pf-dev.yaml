@@ -14,16 +14,21 @@ spec:
         app: pf-dev
     spec:
       containers:
-      - name: kubectl
-        image: bitnami/kubectl:latest
-        command:
+      - command:
         - kubectl
         - port-forward
         - --address
         - 0.0.0.0
         - svc/dev-server-service
-        - "5500:5500"
-        - "-n"
+        - 5500:5500
+        - -n
         - default
-        - "--pod-running-timeout"
-        - "10s"
+        - --pod-running-timeout
+        - 10s
+        image: bitnami/kubectl:latest
+        name: kubectl
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        seccompProfile:
+          type: RuntimeDefault

@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-monitoring
+  namespace: monitoring
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - namespaceSelector: {}
+    ports:
+    - port: 3000  # Grafana
+    - port: 9090  # Prometheus
+    - port: 9093  # Alertmanager
+    - port: 8080  # kube-state-metrics
+    - port: 8081  # kube-state-metrics
+    - port: 9091  # Pushgateway
+  egress:
+  - to:
+    - namespaceSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress

@@ -47,10 +47,8 @@ recovery() {
 start_infra() {
     log "[INFRA] Iniciando servicos..."
 
-    for p in "kubectl proxy.*8001" "kubectl proxy.*8002" "port-forward.*nginx.*8083" "port-forward.*grafana.*3000" "port-forward.*dev-server.*5500" "port-forward.*mobile.*5599"; do
         case "$p" in
             *8001) pgrep -f "$p" >/dev/null 2>&1 || kubectl proxy --address=0.0.0.0 --port=8001 > /tmp/proxy-8001.log 2>&1 & ;;
-            *8002) pgrep -f "$p" >/dev/null 2>&1 || kubectl proxy --port=8002 --accept-hosts=".*" --address="0.0.0.0" > /tmp/proxy-8002.log 2>&1 & ;;
             *8083) pgrep -f "$p" >/dev/null 2>&1 || nohup kubectl port-forward --address 0.0.0.0 svc/nginx-service -n default 8083:80 > /tmp/pf-nginx.log 2>&1 & ;;
             *3000) pgrep -f "$p" >/dev/null 2>&1 || nohup kubectl port-forward --address 127.0.0.1 svc/grafana -n monitoring 3000:80 > /tmp/pf-grafana.log 2>&1 & ;;
             *5500) pgrep -f "$p" >/dev/null 2>&1 || nohup kubectl port-forward --address 0.0.0.0 svc/dev-server-service -n default 5500:5500 > /tmp/pf-dev.log 2>&1 & ;;
@@ -67,7 +65,6 @@ while true; do
     kind get clusters 2>/dev/null | grep -q $CLUSTER || { log "[ALERTA] Cluster perdido"; recovery && start_infra; continue; }
 
     pgrep -f "port-forward.*nginx.*8083" > /dev/null 2>&1 || { nohup kubectl port-forward --address 0.0.0.0 svc/nginx-service -n default 8083:80 > /tmp/pf-nginx.log 2>&1 & log "[FIX] nginx"; }
-    pgrep -f "kubectl proxy.*8002" > /dev/null 2>&1 || { kubectl proxy --port=8002 --accept-hosts=".*" --address="0.0.0.0" > /tmp/proxy-8002.log 2>&1 & log "[FIX] proxy 8002"; }
     pgrep -f "port-forward.*grafana.*3000" > /dev/null 2>&1 || { nohup kubectl port-forward --address 127.0.0.1 svc/grafana -n monitoring 3000:80 > /tmp/pf-grafana.log 2>&1 & log "[FIX] grafana"; }
     pgrep -f "port-forward.*dev-server.*5500" > /dev/null 2>&1 || { nohup kubectl port-forward --address 0.0.0.0 svc/dev-server-service -n default 5500:5500 > /tmp/pf-dev.log 2>&1 & log "[FIX] dev"; }
     pgrep -f "port-forward.*mobile.*5599" > /dev/null 2>&1 || { nohup kubectl port-forward --address 0.0.0.0 svc/mobile-server-service -n default 5599:5599 > /tmp/pf-mobile.log 2>&1 & log "[FIX] mobile"; }

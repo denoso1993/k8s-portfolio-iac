@@ -1,23 +1,30 @@
 {
-  "editable": true,
-  "graphTooltip": 0,
-  "id": 2596594426105856,
   "panels": [
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "bfou9avcythj4c"
+      },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
+          "max": 50,
+          "min": 0,
           "thresholds": {
             "steps": [
               {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 10
+              },
+              {
                 "color": "green",
-                "value": -1
+                "value": 20
               }
             ]
-          },
-          "unit": "none"
+          }
         }
       },
       "gridPos": {
@@ -26,40 +33,22 @@
         "x": 0,
         "y": 0
       },
-      "id": 1,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none"
-      },
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "bfou9avcythj4c"
           },
-          "expr": "count(kube_pod_info)",
-          "instant": true
+          "expr": "count(kube_pod_info)"
         }
       ],
       "title": "Pods",
-      "type": "stat"
+      "type": "gauge"
     },
     {
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "thresholds": {
-            "steps": [
-              {
-                "color": "green",
-                "value": -1
-              }
-            ]
-          },
-          "unit": "none"
-        }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "bfou9avcythj4c"
       },
       "gridPos": {
         "h": 4,
@@ -67,39 +56,36 @@
         "x": 4,
         "y": 0
       },
-      "id": 2,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none"
-      },
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "bfou9avcythj4c"
           },
-          "expr": "count(up{job=\"kubernetes-nodes\"})",
-          "instant": true
+          "expr": "count(up{job=\"kubernetes-nodes\"})"
         }
       ],
       "title": "Nodes",
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "bfou9avcythj4c"
+      },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
+          "max": 100,
+          "min": 0,
           "thresholds": {
             "steps": [
               {
                 "color": "green",
-                "value": -1
+                "value": null
               },
               {
-                "color": "orange",
-                "value": 50
+                "color": "yellow",
+                "value": 40
               },
               {
                 "color": "red",
@@ -108,9 +94,7 @@
             ]
           },
           "unit": "percent"
-        },
-        "max": 100,
-        "min": 0
+        }
       },
       "gridPos": {
         "h": 4,
@@ -118,53 +102,45 @@
         "x": 8,
         "y": 0
       },
-      "id": 3,
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
-      },
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "bfou9avcythj4c"
           },
-          "expr": "sum(rate(container_cpu_usage_seconds_total[2m]))/sum(machine_cpu_cores)*100",
-          "instant": true
+          "expr": "sum(rate(container_cpu_usage_seconds_total[2m]))/sum(machine_cpu_cores)*100"
         }
       ],
       "title": "CPU %",
       "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "bfou9avcythj4c"
+      },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
+          "max": 8,
+          "min": 0,
           "thresholds": {
             "steps": [
               {
                 "color": "green",
-                "value": -1
+                "value": null
               },
               {
-                "color": "orange",
-                "value": 2
+                "color": "yellow",
+                "value": 4
               },
               {
                 "color": "red",
-                "value": 3.5
+                "value": 6
               }
             ]
           },
           "unit": "gb"
-        },
-        "max": 4,
-        "min": 0
+        }
       },
       "gridPos": {
         "h": 4,
@@ -172,43 +148,22 @@
         "x": 12,
         "y": 0
       },
-      "id": 4,
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
-      },
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "bfou9avcythj4c"
           },
-          "expr": "sum(container_memory_working_set_bytes)/1024/1024/1024",
-          "instant": true
+          "expr": "sum(container_memory_working_set_bytes)/1024/1024/1024"
         }
       ],
       "title": "Mem GB",
       "type": "gauge"
     },
     {
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "thresholds": {
-            "steps": [
-              {
-                "color": "green",
-                "value": -1
-              }
-            ]
-          },
-          "unit": "none"
-        }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "bfou9avcythj4c"
       },
       "gridPos": {
         "h": 4,
@@ -216,29 +171,22 @@
         "x": 16,
         "y": 0
       },
-      "id": 5,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none"
-      },
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "bfou9avcythj4c"
           },
-          "expr": "count(up{job=\"kubernetes-service-endpoints\"})",
-          "instant": true
+          "expr": "count(up{job=\"kubernetes-service-endpoints\"})"
         }
       ],
       "title": "Svcs",
       "type": "stat"
     },
     {
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent"
-        }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "bfou9avcythj4c"
       },
       "gridPos": {
         "h": 7,
@@ -246,12 +194,11 @@
         "x": 0,
         "y": 5
       },
-      "id": 6,
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "bfou9avcythj4c"
           },
           "expr": "sum(rate(container_cpu_usage_seconds_total[2m]))by(namespace)",
           "legendFormat": "{{namespace}}"
@@ -261,10 +208,9 @@
       "type": "timeseries"
     },
     {
-      "fieldConfig": {
-        "defaults": {
-          "unit": "megbytes"
-        }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "bfou9avcythj4c"
       },
       "gridPos": {
         "h": 7,
@@ -272,12 +218,11 @@
         "x": 12,
         "y": 5
       },
-      "id": 7,
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "bfou9avcythj4c"
           },
           "expr": "sum(container_memory_working_set_bytes)by(namespace)/1024/1024",
           "legendFormat": "{{namespace}}"
@@ -287,13 +232,9 @@
       "type": "timeseries"
     },
     {
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "unit": "none"
-        }
+      "datasource": {
+        "type": "prometheus",
+        "uid": "bfou9avcythj4c"
       },
       "gridPos": {
         "h": 5,
@@ -301,18 +242,13 @@
         "x": 0,
         "y": 13
       },
-      "id": 8,
-      "options": {
-        "orientation": "horizontal"
-      },
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "bfou9avcythj4c"
           },
           "expr": "count(kube_pod_info)by(namespace)",
-          "instant": true,
           "legendFormat": "{{namespace}}"
         }
       ],
@@ -320,18 +256,11 @@
       "type": "bargauge"
     }
   ],
-  "schemaVersion": 39,
-  "tags": [
-    "k8s",
-    "sre"
-  ],
+  "refresh": "1s",
   "time": {
-    "from": "now-30m",
+    "from": "now-15m",
     "to": "now"
   },
-  "timepicker": {},
-  "timezone": "browser",
   "title": "Cluster SRE",
-  "uid": "cluster-sre",
-  "version": 5
+  "uid": "cluster-sre"
 }

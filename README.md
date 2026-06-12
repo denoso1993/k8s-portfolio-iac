@@ -146,6 +146,7 @@ kubectl apply -f bootstrap/argocd-app.yaml
 | Grafana | monitoring:80 | kubectl port-forward svc/grafana -n monitoring 3000:80 |
 | Prometheus | monitoring:9090 | kubectl port-forward svc/prometheus-server -n monitoring 9090:9090 |
 | ArgoCD | argocd:443 | kubectl port-forward svc/argocd-server -n argocd 8080:443 |
+| Mobile (DEV) | 5599 (host) / 8080 (pod) | kubectl port-forward svc/mobile-server-service 5599:8080 |
 
 > Credenciais padrao do Grafana: admin / admin. A senha do ArgoCD e obtida via `kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d`
 
@@ -204,38 +205,9 @@ kubectl logs -n ingress-nginx deploy/ingress-nginx-controller
 
 ### Limitacoes conhecidas
 
-- **Terraform:** O registry do provider Terraform (registry.terraform.io) nao e acessivel deste ambiente WSL devido a restricoes de resolucao de DNS. Toda a infraestrutura e provisionada via kubectl e Helm.
+- **Terraform (deprecado):** O registry.terraform.io nao e acessivel deste ambiente WSL. O Terraform foi removido do bootstrap e substituido por kubectl + Helm. Os manifests em `terraform/` e `archive/terraform/` sao mantidos apenas como referencia historica.
 - **Porta 8081:** Esta porta esta ocupada por outro processo no host. O portfolio e servido na porta 8083, com redirecionamento a partir da porta 8082 via netsh do Windows.
 - **Rede WSL2:** O WSL2 utiliza um adaptador de rede virtualizado. Servicos sao expostos via kubectl port-forward com --address 0.0.0.0 e proxies de porta do Windows (netsh).
-
----
-
-
-
----
-
-## Seguranca
-
-O cluster passou por auditoria de seguranca em 10/06/2026. As seguintes medidas foram implementadas:
-
-### Web (nginx + HTML)
-- **Content-Security-Policy** (CSP) rigido: scripts apenas 'self', iframe apenas Grafana
-- **X-Frame-Options: DENY** ? protecao contra clickjacking
-- **X-Content-Type-Options: nosniff** ? protecao contra MIME sniffing
-- **Referrer-Policy** e **Permissions-Policy** configurados
-
-### Cluster (Kubernetes)
-- **kubectl proxy restrito**: apenas endpoints `/api/v1/pods` e `/api/v1/nodes` via `--accept-paths`
-- **Grafana**: port-forward restrito a localhost (`127.0.0.1`)
-- **NetworkPolicies**: default-deny ingress + regras especificas para nginx (8080) e postgres (5432)
-- **nginx**: `proxy_set_header Host localhost` ? evita host injection
-- **Containers**: non-root (nginx user 101, postgres user 70) com `capabilities drop: ALL`
-
-### Rede
-- **TLS**: Cloudflare com certificado valido
-- **Tunnel**: Cloudflare Tunnel (sem exposure de IP real)
-
-> Para detalhes completos, veja [SECURITY.md](SECURITY.md).
 
 
 ## Autor

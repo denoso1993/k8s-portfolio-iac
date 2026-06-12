@@ -3,14 +3,14 @@ kind: Deployment
 metadata:
   annotations:
     deployment.kubernetes.io/revision: "2"
-  creationTimestamp: "2026-06-11T22:35:28Z"
+  creationTimestamp: "2026-06-12T22:32:23Z"
   generation: 2
   labels:
     app: grafana
   name: grafana
   namespace: monitoring
-  resourceVersion: "5400"
-  uid: b2a34236-953b-4cb2-8198-dc20651ce08a
+  resourceVersion: "4245"
+  uid: 3692a32d-7ec8-42fd-b432-31946528c2ff
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -60,14 +60,14 @@ spec:
 status:
   availableReplicas: 1
   conditions:
-  - lastTransitionTime: "2026-06-11T22:35:42Z"
-    lastUpdateTime: "2026-06-11T22:35:42Z"
+  - lastTransitionTime: "2026-06-12T22:32:41Z"
+    lastUpdateTime: "2026-06-12T22:32:41Z"
     message: Deployment has minimum availability.
     reason: MinimumReplicasAvailable
     status: "True"
     type: Available
-  - lastTransitionTime: "2026-06-11T22:35:28Z"
-    lastUpdateTime: "2026-06-11T22:35:43Z"
+  - lastTransitionTime: "2026-06-12T22:32:23Z"
+    lastUpdateTime: "2026-06-12T22:32:42Z"
     message: ReplicaSet "grafana-5fb6d57dd5" has successfully progressed.
     reason: NewReplicaSetAvailable
     status: "True"

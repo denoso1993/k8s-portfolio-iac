@@ -180,7 +180,7 @@ O daemon `portfolio-daemon.sh` mantem os seguintes port-forwards ativos:
 |-----------|-------------|-----------|--------|
 | 8083 | svc/nginx-service | default | 0.0.0.0 (publico) |
 | 3000 | svc/grafana | monitoring | 127.0.0.1 (localhost) |
-| 5500 | svc/dev-server-service | default | 0.0.0.0 (publico) |
+| 5501 | svc/dev-server-service | default | 0.0.0.0 (publico) |
 | 5599 | svc/mobile-server-service | default | 0.0.0.0 (publico) |
 | 8001 | kubectl proxy | system | 0.0.0.0 (pods/nodes) |
 

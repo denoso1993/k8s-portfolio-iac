@@ -5,14 +5,14 @@
 | Ambiente | Porta | Pod | URL | Conteudo |
 |----------|-------|-----|-----|----------|
 | 🟢 **PROD** | **8083** | nginx | http://localhost:8083 | Portfolio Win95 (767KB) |
-| 🟡 **DEV** | **5500** | dev-server | http://localhost:5500 | Espelhado do PROD para testes |
+| 🟡 **DEV** | **5500** | dev-server | http://localhost:5501 | Espelhado do PROD para testes |
 | 📱 **MOBILE** | **5599** | mobile-server | http://localhost:5599 | Versao mobile com wallpaper |
 | 📊 **GRAFANA** | **3000** | grafana | http://localhost:3000 | Dashboard Cluster SRE |
 
 ## Observacoes Importantes
 
 - **PROD (8083)**: Portfolio completo. NAO MEXER sem autorizacao.
-- **DEV (5500)**: Espelha o conteudo do PROD. Usado para testes de funcionalidade antes de ir para producao.
+- **DEV (5501)**: Espelha o conteudo do PROD. Usado para testes de funcionalidade antes de ir para producao.
 - **MOBILE (5599)**: Versao mobile do portfolio com wallpaper. NAO MEXER, esta OK.
 - **GRAFANA (3000)**: Dashboard Cluster SRE com metricas do cluster em tempo real (refresh 5s).
 - **ArgoCD**: Credenciais admin / LpKFnTWLhKaZnEDj (senha obtida via secret)
@@ -27,7 +27,7 @@ kubectl delete cm -n default dev-html-config --ignore-not-found
 kubectl create cm -n default dev-html-config --from-file=index.html=/tmp/html.txt
 kubectl delete pod -n default -l app=dev-server --force --grace-period=0
 sleep 10
-curl http://localhost:5500/
+curl http://localhost:5501/
 ```
 
 ## Port-Forwards Gerenciados

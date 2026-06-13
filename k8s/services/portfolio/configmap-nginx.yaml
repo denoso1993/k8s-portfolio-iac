@@ -121,7 +121,7 @@ data:
     </div>
     <div style="font-size:12px;line-height:1.5;margin-top:6px;">
     <p style="margin-bottom:3px;"><strong>Sobre mim</strong></p>
-    <p style="margin-bottom:3px;">SRE/Cloud Engineer com 8+ anos de experiencia em <strong>Cloud Native</strong>, <strong>Kubernetes</strong> e automacao de infraestrutura. Especialista em <strong>IaC</strong> (Terraform), <strong>GitOps</strong> (ArgoCD) e observabilidade (<strong>Prometheus</strong>, <strong>Grafana</strong>).</p>
+    <p style="margin-bottom:3px;">SRE/Cloud Engineer com 8+ anos de experiencia em <strong>Cloud Native</strong>, <strong>Kubernetes</strong> e automacao de infraestrutura. Foco em <strong>IaC</strong> (Terraform), <strong>GitOps</strong> (ArgoCD) e observabilidade (<strong>Prometheus</strong>, <strong>Grafana</strong>).</p>
     <p style="margin-bottom:3px;">Este portfolio e uma <strong>PoC de um cluster K8s 100% declarativo</strong> rodando com <strong>Kind</strong> no WSL2 &mdash; servindo este site com nginx, PostgreSQL e dashboard Grafana, tudo versionado no GitHub.</p>
     <hr style="border:none;border-top:1px solid #808080;margin:4px 0;">
     <div style="font-weight:700;font-size:11px;margin-bottom:3px;">Stack do Cluster</div>

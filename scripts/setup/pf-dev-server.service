@@ -1,11 +1,11 @@
 [Unit]
-Description=Port-Forward Grafana
+Description=Port-Forward dev-server
 After=network-online.target
 Wants=network-online.target
 
 [Service]
 Type=exec
-ExecStart=/usr/local/bin/kubectl port-forward --address 127.0.0.1 svc/grafana -n monitoring 3000:80
+ExecStart=/usr/local/bin/kubectl port-forward --address 0.0.0.0 svc/dev-server-service -n default 5500:5500
 Restart=always
 RestartSec=3
 User=administrator

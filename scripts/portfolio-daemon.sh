@@ -63,7 +63,7 @@ start_infra() {
     log "[INFRA] Iniciando servicos..."
     bridge_kill_pfs
     local svcs=(
-        "proxy8001|nohup kubectl proxy --port=8001 --accept-hosts='.*' --address='0.0.0.0' > /tmp/proxy-8001.log 2>&1 &"
+        "proxy8001|nohup kubectl proxy --port=8001 --accept-hosts='localhost|127.0.0.1' --address='127.0.0.1' > /tmp/proxy-8001.log 2>&1 &"
         "nginx8083|nohup kubectl port-forward --address 0.0.0.0 svc/nginx-service -n default 8083:80 > /tmp/pf-nginx.log 2>&1 &"
         "grafana3000|nohup kubectl port-forward --address 127.0.0.1 svc/grafana -n monitoring 3000:80 > /tmp/pf-grafana.log 2>&1 &"
         "dev5500|nohup kubectl port-forward --address 0.0.0.0 svc/dev-server-service -n default 5500:5500 > /tmp/pf-dev.log 2>&1 &"
@@ -106,7 +106,7 @@ while true; do
     pgrep -f "port-forward.*grafana.*3000" >/dev/null 2>&1 || bridge_start_pf "grafana3000" "nohup kubectl port-forward --address 127.0.0.1 svc/grafana -n monitoring 3000:80 > /tmp/pf-grafana.log 2>&1 &"
     pgrep -f "port-forward.*dev-server.*5500" >/dev/null 2>&1 || bridge_start_pf "dev5500" "nohup kubectl port-forward --address 0.0.0.0 svc/dev-server-service -n default 5500:5500 > /tmp/pf-dev.log 2>&1 &"
     pgrep -f "port-forward.*mobile.*5599" >/dev/null 2>&1 || bridge_start_pf "mobile5599" "nohup kubectl port-forward --address 0.0.0.0 svc/mobile-server-service -n default 5599:5599 > /tmp/pf-mobile.log 2>&1 &"
-    pgrep -f "kubectl.*proxy.*8001" >/dev/null 2>&1 || bridge_start_pf "proxy8001" "nohup kubectl proxy --port=8001 --accept-hosts='.*' --address='0.0.0.0' > /tmp/proxy-8001.log 2>&1 &"
+    pgrep -f "kubectl.*proxy.*8001" >/dev/null 2>&1 || bridge_start_pf "proxy8001" "nohup kubectl proxy --port=8001 --accept-hosts='localhost|127.0.0.1' --address='127.0.0.1' > /tmp/proxy-8001.log 2>&1 &"
     
     if [ $((SECONDS % 90)) -lt 30 ]; then healthcheck_pfs; fi
     

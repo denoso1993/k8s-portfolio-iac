@@ -26,5 +26,5 @@ for p in 8083:svc/nginx-service:80:default 3000:svc/grafana:80:monitoring 5500:s
   ns=$(echo $p | cut -d: -f4)
   nohup kubectl port-forward --address 0.0.0.0 $svc -n $ns $port:$target > /tmp/pf-$port.log 2>&1 &
 done
-kubectl proxy --port=8002 --accept-hosts=".*" --address="0.0.0.0" > /tmp/proxy-8002.log 2>&1 &
+kubectl proxy --port=8002 --accept-hosts='localhost|127.0.0.1' --address='127.0.0.1' > /tmp/proxy-8002.log 2>&1 &
 log "=== RECOVERY COMPLETE ==="

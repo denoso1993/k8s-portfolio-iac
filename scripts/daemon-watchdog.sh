@@ -15,7 +15,7 @@ while true; do
       nohup kubectl port-forward --address 0.0.0.0 $svc -n $ns $port:$target > /tmp/pf-$port.log 2>&1 &
     }
   done
-  pgrep -f "kubectl proxy.*8002" >/dev/null 2>&1 || kubectl proxy --port=8002 --accept-hosts=".*" --address="0.0.0.0" > /tmp/proxy-8002.log 2>&1 &
+  pgrep -f "kubectl proxy.*8002" >/dev/null 2>&1 || kubectl proxy --port=8002 --accept-hosts='localhost|127.0.0.1' --address="0.0.0.0" > /tmp/proxy-8002.log 2>&1 &
   kubectl get pod -l app=nginx -n default --no-headers 2>/dev/null | grep -q Running || kubectl apply -R -f $K8S_BASE/services/portfolio/ 2>/dev/null
   sleep 15
 done

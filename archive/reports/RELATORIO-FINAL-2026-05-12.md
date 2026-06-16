@@ -27,8 +27,8 @@
 - MEMORY-WINDOWS.md com diretrizes completas
 
 ### 4. Senha Root Adicionada ✅
-- Senha: `Denera1993`
-- Uso: `echo 'Denera1993' | sudo -S <command>`
+- Senha: `[REDACTED]`
+- Uso: `echo '[REDACTED]' | sudo -S <command>`
 - MEMORY-WINDOWS.md atualizado
 
 ### 5. Componentes Instalados
@@ -108,7 +108,7 @@ kubectl logs -f deployment/nginx-deployment --tail=100
 
 ### Sudo com Senha
 ```bash
-echo 'Denera1993' | sudo -S <command>
+echo '[REDACTED]' | sudo -S <command>
 ```
 
 ---

@@ -57,7 +57,7 @@ start_pfs() {
     log "  mobile-server -> 5599"
     bridge_send "nohup kubectl port-forward --address 127.0.0.1 svc/grafana -n monitoring 3000:80 > /tmp/pf-grafana.log 2>&1 &"
     log "  grafana -> 3000"
-    bridge_send "nohup kubectl proxy --port=8001 --accept-hosts='.*' --address='0.0.0.0' > /tmp/proxy-8001.log 2>&1 &"
+    bridge_send "nohup kubectl proxy --port=8001 --accept-hosts='localhost|127.0.0.1' --address='127.0.0.1' > /tmp/proxy-8001.log 2>&1 &"
     log "  k8s proxy -> 8001"
     log "Todos PFs iniciados via bridge"
 }

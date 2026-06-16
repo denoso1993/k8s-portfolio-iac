@@ -221,7 +221,7 @@ resource "kubernetes_secret" "postgres_credentials" {
   }
   data = {
     POSTGRES_USER     = "sre_admin"
-    POSTGRES_PASSWORD = "sre_password_123"
+    POSTGRES_PASSWORD = "var.postgres_password"
     POSTGRES_DB       = "portfolio_db"
   }
 }

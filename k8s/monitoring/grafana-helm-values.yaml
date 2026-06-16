@@ -1,2 +1,2 @@
 USER-SUPPLIED VALUES:
-adminPassword: admin
+# adminPassword: [use env var or sealed secret]

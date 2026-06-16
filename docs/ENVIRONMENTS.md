@@ -15,7 +15,7 @@
 - **DEV (5501)**: Espelha o conteudo do PROD. Usado para testes de funcionalidade antes de ir para producao.
 - **MOBILE (5599)**: Versao mobile do portfolio com wallpaper. NAO MEXER, esta OK.
 - **GRAFANA (3000)**: Dashboard Cluster SRE com metricas do cluster em tempo real (refresh 5s).
-- **ArgoCD**: Credenciais admin / LpKFnTWLhKaZnEDj (senha obtida via secret)
+- **ArgoCD**: Credenciais admin / [REDACTED] (senha obtida via secret)
 
 ## Como Espelhar PROD no DEV (se necessario)
 

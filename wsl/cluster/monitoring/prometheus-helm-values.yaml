@@ -1,0 +1,15 @@
+USER-SUPPLIED VALUES:
+apiVersion: v1
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 60s
+      evaluation_interval: 60s
+    storage:
+      tsdb:
+        retention.time: 3d
+        retention.size: 256MB
+kind: ConfigMap
+metadata:
+  name: prometheus-server
+  namespace: monitoring

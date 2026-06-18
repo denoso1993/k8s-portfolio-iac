@@ -1,0 +1,13 @@
+[Unit]
+Description=Ensure Kind cluster exists
+After=docker.service network-online.target
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/home/administrator/k8s-portfolio-iac/wsl/scripts/ensure-cluster.sh
+User=administrator
+
+[Install]
+WantedBy=cluster.target

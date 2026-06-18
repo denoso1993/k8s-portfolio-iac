@@ -1,0 +1,5 @@
+[Unit]
+Description=K8s Portfolio Cluster - Auto Recovery
+Requires=ensure-cluster.service cluster-ready.service
+After=ensure-cluster.service cluster-ready.service socat-8083.service socat-5500.service socat-5599.service socat-5598.service socat-3000.service
+Wants=docker.service network-online.target

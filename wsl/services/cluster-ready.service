@@ -1,0 +1,14 @@
+[Unit]
+Description=Wait for cluster health check
+After=ensure-cluster.service
+Requires=ensure-cluster.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/bash -c 'for i in $(seq 1 60); do for p in 8083 5500 5599 5598 3000; do curl -s -o /dev/null http://localhost:$p/ && echo "  $p OK" || echo "  $p waiting"; done; echo "---"; sleep 2; done; echo "Cluster healthy!"'
+TimeoutStartSec=180
+User=administrator
+
+[Install]
+WantedBy=cluster.target

@@ -10,4 +10,8 @@ ExecStart=/home/administrator/k8s-portfolio-iac/wsl/scripts/ensure-cluster.sh
 User=administrator
 
 [Install]
+<<<<<<< HEAD
 WantedBy=cluster.target
+=======
+WantedBy=cluster.target
+>>>>>>> c64199e (fix: remove Requires from socat + setup-task.ps1 + bootstrap update)

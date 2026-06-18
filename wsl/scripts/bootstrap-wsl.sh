@@ -34,3 +34,11 @@ done
 echo ""
 systemctl list-units --type=service --all | grep socat-
 echo "? bootstrap-wsl.sh COMPLETO"
+echo "=== Instalando auto-recovery systemd ==="
+cp /home/administrator/k8s-portfolio-iac/wsl/services/cluster.target /etc/systemd/system/
+cp /home/administrator/k8s-portfolio-iac/wsl/services/ensure-cluster.service /etc/systemd/system/
+cp /home/administrator/k8s-portfolio-iac/wsl/services/cluster-ready.service /etc/systemd/system/
+systemctl daemon-reload
+systemctl enable cluster.target ensure-cluster.service cluster-ready.service
+echo "  Auto-recovery services installed"
+echo "Para iniciar manualmente: systemctl start cluster.target"

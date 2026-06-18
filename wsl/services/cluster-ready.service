@@ -11,4 +11,8 @@ TimeoutStartSec=180
 User=administrator
 
 [Install]
+<<<<<<< HEAD
 WantedBy=cluster.target
+=======
+WantedBy=cluster.target
+>>>>>>> c64199e (fix: remove Requires from socat + setup-task.ps1 + bootstrap update)

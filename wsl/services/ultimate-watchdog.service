@@ -1,0 +1,14 @@
+[Unit]
+Description=Portfolio Ultimate Watchdog - auto-recovery everything
+After=docker.service network-online.target
+Wants=docker.service network-online.target
+
+[Service]
+Type=exec
+ExecStart=/home/administrator/k8s-portfolio-iac/wsl/scripts/ultimate-watchdog.sh
+Restart=always
+RestartSec=10
+User=administrator
+
+[Install]
+WantedBy=multi-user.target

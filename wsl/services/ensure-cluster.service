@@ -1,17 +1,16 @@
 [Unit]
-Description=Ensure Kind cluster exists
+Description=Ensure Kind cluster exists and is healthy
 After=docker.service network-online.target
-Requires=docker.service
+Wants=docker.service
 
 [Service]
 Type=oneshot
 RemainAfterExit=yes
 ExecStart=/home/administrator/k8s-portfolio-iac/wsl/scripts/ensure-cluster.sh
+ExecStartPost=/usr/bin/docker update --restart=always lab-sre-denoso-control-plane
 User=administrator
+Restart=on-failure
+RestartSec=10
 
 [Install]
-<<<<<<< HEAD
 WantedBy=cluster.target
-=======
-WantedBy=cluster.target
->>>>>>> c64199e (fix: remove Requires from socat + setup-task.ps1 + bootstrap update)

@@ -1,9 +1,8 @@
 [Unit]
 Description=K8s Portfolio Cluster - Auto Recovery
-Requires=ensure-cluster.service cluster-ready.service
-After=ensure-cluster.service cluster-ready.service socat-8083.service socat-5500.service socat-5599.service socat-5598.service socat-3000.service
-<<<<<<< HEAD
+Requires=ensure-cluster.service
+After=ensure-cluster.service
+Wants=cluster-ready.service socat-8084.service socat-5500.service socat-5599.service socat-5598.service socat-3000.service cloudflared-tunnel.service
+After=socat-8084.service socat-5500.service socat-5599.service socat-5598.service socat-3000.service cloudflared-tunnel.service
 Wants=docker.service network-online.target
-=======
-Wants=docker.service network-online.target
->>>>>>> c64199e (fix: remove Requires from socat + setup-task.ps1 + bootstrap update)
+After=docker.service network-online.target

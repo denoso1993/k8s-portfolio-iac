@@ -291,8 +291,5 @@ data:
     </script></body></html>}
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2026-06-11T22:41:51Z"
   name: nginx-html-config
   namespace: default
-  resourceVersion: "5913"
-  uid: cc3d6cc3-fa20-44dd-9d73-b2177afc2b69

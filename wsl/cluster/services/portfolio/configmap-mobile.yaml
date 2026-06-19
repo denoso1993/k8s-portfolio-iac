@@ -292,6 +292,5 @@ data:
     </script></body></html>}
 kind: ConfigMap
 metadata:
-  creationTimestamp: null
   name: mobile-html-config
   namespace: default

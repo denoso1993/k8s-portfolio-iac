@@ -5,10 +5,10 @@ Wants=network-online.target
 
 [Service]
 Type=exec
-ExecStart=/usr/local/bin/cloudflared tunnel run --token eyJhIjoiN2ZjMzE1OTJkMTFmZjMwYzQ4OTA2MzdjNGQyNjFmZjciLCJ0IjoiNGY1YzBiNmMtZGFmYi00NTBlLTk0ZGQtNWIwZjk4ZTM0NTY0IiwicyI6IlltUTRPR001TmprdE5XRXhOeTAwWVRNeUxUZ3dORGd0WkRZelpqSmlZVEJsT0RsayJ9
+ExecStart=/usr/local/bin/cloudflared tunnel run --token-file /etc/cloudflared-token
 Restart=always
 RestartSec=5
 User=administrator
 
 [Install]
-WantedBy=cluster.target
+WantedBy=multi-user.target

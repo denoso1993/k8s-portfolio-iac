@@ -20,12 +20,8 @@ metadata:
       server on :\" + str(PORT))\nHTTPServer((\"0.0.0.0\", PORT), H).serve_forever()\n"],"command":["python3","-c"],"image":"python:3-alpine","name":"dev-server","volumeMounts":[{"mountPath":"/html","name":"html-volume"}]},{"command":["kubectl","proxy","--address=0.0.0.0","--port=8001"],"image":"bitnami/kubectl:latest","name":"kubectl-proxy"}],"volumes":[{"configMap":{"name":"dev-html-config"},"name":"html-volume"}]}}}}
 
       '
-  creationTimestamp: '2026-06-10T11:40:30Z'
-  generation: 57
   name: dev-server
   namespace: default
-  resourceVersion: '208704'
-  uid: a17e4d78-ca4a-4475-9fe9-80402ac1fa9e
 spec:
   progressDeadlineSeconds: 600
   replicas: 1

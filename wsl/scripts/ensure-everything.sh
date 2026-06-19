@@ -19,6 +19,8 @@ kubectl apply -f "$REPO_DIR/wsl/cluster/infrastructure/" 2>/dev/null || true
 
 kubectl create configmap nginx-html-config --from-file=index.html="$REPO_DIR/wsl/cluster/services/portfolio/configmap-nginx.yaml" -n default --dry-run=client -o yaml | kubectl apply -f - 2>/dev/null || true
 kubectl create configmap mobile-html-config --from-file=index.html="$REPO_DIR/wsl/cluster/services/portfolio/configmap-mobile.yaml" -n default --dry-run=client -o yaml | kubectl apply -f - 2>/dev/null || true
+kubectl create configmap dev-html-config --from-file=index.html="/wsl/cluster/services/portfolio/configmap-mobile.yaml" -n default --dry-run=client -o yaml | kubectl apply -f - 2>/dev/null || true
+kubectl create configmap dev-mobile-html-config --from-file=index.html="/wsl/cluster/services/portfolio/configmap-mobile.yaml" -n default --dry-run=client -o yaml | kubectl apply -f - 2>/dev/null || true
 
 if ! kubectl get deployment kubectl-proxy -n default 2>/dev/null; then
     kubectl create deployment kubectl-proxy -n default --image=bitnami/kubectl:latest 2>/dev/null || true

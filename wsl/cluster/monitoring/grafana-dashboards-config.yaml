@@ -213,8 +213,5 @@ data:
         path: /etc/grafana/provisioning/dashboards
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2026-06-11T18:41:05Z"
   name: grafana-dashboards
   namespace: monitoring
-  resourceVersion: "6886"
-  uid: 0c884bb6-a385-4834-b5ec-8d48268c2bfb

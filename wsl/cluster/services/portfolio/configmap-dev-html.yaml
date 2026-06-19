@@ -4,4 +4,4 @@ metadata:
   name: dev-html-config
   namespace: default
 data:
-  index.html: |
+  index.html: ""

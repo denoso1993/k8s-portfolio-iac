@@ -4,4 +4,4 @@ metadata:
   name: dev-mobile-html-config
   namespace: default
 data:
-  index.html: |
+  index.html: ""

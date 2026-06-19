@@ -55,7 +55,9 @@ data:
     plugins = /var/lib/grafana/plugins
     provisioning = /etc/grafana/provisioning
     [server]
-    domain = ''
+    domain = 'denisdeoliveira.com.br'
+    root_url = 'https://denisdeoliveira.com.br/grafana/'
+    serve_from_sub_path = true
     [unified_storage]
     index_path = /var/lib/grafana-search/bleve
 ---

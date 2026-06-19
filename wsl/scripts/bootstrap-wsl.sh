@@ -1,44 +1,47 @@
 #!/bin/bash
-set -e
-echo "=== Instalando socat ==="
-apt-get update -qq && apt-get install -y -qq socat
-echo "=== Desabilitando PFs antigos ==="
-for svc in pf-watchdog pf-nginx pf-dev-server pf-mobile pf-mobile-dev pf-grafana grafana-pf k8s-pf k8s-startup; do
-    systemctl stop ${svc}.service 2>/dev/null || true
-    systemctl disable ${svc}.service 2>/dev/null || true
-done
-pkill -f "kubectl.*port-forward" 2>/dev/null || true
-sleep 2
-echo "=== Criando socat forwarders ==="
-FORWARDERS=("8083:172.18.0.2:31701" "5500:172.18.0.2:32286" "5599:172.18.0.2:31807" "5598:172.18.0.2:31804" "3000:172.18.0.2:32039")
-for fwd in "${FORWARDERS[@]}"; do
-    IFS=":" read -r src dst_ip dst_port <<< "$fwd"
-    name="socat-${src}"
-    cat > /etc/systemd/system/${name}.service << SRVEOF
-[Unit]
-Description=${name} -> ${dst_ip}:${dst_port}
-After=network-online.target
-[Service]
-Type=exec
-ExecStart=/usr/bin/socat TCP-LISTEN:${src},fork,reuseaddr TCP:${dst_ip}:${dst_port}
-Restart=always
-RestartSec=3
-User=administrator
-[Install]
-WantedBy=multi-user.target
-SRVEOF
-    systemctl enable ${name}.service
-    systemctl restart ${name}.service
-    echo "  ${name}: ${src} -> ${dst_ip}:${dst_port} OK"
-done
+set -o pipefail
+REPO_DIR="/home/administrator/k8s-portfolio-iac"
+
+echo "=== Bootstrap WSL - k8s-portfolio-iac ==="
 echo ""
-systemctl list-units --type=service --all | grep socat-
-echo "? bootstrap-wsl.sh COMPLETO"
-echo "=== Instalando auto-recovery systemd ==="
-cp /home/administrator/k8s-portfolio-iac/wsl/services/cluster.target /etc/systemd/system/
-cp /home/administrator/k8s-portfolio-iac/wsl/services/ensure-cluster.service /etc/systemd/system/
-cp /home/administrator/k8s-portfolio-iac/wsl/services/cluster-ready.service /etc/systemd/system/
-systemctl daemon-reload
-systemctl enable cluster.target ensure-cluster.service cluster-ready.service
-echo "  Auto-recovery services installed"
-echo "Para iniciar manualmente: systemctl start cluster.target"
+
+# 1. Install dependencies
+echo "[1/8] Instalando dependencias..."
+sudo apt-get update -qq && sudo apt-get install -y -qq socat curl jq 2>/dev/null || true
+
+# 2. Copy systemd services
+echo "[2/8] Instalando systemd services..."
+sudo cp -r "$REPO_DIR/wsl/services/"* /etc/systemd/system/ 2>/dev/null || true
+sudo systemctl daemon-reload
+
+# 3. Enable all services
+echo "[3/8] Habilitando services..."
+sudo systemctl enable ultimate-watchdog.service ensure-cluster.service 2>/dev/null || true
+sudo systemctl enable cloudflared-tunnel.service 2>/dev/null || true
+
+# 4. Create Docker daemon config (cgroupfs for WSL stability)
+echo "[4/8] Configurando Docker..."
+sudo mkdir -p /etc/docker
+echo '{"exec-opts":["native.cgroupdriver=cgroupfs"]}' | sudo tee /etc/docker/daemon.json
+sudo systemctl restart docker 2>/dev/null || true
+sleep 5
+
+# 5. Start the cluster
+echo "[5/8] Iniciando cluster..."
+bash "$REPO_DIR/wsl/scripts/ensure-everything.sh"
+
+# 6. Start watchdog
+echo "[6/8] Iniciando watchdog..."
+sudo systemctl restart ultimate-watchdog.service 2>/dev/null || true
+
+# 7. Verify
+echo "[7/8] Verificando..."
+sleep 10
+for p in 8083 8084 5500 5599 5598 3000; do
+    code=$(curl -s --connect-timeout 3 -o /dev/null -w '%{http_code}' http://localhost:$p/ 2>/dev/null || echo "000")
+    echo "  localhost:$p -> $code"
+done
+
+echo ""
+echo "[8/8] Bootstrap completo!"
+echo "Acesse: https://denisdeoliveira.com.br"

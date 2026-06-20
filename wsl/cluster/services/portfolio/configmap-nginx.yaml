@@ -3,5 +3,3 @@ kind: ConfigMap
 metadata:
   name: nginx-html-config
   namespace: default
-data:
-  index.html: ""

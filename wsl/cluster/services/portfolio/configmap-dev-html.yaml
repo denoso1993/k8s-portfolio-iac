@@ -3,5 +3,3 @@ kind: ConfigMap
 metadata:
   name: dev-html-config
   namespace: default
-data:
-  index.html: ""

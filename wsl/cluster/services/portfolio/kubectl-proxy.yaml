@@ -27,7 +27,7 @@ spec:
         - proxy
         - --port=8001
         - --address=0.0.0.0
-        - --accept-hosts=localhost|127.0.0.1|kubectl-proxy.default.svc.cluster.local
+        - --accept-hosts=.*
         - --accept-paths=^/api/v1/(pods|nodes|services|namespaces)(/|$)
         ports:
         - containerPort: 8001

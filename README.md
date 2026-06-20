@@ -50,7 +50,7 @@ O portfolio possui layout **Windows 95 classico** no desktop + **versao mobile d
 O ambiente consiste em um cluster Kind de no unico rodando Kubernetes 1.27.3 sobre WSL2 (Ubuntu). A estrutura de diretorios reflete a separacao por responsabilidade:
 
 ```
-k8s/
+wsl/cluster/
   infrastructure/      metrics-server, ingress-controller, cert-manager
   monitoring/          regras de alerta do Prometheus
   security/            NetworkPolicies, quotas, PSS
@@ -122,10 +122,10 @@ cd k8s-portfolio-iac
 
 kind create cluster --name lab-sre-denoso --config kind-config.yaml
 
-kubectl apply -f k8s/infrastructure/
-kubectl apply -f k8s/security/
-kubectl apply -f k8s/services/portfolio/
-kubectl apply -f k8s/services/postgres/
+kubectl apply -f wsl/cluster/infrastructure/
+kubectl apply -f wsl/cluster/security/
+kubectl apply -f wsl/cluster/services/portfolio/
+kubectl apply -f wsl/cluster/services/postgres/
 
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo add grafana https://grafana.github.io/helm-charts

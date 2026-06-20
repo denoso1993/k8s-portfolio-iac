@@ -53,6 +53,6 @@ O sistema possui 4 camadas de auto-recovery:
 | scripts/install-monitoring.sh | Instala Prometheus + Grafana via Helm |
 | scripts/bootstrap/kind-config.yaml | Configuracao do cluster Kind |
 | ootstrap/auto-recovery.ps1 | Orchestrador Windows |
-| k8s/monitoring/prometheus-manifests.yaml | Manifests do Prometheus |
-| k8s/monitoring/grafana-manifests.yaml | Manifests do Grafana |
-| k8s/monitoring/cluster-sre-dashboard.json | Dashboard do cluster |
+| wsl/cluster/monitoring/prometheus-manifests.yaml | Manifests do Prometheus |
+| wsl/cluster/monitoring/grafana-manifests.yaml | Manifests do Grafana |
+| wsl/cluster/monitoring/cluster-sre-dashboard.json | Dashboard do cluster |

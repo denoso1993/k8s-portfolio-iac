@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 ENV=$1
-K8S_DIR="/home/administrator/k8s-portfolio-iac/k8s/services/portfolio"
+K8S_DIR="/home/administrator/k8s-portfolio-iac/wsl/cluster/services/portfolio"
 [ -z "$ENV" ] && echo "Uso: bash deploy.sh [desktop-prod|desktop-dev|mobile-prod|mobile-dev]" && exit 1
 echo "=== AMDIENTE: $ENV ==="
 echo -n "Confirma? (s/N): "; read CONFIRM

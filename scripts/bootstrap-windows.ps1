@@ -1,4 +1,10 @@
-# bootstrap-windows.ps1 ? Configura netsh portproxy no Windows
+<#
+⚠️  OBSOLETO — Use windows\bootstrap-windows.ps1 como ponto de entrada único.
+   Este script foi consolidado em windows\bootstrap-windows.ps1 (W7).
+   Mantido apenas para referência — será removido em versão futura.
+#>
+
+# bootstrap-windows.ps1 — [OBSOLETO] Use windows\bootstrap-windows.ps1
 # Uso: PowerShell como Admin:  .\bootstrap-windows.ps1
 
 $ErrorActionPreference = "Stop"

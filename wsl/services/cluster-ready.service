@@ -6,7 +6,40 @@ Requires=ensure-cluster.service
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/bin/bash -c 'for i in $(seq 1 60); do for p in 8083 5500 5599 5598 3000; do curl -s -o /dev/null http://localhost:$p/ && echo "  $p OK" || echo "  $p waiting"; done; echo "---"; sleep 2; done; echo "Cluster healthy!"'
+ExecStart=/bin/bash -c '
+  echo "=== Cluster Health Check ==="
+  echo "[1/4] Verificando deployments essenciais..."
+  for dep in nginx-deployment dev-server mobile-server; do
+    kubectl get deployment $dep -n default &>/dev/null && echo "  ✅ $dep" || echo "  ❌ $dep"
+  done
+
+  echo "[2/4] Verificando pods Running..."
+  for dep in nginx-deployment dev-server mobile-server; do
+    ready=$(kubectl get deployment $dep -n default -o jsonpath="{.status.readyReplicas}" 2>/dev/null || echo "0")
+    if [ "$ready" -gt 0 ]; then
+      echo "  ✅ $dep: $ready replica(s) Ready"
+    else
+      echo "  ❌ $dep: sem réplicas Ready"
+    fi
+  done
+
+  echo "[3/4] Verificando monitoring..."
+  kubectl get deployment grafana -n monitoring &>/dev/null && echo "  ✅ Grafana" || echo "  ❌ Grafana"
+  kubectl get deployment prometheus-server -n monitoring &>/dev/null && echo "  ✅ Prometheus" || echo "  ❌ Prometheus"
+
+  echo "[4/4] Testando endpoints internos..."
+  for ep in "nginx:http://nginx-service.default.svc.cluster.local:80/" "grafana:http://grafana.monitoring.svc.cluster.local:80/api/health"; do
+    name="${ep%%:*}" url="${ep#*:}"
+    code=$(kubectl run test-$name --image=curlimages/curl:latest --restart=Never --rm -i -- curl -s -o /dev/null -w "%{http_code}" "$url" 2>/dev/null || echo "000")
+    if [ "$code" = "200" ]; then
+      echo "  ✅ $name -> $code"
+    else
+      echo "  ❌ $name -> $code"
+    fi
+  done
+
+  echo "=== Health Check Complete ==="
+'
 TimeoutStartSec=180
 User=administrator
 

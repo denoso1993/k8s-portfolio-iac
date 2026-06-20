@@ -9,9 +9,9 @@ if ! kind get clusters 2>/dev/null | grep -q lab-sre-denoso; then
     kind create cluster --name lab-sre-denoso --config /home/administrator/k8s-portfolio-iac/kind-config.yaml
     echo "[$(date)] Waiting for cluster readiness..."
     sleep 30
-    kubectl apply -f /home/administrator/k8s-portfolio-iac/k8s/services/portfolio/
-    kubectl apply -f /home/administrator/k8s-portfolio-iac/k8s/infrastructure/
-    kubectl apply -f /home/administrator/k8s-portfolio-iac/k8s/security/network-policies/
+    kubectl apply -f /home/administrator/k8s-portfolio-iac/wsl/cluster/services/portfolio/
+    kubectl apply -f /home/administrator/k8s-portfolio-iac/wsl/cluster/infrastructure/
+    kubectl apply -f /home/administrator/k8s-portfolio-iac/wsl/cluster/security/network-policies/
 else
     echo "[$(date)] Cluster already exists"
 fi

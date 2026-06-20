@@ -37,11 +37,11 @@ Windows Login
     |   └── Se cluster nao existe -> kind create cluster
     |
     ├── [RECOVERY] Aplica manifests K8s
-    |   ├── k8s/infrastructure/
-    |   ├── k8s/security/
-    |   ├── k8s/security/network-policies/
-    |   ├── k8s/services/postgres/
-    |   └── k8s/services/portfolio/
+    |   ├── wsl/cluster/infrastructure/
+    |   ├── wsl/cluster/security/
+    |   ├── wsl/cluster/security/network-policies/
+    |   ├── wsl/cluster/services/postgres/
+    |   └── wsl/cluster/services/portfolio/
     |
     ├── [INFRA] Inicia servicos
     |   ├── port-forward nginx:8083 (0.0.0.0)
@@ -97,7 +97,7 @@ O daemon implementa auto-recuperacao para os seguintes cenarios:
 |---------|------|
 | Cluster Kind perdido | `kind create cluster` + re-aplica tudo |
 | Port-forward caiu | Recria o port-forward especifico |
-| Pod nginx nao esta Running | Re-aplica `k8s/services/portfolio/` |
+| Pod nginx nao esta Running | Re-aplica `wsl/cluster/services/portfolio/` |
 | Site nao responde HTTP 200 | Log de alerta (sem acao automatica) |
 | WSL reiniciou | Daemon detecta e faz recovery completo |
 

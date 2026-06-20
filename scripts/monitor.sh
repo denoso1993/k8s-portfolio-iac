@@ -1,4 +1,7 @@
 #!/bin/bash
+# ⚠️ OBSOLETO — Use wsl/scripts/ultimate-watchdog.sh em vez deste
+# Mantido apenas para referência histórica
+# Última atualização: 2026-06-20
 LOG=/tmp/portfolio-monitor.log
 
 log() {
@@ -40,6 +43,6 @@ if kubectl get pods -n default -o name 2>/dev/null | grep -q nginx; then
     :
 else
     log "nginx pod missing - reapplying manifests..."
-    kubectl apply -f /home/administrator/k8s-portfolio-iac/k8s/services/portfolio/ 2>/dev/null || true
+    kubectl apply -f /home/administrator/k8s-portfolio-iac/wsl/cluster/services/portfolio/ 2>/dev/null || true
     log "manifests reapplied"
 fi

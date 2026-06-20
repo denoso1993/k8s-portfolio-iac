@@ -1,0 +1,14 @@
+[Unit]
+Description=Socat forward port 8084 to nginx NodePort 31701
+After=docker.service network-online.target
+Requires=docker.service
+
+[Service]
+Type=exec
+ExecStart=/usr/local/bin/socat-forward.sh 8084 31701
+Restart=always
+RestartSec=5
+User=root
+
+[Install]
+WantedBy=cluster.target

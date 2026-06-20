@@ -102,11 +102,11 @@ bash scripts/ensure-cluster.sh
 
 Este script:
 - Cria o cluster Kind `lab-sre-denoso` (se nao existir)
-- Aplica `k8s/infrastructure/` (ArgoCD, ingress, etc.)
-- Aplica `k8s/security/` (NetworkPolicies, quotas)
-- Aplica `k8s/services/portfolio/` (nginx, mobile, dev-server)
-- Aplica `k8s/services/postgres/` (StatefulSet + PVC)
-- Aplica `k8s/platform/` (Kyverno)
+- Aplica `wsl/cluster/infrastructure/` (ArgoCD, ingress, etc.)
+- Aplica `wsl/cluster/security/` (NetworkPolicies, quotas)
+- Aplica `wsl/cluster/services/portfolio/` (nginx, mobile, dev-server)
+- Aplica `wsl/cluster/services/postgres/` (StatefulSet + PVC)
+- Aplica `wsl/cluster/platform/` (Kyverno)
 - Instala stack de monitoramento (Prometheus + Grafana + Loki)
 - Importa dashboard Grafana "Cluster SRE"
 
@@ -147,7 +147,7 @@ powershell -File bootstrap/install-tasks.ps1
 
 | Servico | Usuario | Senha | Como obter |
 |---------|---------|-------|------------|
-| **Grafana** | `admin` | `admin` | Definido no deployment (`k8s/monitoring/grafana-deployment.yaml`) |
+| **Grafana** | `admin` | `admin` | Definido no deployment (`wsl/cluster/monitoring/grafana-deployment.yaml`) |
 | **ArgoCD** | `admin` | (auto-gerada) | `kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath='{.data.password}' | base64 -d` |
 | **PostgreSQL** | `postgres` | (auto-gerada) | Gerado por `scripts/generate-postgres-secret.sh` |
 | **ArgoCD Web UI** | — | — | `kubectl port-forward svc/argo-cd-argocd-server -n argocd 8080:443` (acesso local) |

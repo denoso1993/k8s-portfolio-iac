@@ -126,11 +126,11 @@ New-NetFirewallRule -DisplayName "Block NodePort 30080" -Direction Inbound -Loca
 ## Restauracao completa do portfolio
 
 ### Aplicar nginx + HTML
-kubectl apply -f k8s/services/portfolio/
+kubectl apply -f wsl/cluster/services/portfolio/
 kubectl rollout restart deployment nginx-deployment -n default
 
 ### Restaurar dashboard Grafana
-curl -X POST -u admin:admin http://localhost:3000/api/dashboards/db -H "Content-Type: application/json" -d @k8s/monitoring/cluster-sre-dashboard.json
+curl -X POST -u admin:admin http://localhost:3000/api/dashboards/db -H "Content-Type: application/json" -d @wsl/cluster/monitoring/cluster-sre-dashboard.json
 
 ### Arquivos principais
 - configmap-nginx.yaml: HTML do portfolio

@@ -1,0 +1,14 @@
+[Unit]
+Description=Socat forward port 5598 to mobile-dev-server NodePort 31804
+After=docker.service network-online.target
+Requires=docker.service
+
+[Service]
+Type=exec
+ExecStart=/usr/local/bin/socat-forward.sh 5598 31804
+Restart=always
+RestartSec=5
+User=root
+
+[Install]
+WantedBy=cluster.target

@@ -1,5 +1,7 @@
 #!/bin/bash
-# portfolio-daemon.sh v5 - WSL Bridge PF management
+# ⚠️ OBSOLETO — Use wsl/scripts/ultimate-watchdog.sh em vez deste
+# Mantido apenas para referência histórica
+# Última atualização: 2026-06-20
 LOG=/tmp/portfolio-daemon.log
 PIDFILE=/tmp/portfolio-daemon.pid
 K8S_BASE="/home/administrator/k8s-portfolio-iac/k8s"

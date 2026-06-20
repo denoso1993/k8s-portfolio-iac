@@ -86,10 +86,10 @@ Tres politicas aplicadas no namespace default:
 
 | Arquivo | Descricao |
 |---------|-----------|
-| `k8s/services/portfolio/nginx-secure.conf` | Config do nginx com security headers |
-| `k8s/security/network-policies/default-deny.yaml` | NetworkPolicy: bloqueio total ingress |
-| `k8s/security/network-policies/allow-nginx.yaml` | NetworkPolicy: libera nginx:8080 |
-| `k8s/security/network-policies/allow-postgres.yaml` | NetworkPolicy: libera postgres:5432 |
+| `wsl/cluster/services/portfolio/nginx-secure.conf` | Config do nginx com security headers |
+| `wsl/cluster/security/network-policies/default-deny.yaml` | NetworkPolicy: bloqueio total ingress |
+| `wsl/cluster/security/network-policies/allow-nginx.yaml` | NetworkPolicy: libera nginx:8080 |
+| `wsl/cluster/security/network-policies/allow-postgres.yaml` | NetworkPolicy: libera postgres:5432 |
 | `scripts/monitor.sh` | Monitor com configuracoes seguras |
 | `scripts/start-cluster.sh` | Startup com configuracoes seguras |
 | `SECURITY.md` | Este documento |

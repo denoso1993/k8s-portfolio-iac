@@ -2,7 +2,7 @@
 # import-grafana-dashboard.sh - Importa o dashboard Cluster SRE no Grafana
 set -e
 
-DASHBOARD_FILE="$HOME/k8s-portfolio-iac/k8s/monitoring/cluster-sre-dashboard.json"
+DASHBOARD_FILE="$HOME/k8s-portfolio-iac/wsl/cluster/monitoring/cluster-sre-dashboard.json"
 GRAFANA_URL="${GRAFANA_URL:-http://localhost:3000}"
 GRAFANA_USER="${GRAFANA_USER:-admin}"
 GRAFANA_PASS="${GRAFANA_PASS:-admin}"

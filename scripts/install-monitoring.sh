@@ -9,7 +9,7 @@ helm repo update 2>/dev/null || true
 kubectl create namespace monitoring 2>/dev/null || true
 if ! helm list -n monitoring -q 2>/dev/null | grep -q prometheus; then
     log "Instalando Prometheus..."
-    helm install prometheus prometheus-community/prometheus --namespace monitoring --values /home/administrator/k8s-portfolio-iac/k8s/monitoring/prometheus-values.yaml --wait --timeout 5m 2>>$LOG
+    helm install prometheus prometheus-community/prometheus --namespace monitoring --values /home/administrator/k8s-portfolio-iac/wsl/cluster/monitoring/prometheus-values.yaml --wait --timeout 5m 2>>$LOG
     log "Prometheus instalado"
 fi
 if ! helm list -n monitoring -q 2>/dev/null | grep -q grafana; then

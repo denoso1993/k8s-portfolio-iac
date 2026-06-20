@@ -1,4 +1,7 @@
 #!/bin/bash
+# ⚠️ OBSOLETO — Use wsl/scripts/ultimate-watchdog.sh em vez deste
+# Mantido apenas para referência histórica
+# Última atualização: 2026-06-20
 LOG=/var/log/portfolio-watchdog.log
 K8S_BASE=/home/administrator/k8s-portfolio-iac/k8s
 log() { echo "[$(date "+%Y-%m-%d %H:%M:%S")] $*" >> $LOG; }

@@ -46,6 +46,9 @@ for svc in socat-8084 socat-5500 socat-5599 socat-5598 socat-3000; do
     systemctl is-active --quiet "$svc.service" 2>/dev/null || sudo systemctl restart "$svc.service" 2>/dev/null || true
 done
 
+# Verificar token Cloudflare antes de iniciar o tunnel
+bash "$REPO_DIR/wsl/scripts/setup-cloudflared-token.sh" --check || true
+
 if ! pgrep -f "cloudflared tunnel" > /dev/null 2>&1; then
     nohup cloudflared tunnel run --token-file /etc/cloudflared-token > /tmp/cloudflared.log 2>&1 &
 fi

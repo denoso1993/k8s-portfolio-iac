@@ -21,7 +21,10 @@ kubectl wait --for=condition=Ready nodes --all --timeout=120s
 # Apply manifests - continue even if some fail
 kubectl apply -f /home/administrator/k8s-portfolio-iac/wsl/cluster/services/portfolio/ 2>/dev/null || true
 kubectl apply -f /home/administrator/k8s-portfolio-iac/wsl/cluster/services/postgres/ 2>/dev/null || true
-kubectl apply -f /home/administrator/k8s-portfolio-iac/wsl/cluster/monitoring/ 2>/dev/null || true
+# Aplicar manifests do monitoring de forma específica (evita prometheus-helm-values.yaml)
+kubectl apply -f /home/administrator/k8s-portfolio-iac/wsl/cluster/monitoring/prometheus-manifests.yaml 2>/dev/null || true
+kubectl apply -f /home/administrator/k8s-portfolio-iac/wsl/cluster/monitoring/grafana-manifests.yaml 2>/dev/null || true
+kubectl apply -f /home/administrator/k8s-portfolio-iac/wsl/cluster/monitoring/loki-manifests.yaml 2>/dev/null || true
 
 # Create large ConfigMaps via --from-file (bypasses annotation limit)
 kubectl create configmap nginx-html-config --from-file=index.html=/home/administrator/k8s-portfolio-iac/wsl/cluster/services/portfolio/configmap-nginx.yaml -n default 2>/dev/null || true

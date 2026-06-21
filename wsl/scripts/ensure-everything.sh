@@ -30,7 +30,9 @@ echo "[$(date)] Applying manifests..."
 kubectl apply -f "$REPO_DIR/wsl/cluster/services/portfolio/" --server-side 2>/dev/null || true
 kubectl apply -f "$REPO_DIR/wsl/cluster/services/postgres/" 2>/dev/null || true
 kubectl create namespace monitoring 2>/dev/null || true
-kubectl apply -f "$REPO_DIR/wsl/cluster/monitoring/" 2>/dev/null || true
+kubectl apply -f "$REPO_DIR/wsl/cluster/monitoring/prometheus-manifests.yaml" 2>/dev/null || true
+kubectl apply -f "$REPO_DIR/wsl/cluster/monitoring/grafana-manifests.yaml" 2>/dev/null || true
+kubectl apply -f "$REPO_DIR/wsl/cluster/monitoring/loki-manifests.yaml" 2>/dev/null || true
 kubectl apply -f "$REPO_DIR/wsl/cluster/infrastructure/" 2>/dev/null || true
 
 if ! kubectl get deployment kubectl-proxy -n default 2>/dev/null; then

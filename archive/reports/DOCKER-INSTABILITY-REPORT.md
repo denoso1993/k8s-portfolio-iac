@@ -1,4 +1,4 @@
-# Docker Desktop Instability Report
+# Docker Engine Instability Report
 
 ## Problem
 Kubernetes cluster (Kind) crashes repeatedly after ~30 seconds of operation.
@@ -12,9 +12,9 @@ Kubernetes cluster (Kind) crashes repeatedly after ~30 seconds of operation.
 ## Root Cause Analysis
 
 ### Possible Causes:
-1. **Docker Desktop WSL2 Integration Unstable**
+1. **Docker Engine WSL2 Integration Unstable**
    - WSL2 networking layer may be corrupted
-   - Docker Desktop process may need restart
+   - Docker Engine process may need restart
 
 2. **Resource Constraints**
    - Insufficient memory allocated to Docker
@@ -26,13 +26,13 @@ Kubernetes cluster (Kind) crashes repeatedly after ~30 seconds of operation.
 
 ## Immediate Solution
 
-### Step 1: Restart Docker Desktop
+### Step 1: Restart Docker Engine
 ```powershell
 # Run as Administrator
-Restart-Service com.docker.service -Force
 wsl --shutdown
 Start-Sleep -Seconds 10
-# Then open Docker Desktop manually
+# Then restart WSL
+wsl -d Ubuntu
 ```
 
 ### Step 2: Verify Cluster
@@ -58,10 +58,12 @@ kind create cluster --name lab-sre-denoso --config kind-config.yaml
 ```
 
 ### Option B: Increase Docker Resources
-1. Open Docker Desktop Settings
-2. Resources → WSL2
-3. Increase memory to 4GB minimum
-4. Apply & Restart
+1. Configure `.wslconfig` no Windows:
+   ```ini
+   [wsl2]
+   memory=4GB
+   ```
+2. Apply: `wsl --shutdown`
 
 ### Option C: Check Logs
 ```bash
@@ -78,7 +80,7 @@ wsl -d Ubuntu -e journalctl -u docker
 
 ## Next Steps
 
-1. **IMMEDIATE**: Restart Docker Desktop
+1. **IMMEDIATE**: Restart Docker Engine
 2. **VERIFY**: Cluster stability
 3. **TEST**: Nginx access
 4. **DOCUMENT**: Results

@@ -6,7 +6,7 @@
 .DESCRIPTION
   Este script deve ser executado como Administrador em uma máquina Windows NOVA.
   Ele configura todo o ambiente Windows necessário para rodar o cluster Kubernetes
-  via WSL + Docker Desktop + Kind.
+  via WSL + Docker Engine + Kind.
 
   Etapas:
     1. Git — configura identidade, credential helper, clona repositórios
@@ -124,7 +124,7 @@ function Start-PortfolioCluster {
 
     function Log { param($msg) "$(Get-Date -Format HH:mm:ss) $msg" | Out-File -Path $logFile -Append; Write-Host "  $msg" -ForegroundColor Gray }
 
-    Write-Host "  Aguardando Docker Desktop..." -ForegroundColor Gray
+    Write-Host "  Aguardando Docker Engine..." -ForegroundColor Gray
     $timeout = 120; $elapsed = 0
     while ($elapsed -lt $timeout) {
         try { docker info 2>$null | Out-Null; Log "Docker OK"; break } catch {}
@@ -295,61 +295,15 @@ function Setup-Firewall {
 # FUNÇÃO: Show-WslDockerInstructions
 # ──────────────────────────────────────────────
 function Show-WslDockerInstructions {
-    <#
-    .SYNOPSIS
-      Exibe instruções sobre WSL e Docker Desktop.
-    #>
-    Write-Step "WSL + Docker" "📖"
+    Write-Step "WSL + Docker (nativo)" "📖"
 
     Write-Host ""
-    Write-Host "  Pré-requisitos para o cluster funcionar:" -ForegroundColor Yellow
-    Write-Host ""
-
-    # WSL
-    Write-Host "  ┌── WSL ──────────────────────────────────────────" -ForegroundColor Cyan
-    Write-Host "  │  ✅ WSL já deve estar instalado (verificado acima)" -ForegroundColor Green
-    Write-Host "  │  Distribuição padrão: Ubuntu" -ForegroundColor White
-    Write-Host "  │" -ForegroundColor Cyan
-    Write-Host "  │  Para verificar:" -ForegroundColor Gray
-    Write-Host "  │    wsl -l -v" -ForegroundColor White
-    Write-Host "  │    wsl -d Ubuntu -- bash -c 'echo OK'" -ForegroundColor White
-    Write-Host "  │" -ForegroundColor Cyan
-    Write-Host "  │  Se o WSL não estiver instalado:" -ForegroundColor Yellow
-    Write-Host "  │    wsl --install -d Ubuntu" -ForegroundColor White
-    Write-Host "  └────────────────────────────────────────────────" -ForegroundColor Cyan
-
-    Write-Host ""
-    Write-Host "  ┌── Docker Desktop ───────────────────────────────" -ForegroundColor Blue
-    Write-Host "  │  ✅ Docker Desktop deve estar instalado e rodando" -ForegroundColor Green
-    Write-Host "  │" -ForegroundColor Blue
-    Write-Host "  │  • Baixe de: https://www.docker.com/products/docker-desktop/" -ForegroundColor White
-    Write-Host "  │  • Configure WSL Integration: Ubuntu" -ForegroundColor White
-    Write-Host "  │  • Settings → Resources → WSL Integration → Ubuntu ON" -ForegroundColor White
-    Write-Host "  │  • Após configurar, reinicie o Docker Desktop" -ForegroundColor Yellow
-    Write-Host "  │" -ForegroundColor Blue
-    Write-Host "  │  Para verificar:" -ForegroundColor Gray
-    Write-Host "  │    docker info" -ForegroundColor White
-    Write-Host "  │    wsl -d Ubuntu -- docker ps" -ForegroundColor White
-    Write-Host "  └────────────────────────────────────────────────" -ForegroundColor Blue
-
-    Write-Host ""
-    Write-Host "  ┌── Kind (Kubernetes in Docker) ──────────────────" -ForegroundColor Magenta
-    Write-Host "  │  O bootstrap do WSL instalará o Kind." -ForegroundColor Green
-    Write-Host "  │" -ForegroundColor Magenta
-    Write-Host "  │  Dentro do WSL:" -ForegroundColor Gray
-    Write-Host "  │    cd ~/k8s-portfolio-iac" -ForegroundColor White
-    Write-Host "  │    bash scripts/bootstrap-wsl.sh" -ForegroundColor White
-    Write-Host "  └────────────────────────────────────────────────" -ForegroundColor Magenta
-
-    Write-Host ""
-    Write-Host "  ┌── Cloudflare Tunnel (opcional) ─────────────────" -ForegroundColor DarkYellow
-    Write-Host "  │  Para expor o portfolio publicamente:" -ForegroundColor Gray
-    Write-Host "  │    echo 'SEU_TOKEN' | sudo tee /etc/cloudflared-token" -ForegroundColor White
-    Write-Host "  │    sudo systemctl restart cloudflared-tunnel.service" -ForegroundColor White
-    Write-Host "  └────────────────────────────────────────────────" -ForegroundColor DarkYellow
-
-    Write-Host ""
-    Write-OK "Instruções exibidas"
+    Write-Host "┌── Docker Engine (WSL nativo) ──────────────────────" -ForegroundColor Cyan
+    Write-Host "✅ Docker Engine sera instalado AUTOMATICAMENTE" -ForegroundColor Green
+    Write-Host "   pelo bootstrap dentro do WSL (wsl/scripts/bootstrap-wsl.sh)" -ForegroundColor White
+    Write-Host "   Nao e necessario instalar Docker Desktop no Windows." -ForegroundColor White
+    Write-Host "   O Docker Engine roda nativamente dentro do WSL2." -ForegroundColor White
+    Write-Host "└───────────────────────────────────────────────────" -ForegroundColor Cyan
 }
 
 

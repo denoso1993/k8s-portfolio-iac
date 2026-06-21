@@ -321,7 +321,7 @@ CASO C: Bridge inativa, WSL/Python3 indisponível
 | Bridge não sobe | Tentar 2x. Se falhar, reportar e continuar Waves 1+4 | executor |
 | Bridge cai durante Wave 2 | Retry 1x. Se cair de novo, reportar dados parciais e continuar | executor |
 | Kind cluster não existe | Reportar "cluster inexistente", pular tasks K8s | executor |
-| Docker Desktop não responde | Reportar status, continuar (não é blocker) | executor-light |
+| Docker Engine não responde | Reportar status, continuar (não é blocker) | executor-light |
 | curl/HTTP falha em todos endpoints | Reportar como ISSUE GRAVE, verificar firewall/socat | executor-light |
 | Merge conflict encontrado | Reportar como CRITICAL, listar arquivos conflitados | explorer |
 | Proxy/GitHub rate limit | Aguardar 60s e retry 1x | executor-light |

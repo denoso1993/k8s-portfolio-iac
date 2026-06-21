@@ -6,7 +6,7 @@
 |---------|------------------|-------|
 | **Sistema Operacional** | Windows 10/11 Pro/Enterprise | Home edition requer WSL2 manual |
 | **WSL2** | Ubuntu 22.04+ | `wsl --install -d Ubuntu` |
-| **Docker Desktop** | v4.25+ | Com WSL2 backend ativado |
+| **Docker Engine (WSL nativo)** | - | Instalado nativamente no WSL2 |
 | **RAM** | 4 GB disponivel | Cluster Kind usa ~1.5 GB |
 | **Disco** | 10 GB livres | Imagens Docker + manifests |
 | **Git** | v2.40+ | Para clonar o repositorio |
@@ -29,15 +29,14 @@ wsl --set-default Ubuntu
 
 Reinicie a maquina apos a instalacao.
 
-### 2. Instalar Docker Desktop
+### 2. Instalar Docker Engine (WSL nativo)
 
-1. Baixe de https://www.docker.com/products/docker-desktop/
-2. Durante a instalacao, ative **Settings > Resources > WSL Integration > Enable integration with Ubuntu**
-3. Apos instalado, va em **Settings > Kubernetes** e desmarque "Enable Kubernetes" (usaremos Kind)
-4. Verifique:
+O Docker Engine sera instalado automaticamente pelo bootstrap dentro do WSL.
+Nao e necessario instalar Docker Desktop no Windows.
 
-```powershell
-docker info
+```bash
+# Dentro do WSL (Ubuntu)
+bash wsl/scripts/bootstrap-wsl.sh
 ```
 
 ### 3. Configurar WSL Memory (opcional, mas recomendado)

@@ -51,11 +51,15 @@ wsl hostname -I | awk '{print $1}'
 curl http://<WSL_IP>:30000
 ```
 
-### Solution 3: Docker Desktop Settings
-1. Open Docker Desktop
-2. Settings → Resources → WSL Integration
-3. Enable network connectivity
-4. Apply & Restart
+### Solution 3: Docker Engine Config
+1. Verificar se o Docker Engine esta rodando no WSL:
+   ```bash
+   sudo systemctl status docker
+   ```
+2. Se necessario, reiniciar:
+   ```bash
+   sudo systemctl restart docker
+   ```
 
 ### Solution 4: Use kubectl from WSL directly
 ```bash

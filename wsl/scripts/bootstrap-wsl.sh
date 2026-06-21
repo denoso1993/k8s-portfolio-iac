@@ -9,6 +9,27 @@ echo ""
 echo "[1/8] Instalando dependencias..."
 sudo apt-get update -qq && sudo apt-get install -y -qq socat curl jq 2>/dev/null || true
 
+# Docker Engine nativo (sem Docker Desktop)
+if ! command -v docker &>/dev/null; then
+    echo "[1.5/8] Instalando Docker Engine nativo no WSL..."
+    sudo apt-get remove -y docker docker-engine docker.io containerd runc 2>/dev/null || true
+    sudo apt-get update -qq
+    sudo apt-get install -y -qq ca-certificates curl gnupg lsb-release
+    sudo mkdir -p /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt-get update -qq
+    sudo apt-get install -y -qq docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    sudo mkdir -p /etc/docker
+    echo '{"exec-opts":["native.cgroupdriver=cgroupfs"]}' | sudo tee /etc/docker/daemon.json
+    sudo usermod -aG docker $USER
+    sudo systemctl enable docker
+    sudo systemctl start docker
+    echo "  ✅ Docker Engine $(docker --version) instalado nativamente no WSL"
+else
+    echo "  ✅ Docker ja instalado: $(docker --version)"
+fi
+
 # 2. Copy systemd services
 echo "[2/8] Instalando systemd services..."
 sudo cp -r "$REPO_DIR/wsl/services/"* /etc/systemd/system/ 2>/dev/null || true

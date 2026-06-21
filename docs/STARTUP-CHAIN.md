@@ -14,7 +14,7 @@ Windows Login
     v
 [bootstrap/start-cluster.ps1]
 (PowerShell script no Windows)
-    |-- Aguarda Docker Desktop (ate 120s)
+    |-- Aguarda Docker Engine (ate 120s)
     |-- Verifica se WSL esta respondendo
     |-- Verifica se cluster Kind existe
     |-- Chama ensure-cluster.sh dentro do WSL
@@ -68,7 +68,7 @@ Windows Login
 ### 2. start-cluster.ps1 (Windows)
 - **Finalidade:** Script de inicializacao manual (executado tambem pela task)
 - **Localizacao:** `bootstrap/start-cluster.ps1`
-- **Dependencias:** Docker Desktop, WSL (Ubuntu)
+- **Dependencias:** Docker Engine, WSL (Ubuntu)
 
 ### 3. portfolio-daemon.sh (WSL/Linux)
 - **Finalidade:** Daemon principal de manutencao do cluster

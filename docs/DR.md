@@ -4,12 +4,12 @@
 
 ---
 
-### Cenario 1: WSL2 / Docker Desktop crash
+### Cenario 1: WSL2 / Docker Engine crash
 
-**Sintomas:** Cluster inacessivel, `kind get clusters` retorna vazio, Docker Desktop com icone vermelho.
+**Sintomas:** Cluster inacessivel, `kind get clusters` retorna vazio, Docker Engine com icone vermelho.
 
 **Recuperacao:**
-1. Abrir Docker Desktop e aguardar "Engine Running"
+1. Abrir Docker Engine e aguardar "Engine Running"
 2. Abrir terminal WSL (Ubuntu)
 3. Executar:
    ```bash

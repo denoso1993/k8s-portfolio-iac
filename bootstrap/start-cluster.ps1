@@ -3,7 +3,7 @@ param([switch]$Force)
 $logFile = "C:\wsl_bridge\logs\startup-$(Get-Date -Format yyyyMMdd).log"
 function Log { param($msg) "$(Get-Date -Format HH:mm:ss) $msg" | Out-File -Path $logFile -Append; Write-Host $msg }
 Log "=== INICIANDO CLUSTER ==="
-Log "Aguardando Docker Desktop..."
+Log "Aguardando Docker Engine..."
 $timeout = 120; $elapsed = 0
 while ($elapsed -lt $timeout) {
     try { docker info 2>$null | Out-Null; Log "Docker OK"; break } catch {}

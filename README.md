@@ -35,6 +35,48 @@
 
 ---
 
+
+## Arquitetura — 100% WSL Native
+
+> **Este projeto roda INTEIRAMENTE dentro do WSL2 (Ubuntu).**
+> **Nenhum software Windows e necessario alem do proprio WSL.**
+
+```
+Windows 10/11                WSL2 (Ubuntu)
+┌──────────────┐            ┌──────────────────────────────┐
+│  Browser     │            │  Docker Engine (nativo)      │
+│  (Chrome)    │  Cloudflare │    └─ Kind Cluster K8s       │
+│  ─→ site ←───┼──tunnel────┼──→  ├─ nginx (portfolio)    │
+│              │            │     ├─ PostgreSQL            │
+│  WSL (opcional)            │     ├─ Grafana + Prometheus │
+│  ubuntu.exe  │            │     └─ Watchdog (auto-heal)  │
+│  ─→ terminal ────────────→│                              │
+└──────────────┘            └──────────────────────────────┘
+```
+
+### Pre-requisitos (Windows)
+- **WSL 2** com Ubuntu (`wsl --install -d Ubuntu`)
+- **Nada mais.** Docker, Kind, kubectl e todo o resto sao instalados AUTOMATICAMENTE pelo bootstrap dentro do WSL.
+
+### O que NAO e necessario
+- ❌ Docker Desktop (o Docker Engine roda NATIVO no WSL)
+- ❌ Nenhum software adicional no Windows
+- ❌ Nenhuma configuracao manual de rede ou firewall
+
+### Bootstrap completo (3 minutos)
+```bash
+# 1. Clone dentro do WSL
+wsl -d Ubuntu
+git clone https://github.com/denoso1993/k8s-portfolio-iac.git ~/k8s-portfolio-iac
+
+# 2. Execute o bootstrap (instala TUDO automaticamente)
+cd ~/k8s-portfolio-iac
+bash wsl/scripts/bootstrap-wsl.sh
+
+# 3. Acesse
+https://denisdeoliveira.com.br/
+```
+
 ## Visao Geral
 
 Este repositorio define a infraestrutura como codigo de um cluster Kubernetes rodando localmente com Kind. O projeto foi construido para demonstrar tecnicas de Site Reliability Engineering na pratica: GitOps, observabilidade, hardening de seguranca, politicas como codigo e gerenciamento de recursos.
@@ -71,7 +113,7 @@ kind-config.yaml       definicao do cluster Kind
 | Capacidade | Compartilhado com WSL2 host (4GB RAM alocada ao WSL2 (notebook 8GB total)) |
 | Container runtime | containerd 1.7.1 |
 | Rede | Kind default (CNI: kindnet) |
-| Ambiente | WSL2 (Ubuntu 26.04) + Docker Desktop (29.5.3) |
+| Ambiente | WSL2 (Ubuntu 26.04) + Docker Engine (nativo WSL) |
 
 ---
 
@@ -107,7 +149,7 @@ O cluster possui um deployment separado para mobile (mobile-server) com CSS otim
 ### Pre-requisitos
 
 - WSL2 com Ubuntu 20.04 ou superior
-- Docker Desktop com integracao WSL2
+- Docker Engine nativo no WSL2 (sem Docker Desktop)
 - Kind (Kubernetes in Docker)
 - kubectl
 - Helm 3+

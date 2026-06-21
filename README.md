@@ -33,6 +33,12 @@
   <a href="#autor">Autor</a>
 </p>
 
+> **⚠️ ATENCAO: Este repositorio e PUBLICO**
+> Todo conteudo aqui esta visivel para qualquer pessoa na internet.
+> **NAO** commitar: tokens, senhas, chaves de API, certificados, IPs internos,
+> dados pessoais, ou qualquer informacao sensivel.
+> Para segredos, use variaveis de ambiente ou secrets do Kubernetes.
+
 ---
 
 

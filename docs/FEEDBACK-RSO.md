@@ -1,3 +1,6 @@
+> ⚠️ **AVISO:** Este documento faz parte de um repositorio PUBLICO.
+> Nao contem informacoes sensiveis. Refere-se apenas a processo interno do RSO.
+
 # Feedback Analitico — Projeto k8s-portfolio-iac
 
 ## Nota Geral: **C** (Insuficiente com ressalvas)

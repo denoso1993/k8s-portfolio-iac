@@ -42,16 +42,21 @@
 > **Nenhum software Windows e necessario alem do proprio WSL.**
 
 ```
-Windows 10/11                WSL2 (Ubuntu)
-┌──────────────┐            ┌──────────────────────────────┐
-│  Browser     │            │  Docker Engine (nativo)      │
-│  (Chrome)    │  Cloudflare │    └─ Kind Cluster K8s       │
-│  ─→ site ←───┼──tunnel────┼──→  ├─ nginx (portfolio)    │
-│              │            │     ├─ PostgreSQL            │
-│  WSL (opcional)            │     ├─ Grafana + Prometheus │
-│  ubuntu.exe  │            │     └─ Watchdog (auto-heal)  │
-│  ─→ terminal ────────────→│                              │
-└──────────────┘            └──────────────────────────────┘
+Windows 10/11                      WSL2 (Ubuntu)
+┌──────────────────────┐          ┌──────────────────────────────────┐
+│  Browser             │          │  Docker Engine (nativo)          │
+│  (Chrome)            │ Cloudflare│    └─ Kind Cluster K8s           │
+│  ─→ site ←───────────┼──tunnel──┼──→  ├─ nginx (portfolio)        │
+│                      │          │     ├─ PostgreSQL                │
+│  ┌──────────────────┐│          │     ├─ Grafana + Prometheus     │
+│  │ RSO (Agente IA)  ││          │     └─ Watchdog (auto-heal)      │
+│  │ WSL Bridge Client││ TCP 5555 │                                   │
+│  │ wsl_agent.ps1 ───┼──────────┼──→ wsl_bridge_server.py (Python) │
+│  └──────────────────┘│          │     └─ Executa comandos kubectl  │
+│                      │          │                                   │
+│  WSL (opcional)      │          │                                   │
+│  ubuntu.exe ─────────┼──────────→                                   │
+└──────────────────────┘          └──────────────────────────────────┘
 ```
 
 ### Pre-requisitos (Windows)
@@ -76,6 +81,41 @@ bash wsl/scripts/bootstrap-wsl.sh
 # 3. Acesse
 https://denisdeoliveira.com.br/
 ```
+
+### WSL Bridge — Agente de Gerenciamento (Opcional)
+
+> **Repositorio privado:** [WSL-Opencode-Bridge](https://github.com/denoso1993/WSL-Opencode-Bridge)
+> Acesso restrito ao proprietario do projeto.
+
+O **WSL-Opencode-Bridge** e uma ponte de comunicacao entre o Windows e o WSL que permite ao **RSO** (Root Swarm Orchestrator — o agente de IA que gerencia este cluster) executar comandos diretamente no WSL sem necessidade de abrir um terminal manualmente.
+
+```
+Windows (PowerShell)              WSL (Python server)
+┌─────────────────────┐          ┌──────────────────────┐
+│ wsl_agent.ps1 ──────┼─TCP 5555─→ wsl_bridge_server.py │
+│ -Cmd "kubectl..."   │          │ → executa comando     │
+│ -Status             │          │ → retorna resultado   │
+│ -Start / -Stop      │          │                       │
+└─────────────────────┘          └──────────────────────┘
+```
+
+**Funcionalidades:**
+- Executar comandos `kubectl`, `kind`, `docker` sem abrir o WSL
+- Diagnostico remoto de problemas no cluster
+- Integracao com o watchdog para auto-recovery
+- Gerenciamento de port-forwards
+
+**Como ativar (se desejar usar o RSO):**
+```powershell
+# No Windows (PowerShell):
+C:\wsl_bridge\wsl_agent.ps1 -Start        # Inicia o servidor no WSL
+C:\wsl_bridge\wsl_agent.ps1 -Cmd "kubectl get pods -A"  # Executa comandos
+C:\wsl_bridge\wsl_agent.ps1 -Status       # Verifica se esta online
+```
+
+**Nota:** O bridge e opcional para o funcionamento do cluster. O cluster roda 100% autonomamente no WSL com ou sem ele. O bridge e utilizado apenas pelo RSO para facilitar o gerenciamento remoto durante sessoes de diagnostico e manutencao.
+
+
 
 ## Visao Geral
 

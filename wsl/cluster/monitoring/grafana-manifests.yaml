@@ -27,8 +27,6 @@ metadata:
 type: Opaque
 data:
   
-  admin-user: "YWRtaW4="
-  admin-password: "YWRtaW4="
   ldap-toml: ""
 ---
 # Source: grafana/templates/clusterrole.yaml

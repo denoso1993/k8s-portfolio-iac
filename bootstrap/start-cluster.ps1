@@ -1,4 +1,4 @@
-<# .SYNOPSIS Inicia todo o cluster #>
+<# .SYNOPSIS Inicia todo o cluster via sistema systemd do WSL #>
 param([switch]$Force)
 $logFile = "C:\wsl_bridge\logs\startup-$(Get-Date -Format yyyyMMdd).log"
 function Log { param($msg) "$(Get-Date -Format HH:mm:ss) $msg" | Out-File -Path $logFile -Append; Write-Host $msg }
@@ -10,15 +10,13 @@ while ($elapsed -lt $timeout) {
     Start-Sleep -Seconds 2; $elapsed += 2
 }
 Log "Aguardando WSL..."
-wsl -d Ubuntu -e bash -c "echo ready" 2>$null; Log "WSL OK"
-$clusterUp = wsl -d Ubuntu -e bash -c "kind get clusters 2>/dev/null | grep -q lab-sre-denoso && echo YES || echo NO" 2>$null
-if ($clusterUp -ne "YES" -or $Force) {
-    Log "Cluster nao encontrado. Recriando..."
-    wsl -d Ubuntu -e bash -c "cd ~/k8s-portfolio-iac && bash scripts/ensure-cluster.sh" 2>&1 | ForEach-Object { Log "  $_" }
-} else { Log "Cluster OK" }
-Log "Iniciando daemon..."
-wsl -d Ubuntu -e bash -c "cd ~/k8s-portfolio-iac && bash scripts/portfolio-daemon.sh > /dev/null 2>&1 &" 2>$null
-Start-Sleep -Seconds 15
-try { $r = Invoke-WebRequest -Uri "http://localhost:8083/" -UseBasicParsing -TimeoutSec 5; Log "Site: $($r.StatusCode)" }
-catch { Log "ALERTA: Site nao respondeu" }
+wsl -d Ubuntu -e bash -c 'echo ready' 2>$null; Log "WSL OK"
+Log "Iniciando cluster.target via systemd..."
+wsl -d Ubuntu -e bash -c 'sudo systemctl start cluster.target' 2>&1 | ForEach-Object { Log "  $_" }
+Log "Aguardando recovery..."
+Start-Sleep -Seconds 30
+try { $r = Invoke-WebRequest -Uri 'http://localhost:8083/' -UseBasicParsing -TimeoutSec 10; Log "Site: $($r.StatusCode)" }
+catch { Log "ALERTA: Site nao respondeu - $($_.Exception.Message)" }
+try { $g = Invoke-WebRequest -Uri 'http://localhost:3000/' -UseBasicParsing -TimeoutSec 10; Log "Grafana: $($g.StatusCode)" }
+catch { Log "ALERTA: Grafana nao respondeu - $($_.Exception.Message)" }
 Log "=== STARTUP COMPLETO ==="

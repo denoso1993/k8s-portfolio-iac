@@ -234,8 +234,105 @@ Tudo roda automaticamente. O watchdog verifica o cluster a cada 30s e recupera q
 
 ---
 
+## Seguranca
+
+O cluster segue boas praticas de seguranca em multicamadas:
+
+### Pod Security Standards
+
+Cada namespace aplica o nivel de Pod Security Standard mais adequado a sua carga de trabalho:
+
+| Nivel | Namespaces |
+|-------|------------|
+| restricted | default, argocd, cert-manager, monitoring, ingress-nginx |
+| baseline | kube-public, kube-node-lease, local-path-storage |
+| privileged | kube-system |
+
+### Controle de Recursos
+
+O namespace default possui as seguintes limitacoes:
+
+- Maximo de 20 pods
+- Limite de requisicao de CPU: 4 cores (8 de burst)
+- Limite de requisicao de memoria: 4 GB (8 GB de burst)
+- Container padrao: 100m CPU / 128 MB de requisicao
+
+### Politicas de Rede
+
+- Bloqueio total de ingress por padrao (default-deny)
+- Regras explicitas de liberacao para nginx (porta 8080) e PostgreSQL (porta 5432)
+- Acesso ao DNS permitido apenas para o kube-system
+
+### Policy as Code
+
+O Kyverno aplica duas politicas em modo de auditoria:
+
+- Proibicao de containers privilegiados
+- Exigencia de recursos minimos (requests e limits)
+
+---
+
+## Operacao
+
+### Comandos uteis
+
+```bash
+kubectl get pods -A
+kubectl get application -n argocd -o wide
+kubectl top nodes
+kubectl top pods -A
+kubectl describe application -n argocd k8s-portfolio-iac
+kubectl logs -n ingress-nginx deploy/ingress-nginx-controller
+```
+
+### Limitacoes conhecidas
+
+- **Terraform (deprecado):** O registry.terraform.io nao e acessivel deste ambiente WSL. O Terraform foi removido do bootstrap e substituido por kubectl + Helm. Os manifests em `terraform/` e `archive/terraform/` sao mantidos apenas como referencia historica.
+- **Porta 8081:** Esta porta esta ocupada por outro processo no host. O portfolio e servido na porta 8083, com redirecionamento a partir da porta 8082 via netsh do Windows.
+- **Rede WSL2:** O WSL2 utiliza um adaptador de rede virtualizado. Servicos sao expostos via kubectl port-forward com --address 0.0.0.0 e proxies de porta do Windows (netsh).
+
+---
+
+## Auto-Recovery — 3 Camadas Sobrepostas
+
+O cluster possui **tres camadas independentes** de auto-recovery que garantem funcionamento ininterrupto mesmo apos reboot, queda de energia, ou falha de componentes:
+
+### 1. Systemd (WSL)
+- **cluster.target** (enabled) — orquestra inicializacao no boot do WSL
+- **ensure-cluster.service** — cria cluster Kind se ausente
+- **ultimate-watchdog.service** — monitor + recovery a cada 30s
+- **cloudflared-tunnel.service** — tunnel Cloudflare com restart=5s
+
+### 2. Windows Scheduled Tasks
+- **Portfolio-Boot** — inicia WSL + systemd no boot do Windows
+- **Portfolio-Daemon** — chama start-cluster.ps1 no logon
+- **Portfolio-NetshPorts** — recria netsh portproxy no logon
+
+### 3. Docker
+- Container Kind com **restart=always** — volta automaticamente apos restart do Docker
+
+### Fluxo Completo Apos Reboot:
+```
+Boot → Scheduled Tasks → WSL init → systemctl start cluster.target →
+  ensure-cluster → socat forwarders → cloudflared tunnel → 
+  ultimate-watchdog → port-forwards kubectl → Site online!
+```
+
+Para detalhes completos, consulte docs/STARTUP-CHAIN.md.
+
+---
+
 ## Autor
 
-**Denis Oliveira Ramos**  
-SRE & Cloud Infrastructure Engineer  
-[denisdeoliveira.com.br](https://denisdeoliveira.com.br)
+**Denis Oliveira Ramos**
+Analista Cloud Senior | SRE & Infraestrutura
+Barueri, SP - Brasil
+
+[LinkedIn](https://linkedin.com/in/denis93) | denoso1993@gmail.com
+
+---
+
+<p align="center">
+  <em>Projeto de portifolio pessoal em Infraestrutura como Codigo</em><br>
+  Denis Oliveira Ramos
+</p>

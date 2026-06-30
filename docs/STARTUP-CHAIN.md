@@ -1,113 +1,131 @@
-# Cadeia de Inicializacao (Startup Chain)
+# Cadeia de Inicializacao (Startup Chain v2)
 
 ## Visao Geral
 
-O cluster `lab-sre-denoso` possui uma cadeia de auto-start que garante que todos os servicos subam automaticamente apos reboot do Windows ou queda do WSL.
+O cluster `lab-sre-denoso` possui uma cadeia de auto-start em **tres camadas sobrepostas** que garantem recuperacao automatica apos reboot do Windows, queda de energia, ou qualquer falha.
+
+## Diagrama Atualizado
 
 ```
-Windows Login
+[Windows Boot]
+    |
+    |-- Scheduled Task: Portfolio-Boot (SYSTEM)
+    |   `-- Inicia WSL + systemd
+    |
+    |-- Scheduled Task: Portfolio-NetshPorts (Logon)
+    |   `-- netsh interface portproxy (3 regras: 80, 443, 8083)
+    |
+    |-- Scheduled Task: Portfolio-Daemon (Logon, 1min delay)
+    |   `-- bootstrap/start-cluster.ps1
+    |       |-- Aguarda Docker Engine (120s timeout)
+    |       |-- Aguarda WSL responder
+    |       `-- Chama: systemctl start cluster.target (VIA WSL)
     |
     v
-[Scheduled Task: Portfolio-Daemon]
-(Inicia automaticamente no login do usuario)
+[WSL2 (Ubuntu) - Systemd]
     |
-    v
-[bootstrap/start-cluster.ps1]
-(PowerShell script no Windows)
-    |-- Aguarda Docker Engine (ate 120s)
-    |-- Verifica se WSL esta respondendo
-    |-- Verifica se cluster Kind existe
-    |-- Chama ensure-cluster.sh dentro do WSL
-    |-- Inicia portfolio-daemon.sh em background
-    |-- Testa http://localhost:8083/
+    |-- docker.service (enabled)
     |
-    v
-[bootstrap/netsh-recreate.ps1]
-(Executado manualmente apos reboot se IP do WSL mudar)
-    |-- Detecta IP atual do WSL
-    |-- Recria regras netsh portproxy
-    |-- Portas: 80, 443, 5501, 5599
+    |-- cluster.target (enabled - WantedBy=multi-user.target)
+    |   |-- ensure-cluster.service (oneshot)
+    |   |   |-- Cria cluster Kind se nao existir
+    |   |   |-- Aplica manifests (wsl/cluster/)
+    |   |   |-- Cria secrets (postgres, metrics-server)
+    |   |   |-- Cria ConfigMaps (HTML, dashboards)
+    |   |   `-- Seta restart=always no container Kind
+    |   |
+    |   |-- cluster-ready.service (oneshot - health check)
+    |   |
+    |   |-- socat-8084.service (nginx: NodePort 31701)
+    |   |-- socat-5500.service (dev-server: NodePort 32286)
+    |   |-- socat-5599.service (mobile: NodePort 31807)
+    |   |-- socat-5598.service (mobile-dev: NodePort 31804)
+    |   `-- cloudflared-tunnel.service (WSL nativo)
     |
-    v
-[WSL: scripts/portfolio-daemon.sh]
-(Daemon principal, roda dentro do WSL)
+    |-- ultimate-watchdog.service (enabled)
+    |   |-- Monitora cluster a cada 30s
+    |   |-- Recria port-forwards do kubectl:
+    |   |   |-- 8083 -> nginx-service:80 (0.0.0.0) <- cloudflared
+    |   |   |-- 3000 -> grafana:80 (0.0.0.0)
+    |   |   |-- 5500 -> dev-server-service:5500 (0.0.0.0)
+    |   |   |-- 5599 -> mobile-server-service:5599 (0.0.0.0)
+    |   |   `-- 8001 -> kubectl proxy (127.0.0.1, restrito)
+    |   |-- Healthcheck HTTP dos endpoints
+    |   `-- Recovery completo se cluster cair
     |
-    ├── [RECOVERY] Verifica cluster Kind
-    |   ├── Se cluster existe -> OK
-    |   └── Se cluster nao existe -> kind create cluster
-    |
-    ├── [RECOVERY] Aplica manifests K8s
-    |   ├── wsl/cluster/infrastructure/
-    |   ├── wsl/cluster/security/
-    |   ├── wsl/cluster/security/network-policies/
-    |   ├── wsl/cluster/services/postgres/
-    |   └── wsl/cluster/services/portfolio/
-    |
-    ├── [INFRA] Inicia servicos
-    |   ├── port-forward nginx:8083 (0.0.0.0)
-    |   ├── port-forward grafana:3000 (127.0.0.1)
-    |   ├── port-forward dev-server:5500 (0.0.0.0)
-    |   ├── port-forward mobile:5599 (0.0.0.0)
-    |   └── kubectl proxy :8001 (0.0.0.0)
-    |
-    └── [MONITOR] Loop de verificacao (15s)
-        ├── Cluster existe?
-        ├── Port-forwards ativos?
-        ├── Pods essenciais rodando?
-        └── Site responde HTTP 200?
+    `-- wsl-bridge.service (enabled - porta 5555)
+        `-- Comunicacao RSO (agente IA) <-> WSL
 ```
 
-## Componentes
+## Camadas de Auto-Recovery
 
-### 1. Scheduled Task (Windows)
-- **Nome:** `Portfolio-Daemon`
-- **Trigger:** Ao fazer login (com 1 minuto de atraso aleatorio)
-- **Acao:** Executa `wsl -d Ubuntu` chamando `scripts/portfolio-daemon.sh`
-- **Criada por:** `bootstrap/install-tasks.ps1`
+| Camada | Componente | O que faz | Tempo de recuperacao |
+|--------|-----------|-----------|---------------------|
+| 1 | **Windows Scheduled Tasks** | Inicia WSL + cluster.target no boot do Windows | ~30s apos login |
+| 2 | **Systemd cluster.target** | Orquestra Docker -> Kind -> socats -> tunnel | ~2min apos WSL init |
+| 3 | **ultimate-watchdog.service** | Monitor + recovery continuo (loop 30s) | 30-45s |
+| 4 | **Docker restart=always** | Container Kind reinicia automaticamente | 5-10s |
+
+## Componentes Detalhados
+
+### 1. cluster.target (Systemd)
+- **Localizacao:** `/etc/systemd/system/cluster.target`
+- **Status:** `enabled` (WantedBy=multi-user.target)
+- **Dependencias:** docker.service, network-online.target
+- **Servicos gerenciados:**
+  - ensure-cluster.service (cria cluster + aplica manifests)
+  - cluster-ready.service (health check pos-criacao)
+  - socat-8084, socat-5500, socat-5599, socat-5598 (forward NodePorts)
+  - cloudflared-tunnel.service (tunnel Cloudflare)
 
 ### 2. start-cluster.ps1 (Windows)
-- **Finalidade:** Script de inicializacao manual (executado tambem pela task)
 - **Localizacao:** `bootstrap/start-cluster.ps1`
-- **Dependencias:** Docker Engine, WSL (Ubuntu)
+- **Finalidade:** Script de inicializacao chamado pela Scheduled Task
+- **Fluxo:** Docker OK? -> WSL OK? -> `systemctl start cluster.target` -> Verifica site:8083 e grafana:3000
 
-### 3. portfolio-daemon.sh (WSL/Linux)
-- **Finalidade:** Daemon principal de manutencao do cluster
-- **Localizacao:** `scripts/portfolio-daemon.sh`
-- **Comportamento:**
-  - Recovery completo se cluster cair
-  - Monitoramento de port-forwards (recria se cair)
-  - Health check do site a cada 15s
-  - Auto-recuperacao de pods essenciais
-
-### 4. ensure-cluster.sh (WSL/Linux)
-- **Finalidade:** Garantir cluster com todos os recursos
-- **Localizacao:** `scripts/ensure-cluster.sh`
-- **Chamado por:** start-cluster.ps1, portfolio-daemon.sh
+### 3. ultimate-watchdog.sh (WSL)
+- **Localizacao:** `wsl/scripts/ultimate-watchdog.sh`
+- **Finalidade:** Watchdog unico de monitoramento e auto-recovery
+- **Frequencia:** Loop a cada 30s (gerenciado pelo systemd com Restart=always)
 - **Acoes:**
-  - Cria cluster Kind se nao existir
-  - Aplica todos os manifests em ordem
-  - Instala monitoring stack se necessario
-  - Importa dashboard Grafana
+  - Verifica se cluster Kind existe (recria se perdido)
+  - Verifica pods essenciais (reapply manifests se ausentes)
+  - Garante port-forwards do kubectl (recria se cairem)
+  - Healthcheck HTTP dos endpoints (nginx, dev, mobile, grafana, api)
+  - Detecta e mata proxies kubectl inseguros
 
-## Recuperacao Automatica
+### 4. ensure-everything.sh (WSL)
+- **Localizacao:** `wsl/scripts/ensure-everything.sh`
+- **Finalidade:** Script mestre de bootstrap e recovery
+- **Chamado por:** ensure-cluster.service, ultimate-watchdog.service
+- **Acoes:**
+  - Cria cluster Kind se ausente
+  - Aplica manifests K8s (wsl/cluster/) - idempotente
+  - Cria secrets (postgres, metrics-server) se ausentes
+  - Cria ConfigMaps de HTML (dry-run+apply - zero downtime)
+  - Garante socat services rodando
+  - Inicia cloudflared tunnel se token existir
 
-O daemon implementa auto-recuperacao para os seguintes cenarios:
+## Recuperacao Automatica por Cenario
 
-| Cenario | Acao |
-|---------|------|
-| Cluster Kind perdido | `kind create cluster` + re-aplica tudo |
-| Port-forward caiu | Recria o port-forward especifico |
-| Pod nginx nao esta Running | Re-aplica `wsl/cluster/services/portfolio/` |
-| Site nao responde HTTP 200 | Log de alerta (sem acao automatica) |
-| WSL reiniciou | Daemon detecta e faz recovery completo |
+| Cenario | Acao | Responsavel | Tempo |
+|---------|------|-------------|-------|
+| Reboot do Windows | Scheduled Task -> cluster.target -> watchdog | 3 camadas | ~3min |
+| Docker Engine crash | systemd restart docker -> container Kind volta | systemd | 30s |
+| Container Kind perdido | ensure-everything.sh recria cluster | watchdog | 3min |
+| Port-forward caiu | Watchdog detecta e recria em 30s | watchdog | 30s |
+| Cloudflare tunnel cai | systemd restart em 5s | systemd | 5-15s |
+| Pod nginx morre | Kubernetes Deployment controller recria | K8s | 5s |
+| WSL reinicia | systemd reinicia todos os servicos | systemd + tasks | 2min |
 
 ## Scripts Relacionados
 
 | Script | Localizacao | Descricao |
 |--------|------------|-----------|
-| ensure-cluster.sh | `scripts/ensure-cluster.sh` | Cria cluster + aplica recursos |
-| portfolio-daemon.sh | `scripts/portfolio-daemon.sh` | Daemon de manutencao continua |
+| ensure-everything.sh | `wsl/scripts/ensure-everything.sh` | Bootstrap + recovery mestre |
+| ultimate-watchdog.sh | `wsl/scripts/ultimate-watchdog.sh` | Watchdog de monitoramento |
+| ensure-cluster.sh | `wsl/scripts/ensure-cluster.sh` | Criacao do cluster Kind |
 | start-cluster.ps1 | `bootstrap/start-cluster.ps1` | Bootstrap Windows |
 | netsh-recreate.ps1 | `bootstrap/netsh-recreate.ps1` | Recria regras portproxy |
-| install-tasks.ps1 | `bootstrap/install-tasks.ps1` | Instala Scheduled Tasks |
 | auto-recovery.ps1 | `bootstrap/auto-recovery.ps1` | Script de recuperacao manual |
+| socat-forward.sh | `wsl/scripts/socat-forward.sh` | Wrapper de forward com deteccao de IP |

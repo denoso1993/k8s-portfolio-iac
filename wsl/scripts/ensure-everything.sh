@@ -80,3 +80,10 @@ fi
 
 log "[DONE] Ensure complete"
 kubectl get pods -A 2>/dev/null | awk '{print $1, $2, $3}' | head -30
+<<<<<<< HEAD
+=======
+nohup kubectl port-forward --address 0.0.0.0 svc/nginx-service -n default 8083:80 > /tmp/pf-nginx-8083.log 2>&1 &
+
+# Garantir Grafana (port-forward, nao socat - ClusterIP)
+nohup kubectl port-forward --address 0.0.0.0 svc/grafana -n monitoring 3000:80 > /tmp/pf-grafana.log 2>&1 &
+>>>>>>> 6c6be99 (chore:)

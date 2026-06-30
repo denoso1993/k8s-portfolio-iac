@@ -70,7 +70,7 @@ done
 
 # 3. Garantir port-forwards
 ensure_pf "nginx" 8083 "nginx-service" 80 "default" "0.0.0.0"
-ensure_pf "grafana" 3000 "grafana" 80 "monitoring" "127.0.0.1"
+ensure_pf "grafana" 3000 "grafana" 80 "monitoring" "0.0.0.0"
 ensure_pf "dev" 5500 "dev-server-service" 5500 "default" "0.0.0.0"
 ensure_pf "mobile" 5599 "mobile-server-service" 5599 "default" "0.0.0.0"
 

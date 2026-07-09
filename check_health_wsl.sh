@@ -1,0 +1,10 @@
+#!/bin/bash
+echo "8084=$(curl -s -o /dev/null -w '%{http_code}' --connect-timeout 5 http://localhost:8084/ 2>&1)"
+echo "31701=$(curl -s -o /dev/null -w '%{http_code}' --connect-timeout 5 http://localhost:31701/ 2>&1)"
+echo "CLUSTERIP=$(curl -s -o /dev/null -w '%{http_code}' --connect-timeout 5 http://$(kubectl get svc nginx-service -n default -o jsonpath='{.spec.clusterIP}' 2>/dev/null):80/ 2>&1)"
+echo "PODS=$(kubectl get pods -n default -l app=nginx --no-headers 2>&1 | awk '{print $1, $2, $3}'| tr '\n' '|')"
+echo "ENDPOINTS=$(kubectl get endpoints nginx-service -n default -o jsonpath='{.subsets[*].addresses[*].ip}' 2>&1)"
+echo "TUNNEL=$(systemctl is-active cloudflared-tunnel.service 2>&1)"
+echo "SOCAT_8084=$(systemctl is-active socat-8084.service 2>&1)"
+echo "SOCAT_8083=$(systemctl is-active socat-8083.service 2>&1)"
+echo "LOG_NGINX=$(kubectl logs -n default -l app=nginx --tail=3 2>&1 | tr '\n' '|' | head -c 500)"

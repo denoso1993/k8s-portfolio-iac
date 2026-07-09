@@ -7,9 +7,6 @@ metadata:
   name: mobile-server-service
   namespace: default
 spec:
-  clusterIP: 10.96.226.198
-  clusterIPs:
-  - 10.96.226.198
   internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4

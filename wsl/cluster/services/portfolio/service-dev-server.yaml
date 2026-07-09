@@ -7,9 +7,6 @@ metadata:
   name: dev-server-service
   namespace: default
 spec:
-  clusterIP: 10.96.15.191
-  clusterIPs:
-  - 10.96.15.191
   internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4

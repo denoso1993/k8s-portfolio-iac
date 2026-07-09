@@ -7,9 +7,6 @@ metadata:
   name: postgres-service
   namespace: default
 spec:
-  clusterIP: 10.96.125.164
-  clusterIPs:
-  - 10.96.125.164
   internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4

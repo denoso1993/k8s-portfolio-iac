@@ -1,0 +1,6 @@
+[Unit]
+Description=Healthcheck site a cada 5 minutos
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/healthcheck-site.sh
+User=root

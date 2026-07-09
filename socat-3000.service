@@ -1,0 +1,11 @@
+[Unit]
+Description=Socat forward 3000 -> Grafana NodePort 32617
+After=network-online.target
+[Service]
+Type=exec
+ExecStart=/usr/bin/socat TCP-LISTEN:3000,fork,reuseaddr TCP:127.0.0.1:32617
+Restart=always
+RestartSec=3
+User=root
+[Install]
+WantedBy=cluster.target

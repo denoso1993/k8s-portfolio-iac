@@ -1,0 +1,13 @@
+[Unit]
+Description=Socat forward 8083 -> nginx NodePort 31701
+After=docker.service network-online.target
+[Service]
+Type=simple
+ExecStart=/usr/bin/socat TCP-LISTEN:8083,fork,reuseaddr TCP:172.18.0.2:31701
+Restart=always
+RestartSec=3
+StartLimitBurst=0
+StartLimitIntervalSec=0
+User=root
+[Install]
+WantedBy=multi-user.target

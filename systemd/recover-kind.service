@@ -1,0 +1,13 @@
+[Unit]
+Description=Recupera cluster Kind apos reboot WSL
+After=docker.service
+Wants=docker.service
+Before=socat-8083.service cloudflared-tunnel.service
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/recover-kind.sh
+RemainAfterExit=yes
+Restart=on-failure
+User=root
+[Install]
+WantedBy=multi-user.target

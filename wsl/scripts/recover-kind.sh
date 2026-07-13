@@ -24,7 +24,8 @@ kind get kubeconfig --name lab-sre-denoso > /root/.kube/config 2>/dev/null
 echo "[$(date)] Kubeconfig OK" >> $LOG
 
 # 5. Manifests
-kubectl apply -f /home/administrator/k8s-portfolio-iac/wsl/cluster/services/portfolio/ >> $LOG 2>&1
+kubectl apply -f /home/administrator/k8s-portfolio-iac/wsl/cluster/services/portfolio/deployment.yaml
+kubectl apply -f /home/administrator/k8s-portfolio-iac/wsl/cluster/services/portfolio/service-nginx.yaml >> $LOG 2>&1
 kubectl expose deployment nginx-deployment -n default --port=80 --target-port=8080 --name=nginx-service --type=NodePort 2>/dev/null
 kubectl patch svc nginx-service -n default -p '{"spec":{"ports":[{"port":80,"targetPort":8080,"nodePort":31701}]}}' 2>/dev/null
 

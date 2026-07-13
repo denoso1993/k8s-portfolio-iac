@@ -336,3 +336,30 @@ Barueri, SP - Brasil
   <em>Projeto de portifolio pessoal em Infraestrutura como Codigo</em><br>
   Denis Oliveira Ramos
 </p>
+
+## 📌 Notas Técnicas Importantes
+
+### Docker
+Este projeto REQUER **Docker Engine oficial** (`docker-ce`), não o `docker.io` do repositório Ubuntu.
+O bootstrap (`wsl/scripts/bootstrap-wsl.sh`) instala a versão correta automaticamente.
+Se o cluster apresentar instabilidade (exit 128), verifique com `docker version` se é `docker-ce`.
+
+### Network Policies
+As Network Policies em `wsl/cluster/security/network-policies/` são aplicadas ANTES dos serviços.
+A política `allow-kubectl-proxy.yaml` é necessária para o funcionamento da API `/k8s/`.
+A política `allow-monitoring.yaml` tem regra de egress para o API Server (10.96.0.1:443).
+
+### Recuperação Automática
+O sistema possui 3 camadas de proteção:
+1. **Systemd**: `recover-kind.service` recria o cluster no boot do WSL
+2. **Socat**: Services com `StartLimitBurst=0` e `Type=simple` (nunca desistem de reiniciar)
+3. **Autoheal**: Script que verifica o site a cada 30s e recupera automaticamente
+
+### Arquitetura de Componentes
+- **Cluster**: Kind (K8s 1.27.3) rodando em Docker Engine WSL2
+- **Web**: nginx-unprivileged (porta 8080, NodePort 31701)
+- **Banco**: PostgreSQL 15 (StatefulSet)
+- **Monitoria**: Prometheus + Grafana + kube-state-metrics
+- **Proxy**: socat (8083 → 31701, 3000 → Grafana NodePort)
+- **Túnel**: Cloudflare Tunnel (cloudflared)
+- **Storage**: local-path-provisioner (default Kind)

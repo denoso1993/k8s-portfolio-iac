@@ -1,198 +1,70 @@
-# Guia de Setup do Zero
+# Setup do Zero — k8s-portfolio-iac
 
-## Pre-requisitos
+## Pré-requisitos
+- Windows 10/11 com WSL2
+- Git
 
-| Recurso | Requisito Minimo | Notas |
-|---------|------------------|-------|
-| **Sistema Operacional** | Windows 10/11 Pro/Enterprise | Home edition requer WSL2 manual |
-| **WSL2** | Ubuntu 22.04+ | `wsl --install -d Ubuntu` |
-| **Docker Engine (WSL nativo)** | - | Instalado nativamente no WSL2 |
-| **RAM** | 4 GB disponivel | Cluster Kind usa ~1.5 GB |
-| **Disco** | 10 GB livres | Imagens Docker + manifests |
-| **Git** | v2.40+ | Para clonar o repositorio |
-| **PowerShell** | 7+ (Windows) | Scripts de bootstrap |
-
-> **Nota:** Todo o cluster roda dentro do WSL2. O Windows apenas faz proxy de portas (netsh) e gerencia scheduled tasks.
-
----
-
-## Passo a passo completo
+## Passo a passo
 
 ### 1. Instalar WSL2
-
 ```powershell
-# Windows (PowerShell como Admin)
 wsl --install -d Ubuntu
-wsl --set-default-version 2
-wsl --set-default Ubuntu
 ```
 
-Reinicie a maquina apos a instalacao.
-
-### 2. Instalar Docker Engine (WSL nativo)
-
-O Docker Engine sera instalado automaticamente pelo bootstrap dentro do WSL.
-Nao e necessario instalar Docker Desktop no Windows.
-
-```bash
-# Dentro do WSL (Ubuntu)
-bash wsl/scripts/bootstrap-wsl.sh
-```
-
-### 3. Configurar WSL Memory (opcional, mas recomendado)
-
-Crie `%USERPROFILE%\.wslconfig` no Windows:
-
-```ini
-[wsl2]
-memory=4GB
-processors=2
-localhostForwarding=true
-```
-
-Aplique:
-
+### 2. Clonar o repositório
 ```powershell
-copy .wslconfig %USERPROFILE%\.wslconfig
-wsl --shutdown
-```
-
-### 4. Clonar o repositorio
-
-```bash
-# Dentro do WSL (Ubuntu)
 git clone https://github.com/denoso1993/k8s-portfolio-iac.git
 cd k8s-portfolio-iac
 ```
 
-### 5. Instalar ferramentas (kubectl, kind, helm)
-
-O repositorio possui um script que instala tudo automaticamente:
-
+### 3. Executar bootstrap (instala Docker OFICIAL + Kind + kubectl + cloudflared)
 ```bash
-bash scripts/bootstrap.sh
+# Dentro do WSL
+bash wsl/scripts/bootstrap-wsl.sh
 ```
 
-Ou manualmente:
-
+### 4. Criar cluster
 ```bash
-# kubectl
-curl -LO "https://dl.k8s.io/release/$(curl -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-chmod +x kubectl && sudo mv kubectl /usr/local/bin/
-
-# kind
-curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64
-chmod +x ./kind && sudo mv ./kind /usr/local/bin/kind
-
-# helm
-curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-
-# Verificar
-kubectl version --client
-kind version
-helm version
+cd ~/k8s-portfolio-iac
+bash wsl/scripts/ensure-cluster.sh
 ```
 
-### 6. Criar cluster e aplicar TUDO (comando unico)
-
-```bash
-bash scripts/ensure-cluster.sh
-```
-
-Este script:
-- Cria o cluster Kind `lab-sre-denoso` (se nao existir)
-- Aplica `wsl/cluster/infrastructure/` (ArgoCD, ingress, etc.)
-- Aplica `wsl/cluster/security/` (NetworkPolicies, quotas)
-- Aplica `wsl/cluster/services/portfolio/` (nginx, mobile, dev-server)
-- Aplica `wsl/cluster/services/postgres/` (StatefulSet + PVC)
-- Aplica `wsl/cluster/platform/` (Kyverno)
-- Instala stack de monitoramento (Prometheus + Grafana + Loki)
-- Importa dashboard Grafana "Cluster SRE"
-
-Aguardar ~2 minutos para todos os pods ficarem prontos:
-
+### 5. Verificar
 ```bash
 kubectl get pods -A
+curl http://localhost:8083/
 ```
-
-### 7. Configurar Windows (netsh + Scheduled Tasks)
-
-No Windows (PowerShell como **Administrador**):
-
-```powershell
-# 7a. Recriar regras de portproxy (ip dinamico do WSL)
-powershell -File bootstrap/netsh-recreate.ps1
-
-# 7b. Instalar Scheduled Tasks (auto-start na inicializacao)
-powershell -File bootstrap/install-tasks.ps1
-```
-
-> **O que cada script faz:**
-> - `netsh-recreate.ps1` — Detecta IP do WSL e cria regras portproxy (80, 443, 5501, 5599)
-> - `install-tasks.ps1` — Cria a Scheduled Task `Portfolio-Daemon` para iniciar o cluster automaticamente no login
-
-### 8. Verificar URLs de acesso
-
-| Ambiente | Porta | URL | Descricao |
-|----------|-------|-----|-----------|
-| PROD | **8083** | http://localhost:8083 | Portfolio Windows 95 completo |
-| DEV | **5599** | http://localhost:5599 | Espelho do PROD para testes |
-| GRAFANA | **3000** | http://localhost:3000 | Dashboard Cluster SRE |
-| API | **8001** | http://localhost:8001 | kubectl proxy (pods/nodes) |
-
----
-
-## Credenciais
-
-| Servico | Usuario | Senha | Como obter |
-|---------|---------|-------|------------|
-| **Grafana** | `admin` | `admin` | Definido no deployment (`wsl/cluster/monitoring/grafana-deployment.yaml`) |
-| **ArgoCD** | `admin` | (auto-gerada) | `kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath='{.data.password}' | base64 -d` |
-| **PostgreSQL** | `postgres` | (auto-gerada) | Gerado por `scripts/generate-postgres-secret.sh` |
-| **ArgoCD Web UI** | — | — | `kubectl port-forward svc/argo-cd-argocd-server -n argocd 8080:443` (acesso local) |
-
----
-
-## Auto-Start (Daemon)
-
-O cluster possui um daemon que garante funcionamento 24/7:
-
-```
-Windows (Scheduled Task)
-  └── Login do usuario
-       └── bootstrap/start-cluster.ps1
-            └── WSL: scripts/portfolio-daemon.sh
-                 ├── Verifica cluster (cria se perdido)
-                 ├── Inicia port-forwards (8083, 3000, 5500, 5599, 8001)
-                 └── Monitora a cada 15 segundos
-```
-
-Para detalhes completos do fluxo de auto-start, consulte `docs/STARTUP-CHAIN.md`.
-
----
-
-## Port-Forwards Gerenciados
-
-O daemon `portfolio-daemon.sh` mantem os seguintes port-forwards ativos:
-
-| Porta Host | Servico K8s | Namespace | Escopo |
-|-----------|-------------|-----------|--------|
-| 8083 | svc/nginx-service | default | 0.0.0.0 (publico) |
-| 3000 | svc/grafana | monitoring | 127.0.0.1 (localhost) |
-| 5501 | svc/dev-server-service | default | 0.0.0.0 (publico) |
-| 5599 | svc/mobile-server-service | default | 0.0.0.0 (publico) |
-| 8001 | kubectl proxy | system | 0.0.0.0 (pods/nodes) |
-
-> Os port-forwards sao automaticamente recriados pelo daemon se cairem.
-
----
 
 ## Troubleshooting
 
-| Problema | Solucao |
-|----------|---------|
-| Cluster nao sobe | `kind delete cluster --name lab-sre-denoso && bash scripts/ensure-cluster.sh` |
-| Site nao abre (8083) | Verificar port-forward: `pgrep -a -f "port-forward.*nginx"` |
-| netsh parou de funcionar | Executar `powershell -File bootstrap/netsh-recreate.ps1` (IP do WSL mudou) |
-| Daemon nao esta rodando | `wsl -d Ubuntu -e bash -c "bash ~/k8s-portfolio-iac/scripts/portfolio-daemon.sh"` |
-| Porta ocupada | `netstat -ano | findstr :8083` e matar processo conflitante |
+### Container Kind morre com exit 128 (cgroup)
+Causa: Docker `docker.io` (Ubuntu) foi instalado em vez do `docker-ce` oficial.
+Solução: Remover docker.io e instalar docker-ce manualmente:
+```bash
+apt-get remove -y docker.io containerd runc
+bash wsl/scripts/bootstrap-wsl.sh  # instala docker-ce oficial
+```
+
+### nginx CrashLoopBackOff
+Causa: ConfigMap `nginx-html-config` vazio (só metadata, sem HTML).
+Solução:
+```bash
+kubectl create cm nginx-html-config -n default \
+  --from-file=index.html=~/k8s-portfolio-iac/wsl/cluster/services/portfolio/html/prod-index.html
+kubectl delete pod -n default -l app=nginx --force --grace-period=0
+```
+
+### /k8s/ API retorna 504
+Causa: NetworkPolicy `default-deny-ingress` bloqueia nginx → kubectl-proxy.
+Solução: Aplicar `allow-kubectl-proxy.yaml`:
+```bash
+kubectl apply -f ~/k8s-portfolio-iac/wsl/cluster/security/network-policies/
+```
+
+### Grafana "No Data"
+Causa: kube-state-metrics em CrashLoopBackOff ou Prometheus sem acesso ao API Server.
+Solução: Verificar network policies e recriar kube-state-metrics:
+```bash
+kubectl delete deployment prometheus-kube-state-metrics -n monitoring
+kubectl apply -f ~/k8s-portfolio-iac/wsl/cluster/monitoring/prometheus-manifests.yaml
+```

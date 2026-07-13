@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-kubectl-proxy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: kubectl-proxy
+  policyTypes:
+  - Ingress
+  ingress:
+  - ports:
+    - port: 8001
+      protocol: TCP

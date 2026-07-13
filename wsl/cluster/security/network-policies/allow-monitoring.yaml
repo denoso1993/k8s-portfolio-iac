@@ -6,18 +6,21 @@ metadata:
 spec:
   podSelector: {}
   ingress:
-  - from:
-    - namespaceSelector: {}
-    ports:
-    - port: 3000  # Grafana
-    - port: 9090  # Prometheus
-    - port: 9093  # Alertmanager
-    - port: 8080  # kube-state-metrics
-    - port: 8081  # kube-state-metrics
-    - port: 9091  # Pushgateway
+  - ports:
+    - port: 9090
+    - port: 3000
+    - port: 8080
+    - port: 8081
+    - port: 9091
   egress:
   - to:
     - namespaceSelector: {}
+  - to:
+    - ipBlock:
+        cidr: 10.96.0.1/32
+    ports:
+    - port: 443
+      protocol: TCP
   policyTypes:
   - Ingress
   - Egress

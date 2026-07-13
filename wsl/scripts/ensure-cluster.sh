@@ -22,15 +22,15 @@ fi
 # ===== FUNCAO DE APPLY =====
 apply_manifests() {
     log "[MANIFESTS] Aplicando recursos..."
+    kubectl apply -f "$REPO_DIR/wsl/cluster/security/network-policies/" 2>/dev/null || true
+    kubectl apply -f "$REPO_DIR/wsl/cluster/security/" 2>/dev/null || true
+    kubectl apply -f "$REPO_DIR/wsl/cluster/infrastructure/" 2>/dev/null || true
     kubectl apply -f "$REPO_DIR/wsl/cluster/services/portfolio/" 2>/dev/null || true
     kubectl apply -f "$REPO_DIR/wsl/cluster/services/postgres/" 2>/dev/null || true
     kubectl create namespace monitoring 2>/dev/null || true
     kubectl apply -f "$REPO_DIR/wsl/cluster/monitoring/prometheus-manifests.yaml" 2>/dev/null || true
     kubectl apply -f "$REPO_DIR/wsl/cluster/monitoring/grafana-manifests.yaml" 2>/dev/null || true
     kubectl apply -f "$REPO_DIR/wsl/cluster/monitoring/loki-manifests.yaml" 2>/dev/null || true
-    kubectl apply -f "$REPO_DIR/wsl/cluster/infrastructure/" 2>/dev/null || true
-    kubectl apply -f "$REPO_DIR/wsl/cluster/security/" 2>/dev/null || true
-    kubectl apply -f "$REPO_DIR/wsl/cluster/security/network-policies/" 2>/dev/null || true
     kubectl apply -f "$REPO_DIR/wsl/cluster/platform/" 2>/dev/null || true
     kubectl create secret generic postgres-secret -n default \
         --from-literal=POSTGRES_PASSWORD=postgres \

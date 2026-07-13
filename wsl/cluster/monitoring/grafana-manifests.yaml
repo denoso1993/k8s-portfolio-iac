@@ -105,12 +105,13 @@ metadata:
     app.kubernetes.io/instance: grafana
     app.kubernetes.io/version: "12.3.1"
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - name: service
       port: 80
       protocol: TCP
       targetPort: grafana
+      nodePort: 32690
   selector:
     app.kubernetes.io/name: grafana
     app.kubernetes.io/instance: grafana

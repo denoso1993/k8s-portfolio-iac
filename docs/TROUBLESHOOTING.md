@@ -52,3 +52,30 @@ IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'
 sed -i "s/TCP:[0-9.]*:[0-9]*/TCP:$IP:$NP/" /etc/systemd/system/socat-3000.service
 systemctl daemon-reload && systemctl restart socat-3000.service
 ```
+
+## ⚠️ 502 CONSTANTE (loop destrutivo do autoheal)
+
+**Sintoma:** Site cai em 502 repetidamente, mesmo com cluster aparentemente OK.
+
+**Causa raiz:** O script `/usr/local/bin/autoheal.sh` em loop:
+1. Verifica site a cada 30s
+2. Vê 502 (durante subida do cluster, ~90s)
+3. Apaga o cluster (`kind delete cluster`)
+4. Recria do zero
+5. Vê 502 de novo durante a subida → apaga de novo → LOOP INFINITO
+
+**Correção:**
+```bash
+# PARAR o autoheal destrutivo
+systemctl stop autoheal.service
+systemctl disable autoheal.service
+pkill -f autoheal.sh
+
+# Corrigir CRLF do recover-kind.sh
+dos2unix /usr/local/bin/recover-kind.sh
+
+# Regenerar kubeconfig
+kind get kubeconfig --name lab-sre-denoso > /root/.kube/config
+```
+
+**IMPORTANTE:** NÃO religar autoheal.sh com lógica de `kind delete cluster`. Se precisar de auto-recovery, use verificação com debounce longo (10+ min) que NÃO apaga cluster.

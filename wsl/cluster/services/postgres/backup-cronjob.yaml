@@ -4,14 +4,16 @@ metadata:
   name: postgres-backup
   namespace: default
 spec:
-  schedule: "0 3 * * *"  # Todo dia às 03:00
+  schedule: "0 3 * * *"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
         spec:
           containers:
           - name: postgres-backup
-            image: bitnami/postgresql:15
+            image: postgres:15-alpine
             imagePullPolicy: IfNotPresent
             command:
             - /bin/bash
@@ -27,11 +29,11 @@ spec:
                   name: postgres-secret
                   key: POSTGRES_PASSWORD
             volumeMounts:
-            - name: backup-storage
-              mountPath: /backups
-          restartPolicy: OnFailure
+            - mountPath: /backups
+              name: backup-storage
           volumes:
           - name: backup-storage
             hostPath:
               path: /home/administrator/postgres-backups
               type: DirectoryOrCreate
+          restartPolicy: OnFailure

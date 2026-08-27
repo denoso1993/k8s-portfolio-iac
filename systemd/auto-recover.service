@@ -1,0 +1,11 @@
+[Unit]
+Description=Auto-recover seguro - monitora site a cada 60s
+After=docker.service network-online.target
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/auto-recover.sh
+Restart=always
+RestartSec=10
+User=root
+[Install]
+WantedBy=multi-user.target

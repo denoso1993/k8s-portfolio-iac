@@ -1,5 +1,5 @@
 #!/bin/bash
-# auto-recover.sh v2 - Verifica site E local. Recupera após 2 falhas.
+# auto-recover.sh v3 - Verifica site, local E grafana. Recupera após 2 falhas.
 LOG=/var/log/auto-recover.log
 FAILS=0
 
@@ -23,6 +23,7 @@ recover_full() {
     nohup socat TCP-LISTEN:8083,fork,reuseaddr TCP:$IP:31701 &>/dev/null &
     pkill -f cloudflared 2>/dev/null
     nohup cloudflared tunnel --config /home/administrator/.cloudflared/config.yml run &>/dev/null &
+    # GRAFANA
     kubectl apply -f /home/administrator/k8s-portfolio-iac/wsl/cluster/monitoring/ >> $LOG 2>&1
     kubectl patch svc grafana -n monitoring -p '{"spec":{"type":"NodePort"}}' 2>/dev/null
     kubectl create cm grafana -n monitoring --from-file=grafana.ini=/home/administrator/k8s-portfolio-iac/config/grafana.ini 2>/dev/null
@@ -40,11 +41,12 @@ recover_full() {
 while true; do
     site=$(curl -s -o /dev/null -w '%{http_code}' --connect-timeout 10 https://denisdeoliveira.com.br/ 2>/dev/null)
     local=$(curl -s -o /dev/null -w '%{http_code}' --connect-timeout 5 http://localhost:8083/ 2>/dev/null)
-    if [ "$site" = "200" ] && [ "$local" = "200" ]; then
+    grafana=$(curl -s -o /dev/null -w '%{http_code}' -H 'Host: grafana.denisdeoliveira.com.br' --connect-timeout 5 http://localhost:3000/ 2>/dev/null)
+    if [ "$site" = "200" ] && [ "$local" = "200" ] && { [ "$grafana" = "200" ] || [ "$grafana" = "301" ]; }; then
         FAILS=0
     else
         FAILS=$((FAILS + 1))
-        log "OFF(site=$site local=$local) falha $FAILS/2"
+        log "OFF(site=$site local=$local grafana=$grafana) falha $FAILS/2"
         if [ $FAILS -ge 2 ]; then
             log "2 falhas. Recuperando..."
             recover_full

@@ -1,7 +1,5 @@
 #!/bin/bash
-# auto-recover.sh - Auto-recovery SEGURO
-# Verifica site a cada 60s. Só recupera se 502 por 3+ checagens consecutivas.
-# NUNCA apaga cluster em loop. Executa guia completo (nginx + grafana).
+# auto-recover.sh v2 - Verifica site E local. Recupera após 2 falhas.
 LOG=/var/log/auto-recover.log
 FAILS=0
 
@@ -25,7 +23,6 @@ recover_full() {
     nohup socat TCP-LISTEN:8083,fork,reuseaddr TCP:$IP:31701 &>/dev/null &
     pkill -f cloudflared 2>/dev/null
     nohup cloudflared tunnel --config /home/administrator/.cloudflared/config.yml run &>/dev/null &
-    # Grafana
     kubectl apply -f /home/administrator/k8s-portfolio-iac/wsl/cluster/monitoring/ >> $LOG 2>&1
     kubectl patch svc grafana -n monitoring -p '{"spec":{"type":"NodePort"}}' 2>/dev/null
     kubectl create cm grafana -n monitoring --from-file=grafana.ini=/home/administrator/k8s-portfolio-iac/config/grafana.ini 2>/dev/null
@@ -41,14 +38,15 @@ recover_full() {
 }
 
 while true; do
-    code=$(curl -s -o /dev/null -w '%{http_code}' --connect-timeout 10 https://denisdeoliveira.com.br/ 2>/dev/null)
-    if [ "$code" = "200" ] || [ "$code" = "301" ]; then
+    site=$(curl -s -o /dev/null -w '%{http_code}' --connect-timeout 10 https://denisdeoliveira.com.br/ 2>/dev/null)
+    local=$(curl -s -o /dev/null -w '%{http_code}' --connect-timeout 5 http://localhost:8083/ 2>/dev/null)
+    if [ "$site" = "200" ] && [ "$local" = "200" ]; then
         FAILS=0
     else
         FAILS=$((FAILS + 1))
-        log "OFF($code) falha $FAILS/3"
-        if [ $FAILS -ge 3 ]; then
-            log "3 falhas consecutivas. Recuperando..."
+        log "OFF(site=$site local=$local) falha $FAILS/2"
+        if [ $FAILS -ge 2 ]; then
+            log "2 falhas. Recuperando..."
             recover_full
             FAILS=0
         fi

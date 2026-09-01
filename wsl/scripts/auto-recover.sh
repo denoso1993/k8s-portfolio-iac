@@ -6,6 +6,11 @@ FAILS=0
 log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" >> $LOG; }
 
 recover_full() {
+    kubectl create namespace monitoring 2>/dev/null
+    kubectl create namespace loki 2>/dev/null
+    kubectl create namespace argocd 2>/dev/null
+    kubectl create namespace cert-manager 2>/dev/null
+    kubectl create namespace ingress-nginx 2>/dev/null
     log "=== RECOVERY INICIADO ==="
     systemctl start docker.service 2>/dev/null
     kind delete cluster --name lab-sre-denoso >> $LOG 2>&1
